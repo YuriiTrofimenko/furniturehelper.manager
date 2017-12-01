@@ -14,4 +14,14 @@ public class LinkListItem {
     public Drawable drawable;
     public boolean checked;
     public List<Link> links;
+
+    public LinkListItem() {
+    }
+
+    public LinkListItem(String title, Drawable drawable, boolean checked, List<Link> links) {
+        this.title = title;
+        this.drawable = drawable;
+        this.checked = checked;
+        this.links = links;
+    }
 }
