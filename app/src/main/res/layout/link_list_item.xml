@@ -16,10 +16,12 @@
             android:src="@{item.drawable}"
             android:layout_weight="2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:scaleType="fitCenter"/>
+            android:layout_height="50dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"/>
         <TextView
-            android:text="@{item.title}"
+            android:text="@{item.title + `(` + item.links.size() + `)`}"
             android:layout_weight="7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,6 +37,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:checked="@{item.checked}"/>
     </LinearLayout>
 </layout>
