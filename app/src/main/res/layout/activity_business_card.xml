@@ -22,23 +22,24 @@
             android:weightSum="4">
 
             <LinearLayout
-                android:id="@+id/viberTab"
+                android:id="@+id/viberTabLayout"
                 android:background="#CCCCCC"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:padding="2dp"
                 android:orientation="vertical"
-                android:weightSum="10"
-                android:clickable="true">
+                android:weightSum="10">
 
                 <ImageView
+                    android:id="@+id/viberTabImageView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:src="@drawable/viber"
                     android:layout_gravity="center"
                     android:layout_weight="7"
-                    android:clickable="false"/>
+                    android:clickable="true"
+                    android:focusable="true" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -53,22 +54,23 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/whatsappTab"
+                android:id="@+id/whatsappTabLayout"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:padding="2dp"
                 android:orientation="vertical"
-                android:weightSum="10"
-                android:clickable="true">
+                android:weightSum="10">
 
                 <ImageView
+                    android:id="@+id/whatsappTabImageView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:src="@drawable/whatsapp"
                     android:layout_gravity="center"
                     android:layout_weight="7"
-                    android:clickable="false"/>
+                    android:clickable="true"
+                    android:focusable="true"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -83,22 +85,23 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/telegramTab"
+                android:id="@+id/telegramTabLayout"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:padding="2dp"
                 android:orientation="vertical"
-                android:weightSum="10"
-                android:clickable="true">
+                android:weightSum="10">
 
                 <ImageView
+                    android:id="@+id/telegramTabImageView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:src="@drawable/telegram"
                     android:layout_gravity="center"
                     android:layout_weight="7"
-                    android:clickable="false"/>
+                    android:clickable="true"
+                    android:focusable="true"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -113,7 +116,7 @@
             </LinearLayout>
 
             <LinearLayout
-
+                android:id="@+id/smsTabLayout"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -122,13 +125,14 @@
                 android:weightSum="10">
 
                 <ImageView
-                    android:id="@+id/smsTab"
+                    android:id="@+id/smsTabImageView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:src="@drawable/sms"
                     android:layout_gravity="center"
                     android:layout_weight="7"
-                    android:clickable="true"/>
+                    android:clickable="true"
+                    android:focusable="true"/>
 
                 <TextView
                     android:layout_width="match_parent"
