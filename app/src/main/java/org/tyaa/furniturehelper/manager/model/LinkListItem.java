@@ -13,15 +13,15 @@ public class LinkListItem {
     public String title;
     public Drawable drawable;
     public boolean checked;
-    public List<Link> links;
+    public List<SubLink> subLinks;
 
     public LinkListItem() {
     }
 
-    public LinkListItem(String title, Drawable drawable, boolean checked, List<Link> links) {
+    public LinkListItem(String title, Drawable drawable, boolean checked, List<SubLink> subLinks) {
         this.title = title;
         this.drawable = drawable;
         this.checked = checked;
-        this.links = links;
+        this.subLinks = subLinks;
     }
 }

@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:background="@android:color/transparent"/>
         <TextView
-            android:text="@{item.title + `(` + item.links.size() + `)`}"
+            android:text="@{item.title + `(` + item.subLinks.size() + `)`}"
             android:layout_weight="7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
