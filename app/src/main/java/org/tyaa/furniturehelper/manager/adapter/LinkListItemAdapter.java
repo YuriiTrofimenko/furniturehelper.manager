@@ -8,10 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.tyaa.furniturehelper.manager.R;
 import org.tyaa.furniturehelper.manager.databinding.LinkListItemBinding;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
+import org.tyaa.furniturehelper.manager.viewmodel.LinkListViewModel;
 
 /**
  * Created by yurii on 30.11.17.
@@ -58,6 +61,34 @@ public class LinkListItemAdapter extends BaseAdapter {
                 DataBindingUtil.inflate(mInflater, R.layout.link_list_item, viewGroup, false);
         Log.d("MySpy", "bind!");
         binding.setItem(mList.get(i));
+
+        binding.getRoot().setOnClickListener(v -> {
+
+            Log.d("MySpy", (String) ((TextView)v.findViewById(R.id.linkListItemTitle)).getText());
+            Toast.makeText(
+                    v.getContext()
+                    , ((TextView)v.findViewById(R.id.linkListItemTitle)).getText(), Toast.LENGTH_LONG);
+        });
+
+
+
+        /*binding.setOnLinkListItemClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(
+                        v.getContext()
+                        , ((TextView)v).getText(), Toast.LENGTH_LONG);
+            }
+        });*/
+        //binding.setViewModel(new LinkListViewModel());
+
+        /*view.setOnLongClickListener((View v) -> {
+
+            Toast.makeText(
+                    view.getContext()
+                    , ((TextView)view.findViewById(R.id.linkListItemTitle)).getText(), Toast.LENGTH_LONG);
+            return true;
+        });*/
 
         return binding.getRoot();
     }

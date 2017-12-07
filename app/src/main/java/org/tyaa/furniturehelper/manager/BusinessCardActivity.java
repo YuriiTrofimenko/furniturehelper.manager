@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.tyaa.furniturehelper.manager.common.Global;
@@ -46,6 +48,8 @@ public class BusinessCardActivity extends AppCompatActivity {
     private ImageView mSmsTabImageView;
 
     private List<ImageView> mTabImageViews = new ArrayList<>();
+
+    private ListView mLinkListView;
 
     private String mPhoneNumber = "";
 
@@ -83,6 +87,7 @@ public class BusinessCardActivity extends AppCompatActivity {
                 DataBindingUtil.setContentView(this, R.layout.activity_business_card);
         final LinkList linkList = Global.LINK_LIST;
         activityBusinessCardBinding.setItems(linkList);
+        //activityBusinessCardBinding.
 
         mViberTabLayout = (LinearLayout) findViewById(R.id.viberTabLayout);
         mWhatsappTabLayout = (LinearLayout) findViewById(R.id.whatsappTabLayout);
@@ -123,6 +128,16 @@ public class BusinessCardActivity extends AppCompatActivity {
             });
             tabIdx++;
         }
+
+        mLinkListView = (ListView) findViewById(R.id.listView);
+
+        /*mLinkListView.setOnItemLongClickListener((parent, view, position, id) -> {
+
+            Toast.makeText(
+                    view.getContext()
+                    , ((TextView)view.findViewById(R.id.linkListItemTitle)).getText(), Toast.LENGTH_LONG);
+            return true;
+        });*/
 
         /*ImageView imageView1 = (ImageView) findViewById(R.id.viberTab);
         imageView1.setOnClickListener(new View.OnClickListener() {

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:link_list="@{items.mSubLinks}">
+        app:sub_link_list="@{items.mSubLinks}">
 
     </ListView>
 </layout>

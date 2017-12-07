@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="item" type="org.tyaa.furniturehelper.manager.model.LinkListItem"/>
+        <!--<import type="android.view.View.OnClickListener"/>-->
+        <variable
+            name="item"
+            type="org.tyaa.furniturehelper.manager.model.LinkListItem"/>
+        <!--<variable-->
+            <!--name="onLinkListItemClick"-->
+            <!--type="android.view.View.OnClickListener"/>-->
+        <!--<variable-->
+            <!--name="viewModel"-->
+            <!--type="org.tyaa.furniturehelper.manager.viewmodel.LinkListViewModel"/>-->
     </data>
 
     <LinearLayout
@@ -21,12 +30,15 @@
             android:layout_gravity="center"
             android:background="@android:color/transparent"/>
         <TextView
+            android:id="@+id/linkListItemTitle"
             android:text="@{item.title + `(` + item.subLinks.size() + `)`}"
             android:layout_weight="7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textAlignment="center"/>
+        <!--android:onClickListener="{@onLinkListItemClick}"-->
+        <!--android:onClick="@{viewModel::onLinkListItemClick}"-->
         <!--<ImageButton
             android:src="@android:drawable/ic_input_add"
             android:layout_weight="1"
