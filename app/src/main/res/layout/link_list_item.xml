@@ -31,7 +31,7 @@
             android:background="@android:color/transparent"/>
         <TextView
             android:id="@+id/linkListItemTitle"
-            android:text="@{item.title + `(` + item.subLinks.size() + `)`}"
+            android:text="@{item.title + `(` + item.subLinks.mSubLinks.size() + `)`}"
             android:layout_weight="7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

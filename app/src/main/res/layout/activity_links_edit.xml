@@ -5,14 +5,88 @@
 
     <data>
         <variable name="items" type="org.tyaa.furniturehelper.manager.model.SubLinkList"/>
+        <!--<variable-->
+            <!--name="link_list_item"-->
+            <!--type="org.tyaa.furniturehelper.manager.model.LinkListItem"/>-->
     </data>
 
-    <ListView
-        android:id="@+id/subListView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:sub_link_list="@{items.mSubLinks}">
+        android:weightSum="100"
+        android:layout_margin="5dp">
 
-    </ListView>
+        <LinearLayout
+            android:layout_weight="10"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <ImageButton
+                android:src="@{items.mLinkListItem.drawable}"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:background="@android:color/transparent"/>
+            <TextView
+                android:layout_weight="8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:text="@{items.mLinkListItem.title}"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="75"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/subListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:sub_link_list="@{items.mSubLinks}">
+
+            </ListView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="15"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <Button
+                android:text="Cancel"
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            <Button
+                android:text="+"
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            <Button
+                android:text="Ok"
+                android:layout_margin="10dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
 </layout>

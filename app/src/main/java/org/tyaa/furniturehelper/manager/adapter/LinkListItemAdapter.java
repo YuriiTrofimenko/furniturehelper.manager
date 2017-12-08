@@ -1,6 +1,7 @@
 package org.tyaa.furniturehelper.manager.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.util.Log;
@@ -8,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.tyaa.furniturehelper.manager.BusinessCardActivity;
+import org.tyaa.furniturehelper.manager.LinksEditActivity;
 import org.tyaa.furniturehelper.manager.R;
 import org.tyaa.furniturehelper.manager.databinding.LinkListItemBinding;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
@@ -62,33 +66,27 @@ public class LinkListItemAdapter extends BaseAdapter {
         Log.d("MySpy", "bind!");
         binding.setItem(mList.get(i));
 
-        binding.getRoot().setOnClickListener(v -> {
+        /*((ListView)viewGroup).setOnItemLongClickListener((parent, view1, position, id) -> {
 
-            Log.d("MySpy", (String) ((TextView)v.findViewById(R.id.linkListItemTitle)).getText());
-            Toast.makeText(
-                    v.getContext()
-                    , ((TextView)v.findViewById(R.id.linkListItemTitle)).getText(), Toast.LENGTH_LONG);
-        });
-
-
-
-        /*binding.setOnLinkListItemClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(
-                        v.getContext()
-                        , ((TextView)v).getText(), Toast.LENGTH_LONG);
-            }
-        });*/
-        //binding.setViewModel(new LinkListViewModel());
-
-        /*view.setOnLongClickListener((View v) -> {
-
-            Toast.makeText(
-                    view.getContext()
-                    , ((TextView)view.findViewById(R.id.linkListItemTitle)).getText(), Toast.LENGTH_LONG);
+            Log.d("pos = ", String.valueOf(position));
             return true;
         });*/
+
+        binding.getRoot().setOnClickListener(v -> {
+
+            //Log.d("MySpy", (String) ((TextView)v.findViewById(R.id.linkListItemTitle)).getText());
+            Log.d("id = ", String.valueOf(mList.get(i).getId()));
+            Intent intent = new Intent(v.getContext(), LinksEditActivity.class);
+            /*intent.putExtra(
+                    BusinessCardActivity.SELECTED_LINK_LIST_ITEM_TITLE
+                    , ((TextView)v.findViewById(R.id.linkListItemTitle)).getText()
+            );*/
+            intent.putExtra(
+                    BusinessCardActivity.SELECTED_LINK_LIST_ITEM_TITLE
+                    , mList.get(i).getId()
+            );
+            v.getContext().startActivity(intent);
+        });
 
         return binding.getRoot();
     }

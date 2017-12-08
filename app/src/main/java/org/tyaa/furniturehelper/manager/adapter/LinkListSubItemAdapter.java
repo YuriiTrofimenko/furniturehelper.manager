@@ -3,11 +3,14 @@ package org.tyaa.furniturehelper.manager.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 
 import org.tyaa.furniturehelper.manager.R;
 import org.tyaa.furniturehelper.manager.databinding.LinkBinding;
@@ -58,6 +61,25 @@ public class LinkListSubItemAdapter extends BaseAdapter {
                 DataBindingUtil.inflate(mInflater, R.layout.link, viewGroup, false);
         Log.d("MySpy", "bind!");
         binding.setItem(mList.get(i));
+        ((EditText)binding.getRoot().findViewById(R.id.linkText))
+                .addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                mList.get(i).text = s.toString();
+            }
+        });
 
         return binding.getRoot();
     }

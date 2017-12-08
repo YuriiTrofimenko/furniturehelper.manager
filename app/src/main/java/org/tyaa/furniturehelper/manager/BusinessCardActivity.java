@@ -53,6 +53,9 @@ public class BusinessCardActivity extends AppCompatActivity {
 
     private String mPhoneNumber = "";
 
+    public static final String SELECTED_LINK_LIST_ITEM_TITLE =
+            "org.tyaa.furniturehelper.manager.AppCompatActivity.SELECTED_TITLE";
+
     /*@OnClick({R.id.viberTab, R.id.whatsappTab, R.id.telegramTab, R.id.smsTab})
     void onClickTab(View selectedView) {
 

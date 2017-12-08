@@ -1,9 +1,13 @@
 package org.tyaa.furniturehelper.manager.binder;
 
 import android.databinding.BindingAdapter;
+import android.databinding.InverseBindingAdapter;
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableField;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.tyaa.furniturehelper.manager.adapter.LinkListItemAdapter;
 import org.tyaa.furniturehelper.manager.adapter.LinkListSubItemAdapter;
@@ -29,6 +33,7 @@ public class CustomBinder {
         LinkListSubItemAdapter adapter = new LinkListSubItemAdapter(list);
         view.setAdapter(adapter);
     }
+
 
     /*@BindingAdapter({"app:onLongClick"})
     public static void bindOnClick(

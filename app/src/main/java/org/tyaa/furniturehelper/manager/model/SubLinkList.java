@@ -12,6 +12,7 @@ import org.tyaa.furniturehelper.manager.model.interfaces.ISubLinkList;
 
 public class SubLinkList implements ISubLinkList {
 
+    public LinkListItem mLinkListItem;
     public ObservableArrayList<SubLink> mSubLinks;
     public SubLink mSubLink;
     public Integer mSelectedItemPosition = 0;
@@ -20,6 +21,11 @@ public class SubLinkList implements ISubLinkList {
 
         mSubLinks =
                 new ObservableArrayList<>();
+    }
+
+    public void setLink_list_item(LinkListItem linkListItem){
+
+        mLinkListItem = linkListItem;
     }
 
     @Override

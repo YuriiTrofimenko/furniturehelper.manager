@@ -10,18 +10,32 @@ import java.util.List;
 
 public class LinkListItem {
 
+    private static int count = 0;
+
+    private int id;
     public String title;
     public Drawable drawable;
     public boolean checked;
-    public List<SubLink> subLinks;
+    public SubLinkList subLinks;
 
     public LinkListItem() {
+
+        id = count;
+        count++;
     }
 
-    public LinkListItem(String title, Drawable drawable, boolean checked, List<SubLink> subLinks) {
+    public LinkListItem(String title, Drawable drawable, boolean checked, SubLinkList subLinks) {
+
+        id = count;
+        count++;
+
         this.title = title;
         this.drawable = drawable;
         this.checked = checked;
         this.subLinks = subLinks;
+    }
+
+    public int getId() {
+        return id;
     }
 }
