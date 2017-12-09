@@ -46,7 +46,8 @@
         </receiver>
 
         <activity android:name=".BusinessCardActivity" />
-        <activity android:name=".LinksEditActivity"></activity>
+        <activity android:name=".LinksEditActivity" />
+        <activity android:name=".PermissionActivity"></activity>
     </application>
 
 </manifest>

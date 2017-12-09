@@ -15,9 +15,7 @@ public class CallReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
-        //throw new UnsupportedOperationException("Not yet implemented");
+
         if (intent.getAction().equals("android.intent.action.PHONE_STATE")) {
             String phone_state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
             if (phone_state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
