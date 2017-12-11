@@ -51,7 +51,9 @@ public class PermissionActivity extends AppCompatActivity {
                     , new String[]{Manifest.permission.READ_PHONE_STATE}
                     , PERMISSION_REQUEST_CODE
             );
-        }
+        } else {
 
+            finish();
+        }
     }
 }

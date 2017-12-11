@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import org.tyaa.furniturehelper.manager.R;
 import org.tyaa.furniturehelper.manager.databinding.LinkBinding;
@@ -59,8 +60,9 @@ public class LinkListSubItemAdapter extends BaseAdapter {
 
         LinkBinding binding =
                 DataBindingUtil.inflate(mInflater, R.layout.link, viewGroup, false);
-        Log.d("MySpy", "bind!");
+        //Log.d("MySpy", "bind!");
         binding.setItem(mList.get(i));
+
         ((EditText)binding.getRoot().findViewById(R.id.linkText))
                 .addTextChangedListener(new TextWatcher() {
 
@@ -80,6 +82,13 @@ public class LinkListSubItemAdapter extends BaseAdapter {
                 mList.get(i).text = s.toString();
             }
         });
+
+        ((ImageView)binding.getRoot().findViewById(R.id.linkDrawable))
+                .setOnLongClickListener(v -> {
+
+                    Log.d("MySpy", "ТУДУ!");
+                    return true;
+                });
 
         return binding.getRoot();
     }
