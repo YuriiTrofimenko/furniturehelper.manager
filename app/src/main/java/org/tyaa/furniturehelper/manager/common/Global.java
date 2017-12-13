@@ -1,6 +1,8 @@
 package org.tyaa.furniturehelper.manager.common;
 
 import android.databinding.ObservableArrayList;
+import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 import org.tyaa.furniturehelper.manager.model.LinkList;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
@@ -12,6 +14,7 @@ import org.tyaa.furniturehelper.manager.model.LinkListItem;
 public class Global {
 
     public static final LinkList LINK_LIST;
+    public static ImageView selectedImageView;
 
     static {
 

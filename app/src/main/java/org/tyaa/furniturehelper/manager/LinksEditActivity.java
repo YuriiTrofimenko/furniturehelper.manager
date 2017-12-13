@@ -65,7 +65,7 @@ public class LinksEditActivity extends AppCompatActivity {
         //activityLinksEditBinding.setLink_list_item(mLinkListItem);
     }
 
-    private void selectImage() {
+    public void selectImage() {
 
         final CharSequence[] items = {
                 "Take Photo"
@@ -160,7 +160,7 @@ public class LinksEditActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
 
-        Bitmap bm=null;
+        Bitmap bm = null;
         if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
@@ -168,7 +168,7 @@ public class LinksEditActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        //ivImage.setImageBitmap(bm);
+        Global.selectedImageView.setImageBitmap(bm);
     }
 
     private void onCaptureImageResult(Intent data) {
@@ -189,6 +189,6 @@ public class LinksEditActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //ivImage.setImageBitmap(thumbnail);
+        Global.selectedImageView.setImageBitmap(thumbnail);
     }
 }

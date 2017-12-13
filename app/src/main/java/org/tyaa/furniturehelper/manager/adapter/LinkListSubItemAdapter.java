@@ -13,7 +13,9 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import org.tyaa.furniturehelper.manager.LinksEditActivity;
 import org.tyaa.furniturehelper.manager.R;
+import org.tyaa.furniturehelper.manager.common.Global;
 import org.tyaa.furniturehelper.manager.databinding.LinkBinding;
 import org.tyaa.furniturehelper.manager.model.SubLink;
 
@@ -86,7 +88,9 @@ public class LinkListSubItemAdapter extends BaseAdapter {
         ((ImageView)binding.getRoot().findViewById(R.id.linkDrawable))
                 .setOnLongClickListener(v -> {
 
-                    Log.d("MySpy", "ТУДУ!");
+                    //Log.d("MySpy", "ТУДУ!");
+                    Global.selectedImageView = (ImageView)v;
+                    ((LinksEditActivity)binding.getRoot().getContext()).selectImage();
                     return true;
                 });
 
