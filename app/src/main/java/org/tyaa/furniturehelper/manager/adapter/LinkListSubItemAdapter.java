@@ -90,6 +90,7 @@ public class LinkListSubItemAdapter extends BaseAdapter {
 
                     //Log.d("MySpy", "ТУДУ!");
                     Global.selectedImageView = (ImageView)v;
+                    Global.selectedSubLinkPos = i;
                     ((LinksEditActivity)binding.getRoot().getContext()).selectImage();
                     return true;
                 });

@@ -70,6 +70,8 @@ public class LinksEditActivity extends AppCompatActivity {
         final CharSequence[] items = {
                 "Take Photo"
                 , "Choose from Library"
+                , "Remove Photo"
+                , "Remove Item"
                 , "Cancel"
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(LinksEditActivity.this);
@@ -94,7 +96,15 @@ public class LinksEditActivity extends AppCompatActivity {
 
                         galleryIntent();
                     }
-                } else if (items[item].equals("Cancel")) {
+                } else if (items[item].equals("Remove Photo")) {
+
+                    Global.selectedImageView.setImageDrawable(Global.EMPTY_DRAWABLE);
+                }
+                else if (items[item].equals("Remove Item")) {
+
+                    mLinkListItem.subLinks.mSubLinks.remove(Global.selectedSubLinkPos);
+                }
+                else if (items[item].equals("Cancel")) {
 
                     dialog.dismiss();
                 }

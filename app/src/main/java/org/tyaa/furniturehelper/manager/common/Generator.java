@@ -26,7 +26,7 @@ public class Generator {
         SubLink subLink = new SubLink();
         subLink.text = "test text";
         subLink.link = "test link";
-        subLink.drawable = context.getResources().getDrawable(R.drawable.lidzalogo);
+        subLink.drawable = Global.EMPTY_DRAWABLE;
 
         LinkListItem linkListItem =
                 new LinkListItem(
