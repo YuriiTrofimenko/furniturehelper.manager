@@ -6,8 +6,11 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import org.tyaa.furniturehelper.manager.R;
+import org.tyaa.furniturehelper.manager.entity.LinksGroup;
 import org.tyaa.furniturehelper.manager.model.LinkList;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
+
+import java.util.List;
 
 /**
  * Created by yurii on 30.11.17.
@@ -20,6 +23,7 @@ public class Global {
     public static final Drawable EMPTY_DRAWABLE;
     public static int selectedSubLinkPos;
     public static GreenDAOFacade greenDAOFacade;
+    public static List<LinksGroup> linksGroupList;
 
     static {
 
@@ -36,6 +40,10 @@ public class Global {
 
     private static void initRepository(){
 
+        linksGroupList = greenDAOFacade.getAllLinksGroups();
+        if (linksGroupList == null){
 
+
+        }
     }
 }

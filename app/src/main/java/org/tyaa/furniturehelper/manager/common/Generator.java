@@ -4,11 +4,13 @@ import android.content.Context;
 import android.databinding.ObservableArrayList;
 
 import org.tyaa.furniturehelper.manager.R;
+import org.tyaa.furniturehelper.manager.entity.LinksGroup;
 import org.tyaa.furniturehelper.manager.model.SubLink;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
 import org.tyaa.furniturehelper.manager.model.SubLinkList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yurii on 30.11.17.
@@ -96,5 +98,10 @@ public class Generator {
         linkListItem.subLinks.mSubLinks.add(subLink);
         linkListItems.add(linkListItem);
         return linkListItems;
+    }
+
+    public static List<LinksGroup> generateLinksGroups(){
+
+        return null;
     }
 }

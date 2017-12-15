@@ -17,13 +17,20 @@ public class GreenDAOFacade {
     private LinksGroupDao mLinksGroupDao;
     private Query<LinksGroup> mLinksGroupQuery;
 
-    public List<LinksGroup> mLinksGroupList;
+    //public List<LinksGroup> mLinksGroupList;
 
     public GreenDAOFacade() {
 
         mDaoSession = CurrentApplication.getDaoSession();
         mLinksGroupDao = mDaoSession.getLinksGroupDao();
+        mLinksGroupQuery =
+                mLinksGroupDao.queryBuilder()
+                        .orderAsc(LinksGroupDao.Properties.Title)
+                        .build();
     }
 
-    //public boolean dbDataExists
+    public List<LinksGroup> getAllLinksGroups(){
+
+        return mLinksGroupQuery.list();
+    }
 }
