@@ -10,9 +10,9 @@ import java.util.List;
 
 public class LinkListItem {
 
-    private static int count = 0;
+    private static Long count = 0L;
 
-    private int id;
+    private Long id;
     public String title;
     public Drawable drawable;
     public boolean checked;
@@ -35,7 +35,7 @@ public class LinkListItem {
         this.subLinks = subLinks;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 }

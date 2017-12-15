@@ -19,8 +19,12 @@ public class Global {
     public static ImageView selectedImageView;
     public static final Drawable EMPTY_DRAWABLE;
     public static int selectedSubLinkPos;
+    public static GreenDAOFacade greenDAOFacade;
 
     static {
+
+        greenDAOFacade = new GreenDAOFacade();
+        initRepository();
 
         LINK_LIST = new LinkList();
         LINK_LIST.setLink_list(Generator.getLinkListBasis());
@@ -28,5 +32,10 @@ public class Global {
                 CurrentApplication.getAppContext()
                         .getResources()
                         .getDrawable(R.drawable.empty);
+    }
+
+    private static void initRepository(){
+
+
     }
 }
