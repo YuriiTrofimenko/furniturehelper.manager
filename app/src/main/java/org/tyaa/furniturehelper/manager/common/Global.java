@@ -43,7 +43,8 @@ public class Global {
         linksGroupList = greenDAOFacade.getAllLinksGroups();
         if (linksGroupList == null){
 
-
+            Generator.generateLinksGroups();
+            linksGroupList = greenDAOFacade.getAllLinksGroups();
         }
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.ObservableArrayList;
 
 import org.tyaa.furniturehelper.manager.R;
+import org.tyaa.furniturehelper.manager.entity.Link;
 import org.tyaa.furniturehelper.manager.entity.LinksGroup;
 import org.tyaa.furniturehelper.manager.model.SubLink;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
@@ -17,6 +18,13 @@ import java.util.List;
  */
 
 public class Generator {
+
+    private static Context mContext;
+
+    static {
+
+        mContext = CurrentApplication.getAppContext();
+    }
 
     public static ObservableArrayList<LinkListItem> getLinkListBasis(){
 
@@ -101,6 +109,18 @@ public class Generator {
     }
 
     public static List<LinksGroup> generateLinksGroups(){
+
+        List<LinksGroup> linksGroups = new ArrayList<>();
+        LinksGroup linksGroup =
+                Global.greenDAOFacade.createLinksGroup(
+                        "ВКонтакте"
+                        , true
+                        , Utility.drawableToURI(mContext, R.drawable.vk).toString()
+                );
+        Link link = new Link();
+        link.setText("Александр Дорошеко");
+        link.setLink("https://vk.com/shkafchik30");
+        link.setDrawable(Utility.drawableToURI(mContext, R.drawable.vk).toString());
 
         return null;
     }
