@@ -4,6 +4,7 @@ import android.databinding.ObservableArrayList;
 import android.view.View;
 
 import org.tyaa.furniturehelper.manager.model.interfaces.ILinkList;
+import org.tyaa.furniturehelper.manager.model.interfaces.ISubLink;
 import org.tyaa.furniturehelper.manager.model.interfaces.ISubLinkList;
 
 /**
@@ -13,8 +14,8 @@ import org.tyaa.furniturehelper.manager.model.interfaces.ISubLinkList;
 public class SubLinkList implements ISubLinkList {
 
     public LinkListItem mLinkListItem;
-    public ObservableArrayList<SubLink> mSubLinks;
-    public SubLink mSubLink;
+    public ObservableArrayList<ISubLink> mSubLinks;
+    public ISubLink mSubLink;
     public Integer mSelectedItemPosition = 0;
 
     public SubLinkList() {
@@ -29,13 +30,13 @@ public class SubLinkList implements ISubLinkList {
     }
 
     @Override
-    public void setSub_link(SubLink subLink) {
+    public void setSub_link(ISubLink subLink) {
 
         mSubLinks.add(subLink);
     }
 
     @Override
-    public void setSub_link_list(ObservableArrayList<SubLink> subLinks) {
+    public void setSub_link_list(ObservableArrayList<ISubLink> subLinks) {
 
         mSubLinks = subLinks;
     }
@@ -43,7 +44,7 @@ public class SubLinkList implements ISubLinkList {
     @Override
     public void add(View view) {
 
-        mSubLinks.add(new SubLink());
+        mSubLinks.add(new ISubLink() {});
     }
 
     @Override

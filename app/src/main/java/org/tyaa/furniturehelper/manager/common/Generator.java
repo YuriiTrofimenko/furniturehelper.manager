@@ -118,9 +118,9 @@ public class Generator {
                         , Utility.drawableToURI(mContext, R.drawable.vk).toString()
                 );
         Link link = new Link();
-        link.setText("Александр Дорошеко");
-        link.setLink("https://vk.com/shkafchik30");
-        link.setDrawable(Utility.drawableToURI(mContext, R.drawable.vk).toString());
+        //link.setText("Александр Дорошеко");
+        //link.setLink("https://vk.com/shkafchik30");
+        //link.setDrawable(Utility.drawableToURI(mContext, R.drawable.vk).toString());
 
         return null;
     }

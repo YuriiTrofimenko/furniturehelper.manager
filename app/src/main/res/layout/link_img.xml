@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="item" type="org.tyaa.furniturehelper.manager.model.SubLinkImg"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/linkDrawable"
+            android:src="@{item.drawable}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:background="@android:color/transparent"/>
+    </FrameLayout>
+</layout>

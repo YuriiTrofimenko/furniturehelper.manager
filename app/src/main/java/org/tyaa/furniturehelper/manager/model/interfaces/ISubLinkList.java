@@ -12,8 +12,8 @@ import org.tyaa.furniturehelper.manager.model.SubLink;
 
 public interface ISubLinkList {
 
-    void setSub_link(SubLink subLink);
-    void setSub_link_list(ObservableArrayList<SubLink> subLinks);
+    void setSub_link(ISubLink subLink);
+    void setSub_link_list(ObservableArrayList<ISubLink> subLinks);
     void add(View view);
     void remove(View view);
     Integer getSelectedItemPosition();

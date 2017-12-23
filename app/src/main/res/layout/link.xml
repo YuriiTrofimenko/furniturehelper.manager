@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="item" type="org.tyaa.furniturehelper.manager.model.SubLink"/>
+        <variable name="item" type="org.tyaa.furniturehelper.manager.model.interfaces.ISubLink"/>
     </data>
 
     <LinearLayout

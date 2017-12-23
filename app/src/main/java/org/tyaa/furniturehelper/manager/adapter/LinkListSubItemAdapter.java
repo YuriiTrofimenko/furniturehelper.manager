@@ -18,6 +18,10 @@ import org.tyaa.furniturehelper.manager.R;
 import org.tyaa.furniturehelper.manager.common.Global;
 import org.tyaa.furniturehelper.manager.databinding.LinkBinding;
 import org.tyaa.furniturehelper.manager.model.SubLink;
+import org.tyaa.furniturehelper.manager.model.SubLinkLink;
+import org.tyaa.furniturehelper.manager.model.SubLinkMap;
+import org.tyaa.furniturehelper.manager.model.SubLinkText;
+import org.tyaa.furniturehelper.manager.model.interfaces.ISubLink;
 
 /**
  * Created by yurii on 30.11.17.
@@ -25,10 +29,10 @@ import org.tyaa.furniturehelper.manager.model.SubLink;
 
 public class LinkListSubItemAdapter extends BaseAdapter {
 
-    private ObservableArrayList<SubLink> mList;
+    private ObservableArrayList<ISubLink> mList;
     private LayoutInflater mInflater;
 
-    public LinkListSubItemAdapter(ObservableArrayList<SubLink> _list) {
+    public LinkListSubItemAdapter(ObservableArrayList<ISubLink> _list) {
 
         mList = _list;
     }
@@ -60,12 +64,28 @@ public class LinkListSubItemAdapter extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
+        ISubLink currentSubLink = mList.get(i);
+
+        if (currentSubLink instanceof SubLinkText) {
+
+
+        } else if (currentSubLink instanceof SubLinkLink) {
+
+
+        } else if (currentSubLink instanceof SubLinkMap) {
+
+
+        } else if (currentSubLink instanceof SubLinkLink) {
+
+
+        }
+
         LinkBinding binding =
                 DataBindingUtil.inflate(mInflater, R.layout.link, viewGroup, false);
-        //Log.d("MySpy", "bind!");
+
         binding.setItem(mList.get(i));
 
-        ((EditText)binding.getRoot().findViewById(R.id.linkText))
+        /*((EditText)binding.getRoot().findViewById(R.id.linkText))
                 .addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -93,7 +113,7 @@ public class LinkListSubItemAdapter extends BaseAdapter {
                     Global.selectedSubLinkPos = i;
                     ((LinksEditActivity)binding.getRoot().getContext()).selectImage();
                     return true;
-                });
+                });*/
 
         return binding.getRoot();
     }
