@@ -27,15 +27,14 @@ public class Global {
 
     static {
 
-        greenDAOFacade = new GreenDAOFacade();
-        initRepository();
-
-        LINK_LIST = new LinkList();
-        LINK_LIST.setLink_list(Generator.getLinkListBasis());
+        //greenDAOFacade = new GreenDAOFacade();
+        //initRepository();
         EMPTY_DRAWABLE =
                 CurrentApplication.getAppContext()
                         .getResources()
                         .getDrawable(R.drawable.empty);
+        LINK_LIST = new LinkList();
+        LINK_LIST.setLink_list(Generator.getLinkListBasis());
     }
 
     private static void initRepository(){

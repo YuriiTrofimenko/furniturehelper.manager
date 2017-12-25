@@ -16,8 +16,13 @@ import android.widget.ImageView;
 import org.tyaa.furniturehelper.manager.LinksEditActivity;
 import org.tyaa.furniturehelper.manager.R;
 import org.tyaa.furniturehelper.manager.common.Global;
-import org.tyaa.furniturehelper.manager.databinding.LinkBinding;
+//import org.tyaa.furniturehelper.manager.databinding.LinkBinding;
+import org.tyaa.furniturehelper.manager.databinding.LinkImgBinding;
+import org.tyaa.furniturehelper.manager.databinding.LinkLinkBinding;
+import org.tyaa.furniturehelper.manager.databinding.LinkMapBinding;
+import org.tyaa.furniturehelper.manager.databinding.LinkTextBinding;
 import org.tyaa.furniturehelper.manager.model.SubLink;
+import org.tyaa.furniturehelper.manager.model.SubLinkImg;
 import org.tyaa.furniturehelper.manager.model.SubLinkLink;
 import org.tyaa.furniturehelper.manager.model.SubLinkMap;
 import org.tyaa.furniturehelper.manager.model.SubLinkText;
@@ -64,26 +69,43 @@ public class LinkListSubItemAdapter extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
+        //LinkBinding binding = null;
+        //LinkTextBinding linkTextBinding = null;
+
         ISubLink currentSubLink = mList.get(i);
 
         if (currentSubLink instanceof SubLinkText) {
 
-
+            LinkTextBinding binding =
+                    DataBindingUtil.inflate(mInflater, R.layout.link_text, viewGroup, false);
+            binding.setItem((SubLinkText) currentSubLink);
+            //Log.d("MySpy", "txt bind!");
+            return binding.getRoot();
         } else if (currentSubLink instanceof SubLinkLink) {
 
-
+            LinkLinkBinding binding =
+                    DataBindingUtil.inflate(mInflater, R.layout.link_link, viewGroup, false);
+            binding.setItem((SubLinkLink) currentSubLink);
+            return binding.getRoot();
         } else if (currentSubLink instanceof SubLinkMap) {
 
+            LinkMapBinding binding =
+                    DataBindingUtil.inflate(mInflater, R.layout.link_map, viewGroup, false);
+            binding.setItem((SubLinkMap) currentSubLink);
+            return binding.getRoot();
+        } else /*if (currentSubLink instanceof SubLinkImg)*/ {
 
-        } else if (currentSubLink instanceof SubLinkLink) {
-
-
+            LinkImgBinding binding =
+                    DataBindingUtil.inflate(mInflater, R.layout.link_img, viewGroup, false);
+            binding.setItem((SubLinkImg) currentSubLink);
+            //Log.d("MySpy", "img bind!");
+            return binding.getRoot();
         }
 
-        LinkBinding binding =
-                DataBindingUtil.inflate(mInflater, R.layout.link, viewGroup, false);
+        //LinkBinding binding =
+          //      DataBindingUtil.inflate(mInflater, R.layout.link, viewGroup, false);
 
-        binding.setItem(mList.get(i));
+        //binding.setItem(currentSubLink);
 
         /*((EditText)binding.getRoot().findViewById(R.id.linkText))
                 .addTextChangedListener(new TextWatcher() {
@@ -115,6 +137,6 @@ public class LinkListSubItemAdapter extends BaseAdapter {
                     return true;
                 });*/
 
-        return binding.getRoot();
+        //return binding.getRoot();
     }
 }

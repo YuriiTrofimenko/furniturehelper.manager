@@ -13,6 +13,7 @@ import org.tyaa.furniturehelper.manager.adapter.LinkListItemAdapter;
 import org.tyaa.furniturehelper.manager.adapter.LinkListSubItemAdapter;
 import org.tyaa.furniturehelper.manager.model.SubLink;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
+import org.tyaa.furniturehelper.manager.model.interfaces.ISubLink;
 
 /**
  * Created by yurii on 30.11.17.
@@ -28,7 +29,7 @@ public class CustomBinder {
     }
 
     @BindingAdapter({"sub_link_list"})
-    public static void bindSubList(ListView view, ObservableArrayList<SubLink> list) {
+    public static void bindSubList(ListView view, ObservableArrayList<ISubLink> list) {
 
         LinkListSubItemAdapter adapter = new LinkListSubItemAdapter(list);
         view.setAdapter(adapter);

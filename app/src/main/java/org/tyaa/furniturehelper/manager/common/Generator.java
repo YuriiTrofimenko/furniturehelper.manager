@@ -8,7 +8,10 @@ import org.tyaa.furniturehelper.manager.entity.Link;
 import org.tyaa.furniturehelper.manager.entity.LinksGroup;
 import org.tyaa.furniturehelper.manager.model.SubLink;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
+import org.tyaa.furniturehelper.manager.model.SubLinkImg;
+import org.tyaa.furniturehelper.manager.model.SubLinkLink;
 import org.tyaa.furniturehelper.manager.model.SubLinkList;
+import org.tyaa.furniturehelper.manager.model.SubLinkText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +36,10 @@ public class Generator {
         ObservableArrayList<LinkListItem> linkListItems =
                 new ObservableArrayList<>();
 
-        SubLink subLink = new SubLink();
+        /*SubLink subLink = new SubLink();
         subLink.text = "test text";
         subLink.link = "test link";
-        subLink.drawable = Global.EMPTY_DRAWABLE;
+        subLink.drawable = Global.EMPTY_DRAWABLE;*/
 
         LinkListItem linkListItem =
                 new LinkListItem(
@@ -45,11 +48,28 @@ public class Generator {
                         , true
                         , new SubLinkList()
                 );
-        linkListItem.subLinks.mSubLinks.add(subLink);
-        linkListItem.subLinks.mSubLinks.add(subLink);
-        linkListItem.subLinks.mSubLinks.add(subLink);
+        //linkListItem.subLinks.mSubLinks.add(subLink);
+        //linkListItem.subLinks.mSubLinks.add(subLink);
+        //linkListItem.subLinks.mSubLinks.add(subLink);
+
+        SubLinkText subLinkText = new SubLinkText();
+        subLinkText.id = 0L;
+        subLinkText.text = "test text 1";
+        linkListItem.subLinks.mSubLinks.add(subLinkText);
+
+        SubLinkLink subLinkLink = new SubLinkLink();
+        subLinkLink.id = 1L;
+        subLinkLink.link = "test link 1";
+        linkListItem.subLinks.mSubLinks.add(subLinkLink);
+
+        SubLinkImg subLinkImg = new SubLinkImg();
+        subLinkImg.id = 2L;
+        subLinkImg.drawable = Global.EMPTY_DRAWABLE;
+        linkListItem.subLinks.mSubLinks.add(subLinkImg);
+
         linkListItems.add(linkListItem);
-        linkListItem =
+
+        /*linkListItem =
                 new LinkListItem(
                         "Facebook"
                         , context.getResources().getDrawable(R.drawable.facebook)
@@ -104,7 +124,7 @@ public class Generator {
         linkListItem.subLinks.mSubLinks.add(subLink);
         linkListItem.subLinks.mSubLinks.add(subLink);
         linkListItem.subLinks.mSubLinks.add(subLink);
-        linkListItems.add(linkListItem);
+        linkListItems.add(linkListItem);*/
         return linkListItems;
     }
 

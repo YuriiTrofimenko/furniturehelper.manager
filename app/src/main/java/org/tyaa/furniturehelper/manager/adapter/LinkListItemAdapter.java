@@ -63,7 +63,7 @@ public class LinkListItemAdapter extends BaseAdapter {
 
         LinkListItemBinding binding =
                 DataBindingUtil.inflate(mInflater, R.layout.link_list_item, viewGroup, false);
-        Log.d("MySpy", "bind!");
+        //Log.d("MySpy", "bind!");
         binding.setItem(mList.get(i));
 
         /*((ListView)viewGroup).setOnItemLongClickListener((parent, view1, position, id) -> {

@@ -26,7 +26,7 @@ import java.io.IOException;
 
 public class LinksEditActivity extends AppCompatActivity {
 
-    private int mLinksId;
+    private Long mLinksId;
     private LinkListItem mLinkListItem;
     private String mUserChosenTask;
 
@@ -41,7 +41,7 @@ public class LinksEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_links_edit);
 
         mLinksId =
-                getIntent().getIntExtra(BusinessCardActivity.SELECTED_LINK_LIST_ITEM_TITLE, 0);
+                getIntent().getLongExtra(BusinessCardActivity.SELECTED_LINK_LIST_ITEM_TITLE, 0);
                 //getIntent().getStringExtra(BusinessCardActivity.SELECTED_LINK_LIST_ITEM_TITLE);
 
         //Log.d("asd", String.valueOf(mLinksPos));

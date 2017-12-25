@@ -61,8 +61,8 @@ public class GreenDAOFacade {
 
         Link link = new Link();
         link.setText(_text);
-        link.setLink(_link);
-        link.setDrawable(_drawable);
+        //link.setLink(_link);
+        //link.setDrawable(_drawable);
         Long id = mLinkDao.insert(link);
         return mLinkDao.loadDeep(id);
     }

@@ -45,6 +45,15 @@
                 android:text="@{items.mLinkListItem.title}"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#7b7b7b"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
         <LinearLayout
             android:layout_weight="75"
             android:layout_width="match_parent"
