@@ -4,9 +4,9 @@ import android.content.Context;
 import android.databinding.ObservableArrayList;
 
 import org.tyaa.furniturehelper.manager.R;
-import org.tyaa.furniturehelper.manager.entity.Link;
+import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
+import org.tyaa.furniturehelper.manager.entity.LinkUrlItem;
 import org.tyaa.furniturehelper.manager.entity.LinksGroup;
-import org.tyaa.furniturehelper.manager.model.SubLink;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
 import org.tyaa.furniturehelper.manager.model.SubLinkImg;
 import org.tyaa.furniturehelper.manager.model.SubLinkLink;
@@ -128,20 +128,107 @@ public class Generator {
         return linkListItems;
     }
 
+    /**
+     * Метод создания демонстрационных данных ссылок для БД
+     * */
     public static List<LinksGroup> generateLinksGroups(){
 
+        /**
+         * Список для групп ссылок
+         * */
         List<LinksGroup> linksGroups = new ArrayList<>();
+        /**
+         * Группа ссылок из ВК
+         * */
         LinksGroup linksGroup =
                 Global.greenDAOFacade.createLinksGroup(
                         "ВКонтакте"
                         , true
                         , Utility.drawableToURI(mContext, R.drawable.vk).toString()
                 );
-        Link link = new Link();
-        //link.setText("Александр Дорошеко");
-        //link.setLink("https://vk.com/shkafchik30");
-        //link.setDrawable(Utility.drawableToURI(mContext, R.drawable.vk).toString());
+        /**
+         * Добавление текстового элемента в группу
+         * */
+        LinkTextItem linkTextItem = new LinkTextItem();
+        linkTextItem.setText("Отзывы о нас");
+        linkTextItem.setLinksGroup(linksGroup);
+        Global.greenDAOFacade.createLink(linkTextItem);
+        //linksGroup.linkTextItems.add(linkTextItem);
+        /**
+         * Добавление элемента-ссылки в группу
+         * */
+        LinkUrlItem linkUrlItem = new LinkUrlItem();
+        linkUrlItem.setLink("www.vk.com/topic-115792435_34460571");
+        linkUrlItem.setLinksGroup(linksGroup);
+        Global.greenDAOFacade.createLink(linkUrlItem);
+        //linksGroup.linkUrlItems.add(linkUrlItem);
+        /**
+         * Добаление текстового элемента в группу
+         * */
+        linkTextItem = new LinkTextItem();
+        linkTextItem.setText("Шкафчик мебельная торговая сеть в Мариуполе");
+        linkTextItem.setLinksGroup(linksGroup);
+        Global.greenDAOFacade.createLink(linkTextItem);
+        //linksGroup.linkTextItems.add(linkTextItem);
+        /**
+         * Добаление элемента-ссылки в группу
+         * */
+        linkUrlItem = new LinkUrlItem();
+        linkUrlItem.setLink("www.vk.com/lidzacom");
+        linkUrlItem.setLinksGroup(linksGroup);
+        Global.greenDAOFacade.createLink(linkUrlItem);
+        //linksGroup.linkUrlItems.add(linkUrlItem);
+        /**
+         * Добаление текстового элемента в группу
+         * */
+        linkTextItem = new LinkTextItem();
+        linkTextItem.setText("Александр Дорошеко");
+        linkTextItem.setLinksGroup(linksGroup);
+        Global.greenDAOFacade.createLink(linkTextItem);
+        //linksGroup.linkTextItems.add(linkTextItem);
+        /**
+         * Добаление элемента-ссылки в группу
+         * */
+        linkUrlItem = new LinkUrlItem();
+        linkUrlItem.setLink("https://vk.com/shkafchik30");
+        linkUrlItem.setLinksGroup(linksGroup);
+        Global.greenDAOFacade.createLink(linkUrlItem);
+        //linksGroup.linkUrlItems.add(linkUrlItem);
+        /**
+         * Добаление группы, заполненной элементами, в список
+         * */
+        linksGroups.add(linksGroup);
 
-        return null;
+        /**
+         * Группа ссылок из Фейсбук
+         * */
+        linksGroup =
+                Global.greenDAOFacade.createLinksGroup(
+                        "Facebook"
+                        , true
+                        , Utility.drawableToURI(mContext, R.drawable.facebook).toString()
+                );
+        /**
+         * Добаление текстового элемента в группу
+         * */
+        linkTextItem = new LinkTextItem();
+        linkTextItem.setText("Шкафчик торговая сеть мебельных магазинов в Мариуполе");
+        linkTextItem.setLinksGroup(linksGroup);
+        Global.greenDAOFacade.createLink(linkTextItem);
+        //linksGroup.linkTextItems.add(linkTextItem);
+        /**
+         * Добаление элемента-ссылки в группу
+         * */
+        linkUrlItem = new LinkUrlItem();
+        linkUrlItem.setLink("https://www.facebook.com/SHKAFCHIK30");
+        linkUrlItem.setLinksGroup(linksGroup);
+        Global.greenDAOFacade.createLink(linkUrlItem);
+        //linksGroup.linkUrlItems.add(linkUrlItem);
+        /**
+         * Добаление группы, заполненной элементами, в список
+         * */
+        linksGroups.add(linksGroup);
+
+        return linksGroups;
     }
 }

@@ -1,31 +1,31 @@
 package org.tyaa.furniturehelper.manager.entity;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.ToOne;
 import org.tyaa.furniturehelper.manager.entity.interfaces.ILinkItem;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 /**
- * Attachment: map
+ * Attachment: text
  * Created by yurii on 21.12.17.
  */
 
 @Entity(
         active = true,
-        nameInDb = "LinkMapItem"
+        nameInDb = "LinkTextItem"
 )
-public class LinkMapItem implements ILinkItem {
+public class LinkTextItem implements ILinkItem {
 
     @Id(autoincrement = true)
     private Long id;
 
-    @Property(nameInDb = "link")
+    @Property(nameInDb = "text")
     @NotNull
-    private String link;
+    private String text;
 
     //ИД "Ссылки", к которой принадлежит данное прикрепление
     private Long linksGroupId;
@@ -38,18 +38,18 @@ public class LinkMapItem implements ILinkItem {
 private transient DaoSession daoSession;
 
 /** Used for active entity operations. */
-@Generated(hash = 1344271472)
-private transient LinkMapItemDao myDao;
+@Generated(hash = 555363119)
+private transient LinkTextItemDao myDao;
 
-@Generated(hash = 1959082309)
-public LinkMapItem(Long id, @NotNull String link, Long linksGroupId) {
+@Generated(hash = 881371831)
+public LinkTextItem(Long id, @NotNull String text, Long linksGroupId) {
     this.id = id;
-    this.link = link;
+    this.text = text;
     this.linksGroupId = linksGroupId;
 }
 
-@Generated(hash = 212292580)
-public LinkMapItem() {
+@Generated(hash = 1511569863)
+public LinkTextItem() {
 }
 
 public Long getId() {
@@ -60,12 +60,12 @@ public void setId(Long id) {
     this.id = id;
 }
 
-public String getLink() {
-    return this.link;
+public String getText() {
+    return this.text;
 }
 
-public void setLink(String link) {
-    this.link = link;
+public void setText(String text) {
+    this.text = text;
 }
 
 public Long getLinksGroupId() {
@@ -146,9 +146,9 @@ public void update() {
 }
 
 /** called by internal mechanisms, do not call yourself. */
-@Generated(hash = 993973150)
+@Generated(hash = 505895724)
 public void __setDaoSession(DaoSession daoSession) {
     this.daoSession = daoSession;
-    myDao = daoSession != null ? daoSession.getLinkMapItemDao() : null;
+    myDao = daoSession != null ? daoSession.getLinkTextItemDao() : null;
 }
 }

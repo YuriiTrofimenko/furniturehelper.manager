@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.AnyRes;
@@ -70,6 +71,16 @@ public class Utility {
                 + '/' + context.getResources().getResourceTypeName(drawableId)
                 + '/' + context.getResources().getResourceEntryName(drawableId) );
         return imageUri;
+    }
+
+    /**
+     * get Drawable from string
+     * */
+    public static final Drawable stringToDrawable(@NonNull String _uriString) {
+
+        Uri imageUri = Uri.parse(_uriString);
+        final String path = imageUri.getPath();
+        return Drawable.createFromPath(path);
     }
 
     /**

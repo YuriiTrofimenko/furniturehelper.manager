@@ -10,7 +10,7 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 
 /**
- * Attachment: link
+ * Attachment: image
  * Created by yurii on 21.12.17.
  */
 
@@ -23,15 +23,18 @@ public class LinkImgItem implements ILinkItem {
     @Id(autoincrement = true)
     private Long id;
 
+    /**
+     * Изображение
+     * */
     @Property(nameInDb = "drawable")
     @NotNull
     private String drawable;
 
-    //ИД "Ссылки", к которой пренадлежит данное прикрепление
-    private Long linkId;
+    //ИД "Ссылки", к которой принадлежит данное прикрепление
+    private Long linksGroupId;
 
-    @ToOne(joinProperty = "linkId")
-    private Link parentLink;
+    @ToOne(joinProperty = "linksGroupId")
+    private LinksGroup linksGroup;
 
 /** Used to resolve relations */
 @Generated(hash = 2040040024)
@@ -41,11 +44,11 @@ private transient DaoSession daoSession;
 @Generated(hash = 2022721852)
 private transient LinkImgItemDao myDao;
 
-@Generated(hash = 1179826571)
-public LinkImgItem(Long id, @NotNull String drawable, Long linkId) {
+@Generated(hash = 933929155)
+public LinkImgItem(Long id, @NotNull String drawable, Long linksGroupId) {
     this.id = id;
     this.drawable = drawable;
-    this.linkId = linkId;
+    this.linksGroupId = linksGroupId;
 }
 
 @Generated(hash = 2104551720)
@@ -68,44 +71,44 @@ public void setDrawable(String drawable) {
     this.drawable = drawable;
 }
 
-public Long getLinkId() {
-    return this.linkId;
+public Long getLinksGroupId() {
+    return this.linksGroupId;
 }
 
-public void setLinkId(Long linkId) {
-    this.linkId = linkId;
+public void setLinksGroupId(Long linksGroupId) {
+    this.linksGroupId = linksGroupId;
 }
 
-@Generated(hash = 1853227027)
-private transient Long parentLink__resolvedKey;
+@Generated(hash = 1566396435)
+private transient Long linksGroup__resolvedKey;
 
 /** To-one relationship, resolved on first access. */
-@Generated(hash = 1061151848)
-public Link getParentLink() {
-    Long __key = this.linkId;
-    if (parentLink__resolvedKey == null
-            || !parentLink__resolvedKey.equals(__key)) {
+@Generated(hash = 34970653)
+public LinksGroup getLinksGroup() {
+    Long __key = this.linksGroupId;
+    if (linksGroup__resolvedKey == null
+            || !linksGroup__resolvedKey.equals(__key)) {
         final DaoSession daoSession = this.daoSession;
         if (daoSession == null) {
             throw new DaoException("Entity is detached from DAO context");
         }
-        LinkDao targetDao = daoSession.getLinkDao();
-        Link parentLinkNew = targetDao.load(__key);
+        LinksGroupDao targetDao = daoSession.getLinksGroupDao();
+        LinksGroup linksGroupNew = targetDao.load(__key);
         synchronized (this) {
-            parentLink = parentLinkNew;
-            parentLink__resolvedKey = __key;
+            linksGroup = linksGroupNew;
+            linksGroup__resolvedKey = __key;
         }
     }
-    return parentLink;
+    return linksGroup;
 }
 
 /** called by internal mechanisms, do not call yourself. */
-@Generated(hash = 2073754214)
-public void setParentLink(Link parentLink) {
+@Generated(hash = 987654691)
+public void setLinksGroup(LinksGroup linksGroup) {
     synchronized (this) {
-        this.parentLink = parentLink;
-        linkId = parentLink == null ? null : parentLink.getId();
-        parentLink__resolvedKey = linkId;
+        this.linksGroup = linksGroup;
+        linksGroupId = linksGroup == null ? null : linksGroup.getId();
+        linksGroup__resolvedKey = linksGroupId;
     }
 }
 
