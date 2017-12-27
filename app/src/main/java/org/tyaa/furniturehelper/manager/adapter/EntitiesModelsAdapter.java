@@ -33,38 +33,54 @@ public class EntitiesModelsAdapter {
             LinkListItem linkListItem =
                     new LinkListItem(
                             linksGroup.getTitle()
-                            , Utility.stringToDrawable(linksGroup.getDrawable())
+                            , Utility.uriStringToDrawable(linksGroup.getDrawable())
                             , linksGroup.getChecked()
                             , new SubLinkList()
                     );
-            for (LinkTextItem linkTextItem : linksGroup.linkTextItems) {
+            if (linksGroup.linkTextItems != null) {
 
-                SubLinkText subLinkText = new SubLinkText();
-                subLinkText.id = linkTextItem.getId();
-                subLinkText.text = linkTextItem.getText();
-                linkListItem.subLinks.mSubLinks.add(subLinkText);
-            }
-            for (LinkUrlItem linkUrlItem : linksGroup.linkUrlItems) {
+                for (LinkTextItem linkTextItem : linksGroup.linkTextItems) {
 
-                SubLinkLink subLinkLink = new SubLinkLink();
-                subLinkLink.id = linkUrlItem.getId();
-                subLinkLink.link = linkUrlItem.getLink();
-                linkListItem.subLinks.mSubLinks.add(subLinkLink);
+                    SubLinkText subLinkText = new SubLinkText();
+                    subLinkText.id = linkTextItem.getId();
+                    subLinkText.text = linkTextItem.getText();
+                    linkListItem.subLinks.mSubLinks.add(subLinkText);
+                }
             }
-            for (LinkMapItem linkMapItem : linksGroup.linkMapItems) {
 
-                SubLinkMap subLinkMap = new SubLinkMap();
-                subLinkMap.id = linkMapItem.getId();
-                subLinkMap.map = linkMapItem.getLink();
-                linkListItem.subLinks.mSubLinks.add(subLinkMap);
-            }
-            for (LinkImgItem linkImgItem : linksGroup.linkImgItems) {
+            if (linksGroup.linkUrlItems != null) {
 
-                SubLinkImg subLinkImg = new SubLinkImg();
-                subLinkImg.id = linkImgItem.getId();
-                subLinkImg.drawable = Utility.stringToDrawable(linkImgItem.getDrawable());
-                linkListItem.subLinks.mSubLinks.add(subLinkImg);
+                for (LinkUrlItem linkUrlItem : linksGroup.linkUrlItems) {
+
+                    SubLinkLink subLinkLink = new SubLinkLink();
+                    subLinkLink.id = linkUrlItem.getId();
+                    subLinkLink.link = linkUrlItem.getLink();
+                    linkListItem.subLinks.mSubLinks.add(subLinkLink);
+                }
             }
+
+            if (linksGroup.linkMapItems != null) {
+
+                for (LinkMapItem linkMapItem : linksGroup.linkMapItems) {
+
+                    SubLinkMap subLinkMap = new SubLinkMap();
+                    subLinkMap.id = linkMapItem.getId();
+                    subLinkMap.map = linkMapItem.getLink();
+                    linkListItem.subLinks.mSubLinks.add(subLinkMap);
+                }
+            }
+
+            if (linksGroup.linkImgItems != null) {
+
+                for (LinkImgItem linkImgItem : linksGroup.linkImgItems) {
+
+                    SubLinkImg subLinkImg = new SubLinkImg();
+                    subLinkImg.id = linkImgItem.getId();
+                    subLinkImg.drawable = Utility.uriStringToDrawable(linkImgItem.getDrawable());
+                    linkListItem.subLinks.mSubLinks.add(subLinkImg);
+                }
+            }
+
             linkListItems.add(linkListItem);
         }
 

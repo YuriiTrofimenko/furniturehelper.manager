@@ -28,7 +28,10 @@ public class CurrentApplication extends Application {
         DaoMaster.DevOpenHelper helper =
                 new DaoMaster.DevOpenHelper(this, "business-card-db");
         Database db = helper.getWritableDb();
-        mDaoSession = new DaoMaster(db).newSession();
+        DaoMaster daoMaster = new DaoMaster(db);
+        mDaoSession = daoMaster.newSession();
+        //DaoMaster.dropAllTables(db, true);
+        //DaoMaster.createAllTables(db, true);
     }
 
     public static Context getAppContext() {

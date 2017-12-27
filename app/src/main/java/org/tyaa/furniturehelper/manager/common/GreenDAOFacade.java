@@ -41,6 +41,10 @@ public class GreenDAOFacade {
 
         mLinksGroupDao = mDaoSession.getLinksGroupDao();
         //mLinkDao = mDaoSession.getLinkDao();
+        mLinkTextItemDao = mDaoSession.getLinkTextItemDao();
+        mLinkUrlItemDao = mDaoSession.getLinkUrlItemDao();
+        mLinkMapItemDao = mDaoSession.getLinkMapItemDao();
+        mLinkImgItemDao = mDaoSession.getLinkImgItemDao();
 
         mLinksGroupQuery =
                 mLinksGroupDao.queryBuilder()
@@ -63,6 +67,11 @@ public class GreenDAOFacade {
         linksGroup.setDrawable(_drawable);
         Long id = mLinksGroupDao.insert(linksGroup);
         return mLinksGroupDao.load(id);
+    }
+
+    public void clearLinksGroups(){
+
+        mLinksGroupDao.deleteAll();
     }
 
     /* Link */

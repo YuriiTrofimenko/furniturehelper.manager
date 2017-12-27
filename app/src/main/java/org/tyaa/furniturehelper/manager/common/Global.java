@@ -3,6 +3,7 @@ package org.tyaa.furniturehelper.manager.common;
 import android.databinding.ObservableArrayList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.ImageView;
 
 import org.tyaa.furniturehelper.manager.R;
@@ -29,7 +30,7 @@ public class Global {
 
     static {
 
-        //greenDAOFacade = new GreenDAOFacade();
+        greenDAOFacade = new GreenDAOFacade();
         initRepository();
         EMPTY_DRAWABLE =
                 CurrentApplication.getAppContext()
@@ -45,11 +46,14 @@ public class Global {
      * */
     private static void initRepository(){
 
+        greenDAOFacade.clearLinksGroups();
         //Пытаемся получить список всех групп ссылок из БД
         linksGroupList = greenDAOFacade.getAllLinksGroups();
         //Если ничего не получено - значит БД еще не создавалась
-        if (linksGroupList == null){
+        Log.d("MyLog", "get groups 1");
+        if (linksGroupList == null || linksGroupList.size() == 0){
 
+            Log.d("MyLog", "get groups 2");
             //Создаем список групп, заполненных элементами
             Generator.generateLinksGroups();
 

@@ -8,14 +8,26 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.AnyRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
+
+import org.tyaa.furniturehelper.manager.R;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Created by yurii on 11.12.17.
@@ -24,6 +36,9 @@ import android.support.v7.app.AlertDialog;
 public class Utility {
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+
+    private static Bitmap mBitmap;
+    private static File mFile;
 
     //Проверка разрешений на работу с картой памяти
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -64,22 +79,48 @@ public class Utility {
      * @param drawableId - drawable res id
      * @return - uri
      */
-    public static final Uri drawableToURI(@NonNull Context context,
+    public static final String drawableToURIString(@NonNull Context context,
                                           @AnyRes int drawableId) {
-        Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+        /*Log.d("MyLog", "drawableToURI");
+        Uri imageUri = Uri.parse(
+                ContentResolver.SCHEME_ANDROID_RESOURCE +
+                //"res:///" +
                 "://" + context.getResources().getResourcePackageName(drawableId)
                 + '/' + context.getResources().getResourceTypeName(drawableId)
                 + '/' + context.getResources().getResourceEntryName(drawableId) );
-        return imageUri;
+        return imageUri;*/
+        // Get the image from drawable resource as drawable object
+        Drawable drawable = context.getDrawable(drawableId);
+        mBitmap = ((BitmapDrawable)drawable).getBitmap();
+        // Get the external storage directory path
+        String path = Environment.getExternalStorageDirectory().toString();
+        // Create a file to save the image
+        mFile =
+                new File(path, context.getResources()
+                        .getResourceEntryName(drawableId) + ".png");
+        try{
+            OutputStream stream = null;
+            stream = new FileOutputStream(mFile);
+            mBitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+            stream.flush();
+            stream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Parse the saved image path to uri
+        return mFile.getAbsolutePath();
     }
 
     /**
      * get Drawable from string
      * */
-    public static final Drawable stringToDrawable(@NonNull String _uriString) {
+    public static final Drawable uriStringToDrawable(@NonNull String _uriString) {
 
         Uri imageUri = Uri.parse(_uriString);
-        final String path = imageUri.getPath();
+        String path = imageUri.toString();
+        Log.d("MyLog", path);
         return Drawable.createFromPath(path);
     }
 
