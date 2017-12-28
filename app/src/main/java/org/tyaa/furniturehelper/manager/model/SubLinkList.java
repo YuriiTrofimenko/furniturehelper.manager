@@ -44,7 +44,12 @@ public class SubLinkList implements ISubLinkList {
     @Override
     public void add(View view) {
 
-        mSubLinks.add(new ISubLink() {});
+        mSubLinks.add(new ISubLink() {
+            @Override
+            public Long getId() {
+                return mSubLink.getId();
+            }
+        });
     }
 
     @Override

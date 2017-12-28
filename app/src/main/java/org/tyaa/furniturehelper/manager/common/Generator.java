@@ -5,6 +5,7 @@ import android.databinding.ObservableArrayList;
 import android.util.Log;
 
 import org.tyaa.furniturehelper.manager.R;
+import org.tyaa.furniturehelper.manager.entity.LinkImgItem;
 import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
 import org.tyaa.furniturehelper.manager.entity.LinkUrlItem;
 import org.tyaa.furniturehelper.manager.entity.LinksGroup;
@@ -168,13 +169,23 @@ public class Generator {
         linksGroup.linkUrlItems = new ArrayList<>();
         linksGroup.linkUrlItems.add(linkUrlItem);
         /**
+         * Добавление графического элемента в группу
+         * */
+        LinkImgItem linkImgItem = new LinkImgItem();
+        linkImgItem.setDrawable(Utility.drawableToURIString(mContext, R.drawable.lidzalogo));
+        linkImgItem.setLinksGroup(linksGroup);
+        Global.greenDAOFacade.createLink(linkImgItem);
+        linksGroup.linkImgItems = new ArrayList<>();
+        linksGroup.linkImgItems.add(linkImgItem);
+        Log.d("MyLog", linksGroup.linkImgItems.get(0).getDrawable());
+        /**
          * Добаление текстового элемента в группу
          * */
         linkTextItem = new LinkTextItem();
         linkTextItem.setText("Шкафчик мебельная торговая сеть в Мариуполе");
         linkTextItem.setLinksGroup(linksGroup);
         Global.greenDAOFacade.createLink(linkTextItem);
-        linksGroup.linkTextItems = new ArrayList<>();
+        //linksGroup.linkTextItems = new ArrayList<>();
         linksGroup.linkTextItems.add(linkTextItem);
         /**
          * Добаление элемента-ссылки в группу
@@ -183,7 +194,7 @@ public class Generator {
         linkUrlItem.setLink("www.vk.com/lidzacom");
         linkUrlItem.setLinksGroup(linksGroup);
         Global.greenDAOFacade.createLink(linkUrlItem);
-        linksGroup.linkUrlItems = new ArrayList<>();
+        //linksGroup.linkUrlItems = new ArrayList<>();
         linksGroup.linkUrlItems.add(linkUrlItem);
         /**
          * Добаление текстового элемента в группу
@@ -192,7 +203,7 @@ public class Generator {
         linkTextItem.setText("Александр Дорошеко");
         linkTextItem.setLinksGroup(linksGroup);
         Global.greenDAOFacade.createLink(linkTextItem);
-        linksGroup.linkTextItems = new ArrayList<>();
+        //linksGroup.linkTextItems = new ArrayList<>();
         linksGroup.linkTextItems.add(linkTextItem);
         /**
          * Добаление элемента-ссылки в группу
@@ -201,7 +212,7 @@ public class Generator {
         linkUrlItem.setLink("https://vk.com/shkafchik30");
         linkUrlItem.setLinksGroup(linksGroup);
         Global.greenDAOFacade.createLink(linkUrlItem);
-        linksGroup.linkUrlItems = new ArrayList<>();
+        //linksGroup.linkUrlItems = new ArrayList<>();
         linksGroup.linkUrlItems.add(linkUrlItem);
         /**
          * Добаление группы, заполненной элементами, в список

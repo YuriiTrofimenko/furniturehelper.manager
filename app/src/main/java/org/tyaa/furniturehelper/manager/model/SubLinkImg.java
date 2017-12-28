@@ -12,4 +12,9 @@ public class SubLinkImg implements ISubLink {
 
     public Long id;
     public Drawable drawable;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
 }

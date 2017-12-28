@@ -14,7 +14,10 @@ import org.tyaa.furniturehelper.manager.model.SubLinkLink;
 import org.tyaa.furniturehelper.manager.model.SubLinkList;
 import org.tyaa.furniturehelper.manager.model.SubLinkMap;
 import org.tyaa.furniturehelper.manager.model.SubLinkText;
+import org.tyaa.furniturehelper.manager.model.interfaces.ISubLink;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -80,6 +83,13 @@ public class EntitiesModelsAdapter {
                     linkListItem.subLinks.mSubLinks.add(subLinkImg);
                 }
             }
+
+            Collections.sort(linkListItem.subLinks.mSubLinks, new Comparator<ISubLink>() {
+                @Override
+                public int compare(ISubLink o1, ISubLink o2) {
+                    return o2.getId().intValue() - o1.getId().intValue();
+                }
+            });
 
             linkListItems.add(linkListItem);
         }

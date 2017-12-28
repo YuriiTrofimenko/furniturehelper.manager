@@ -12,4 +12,9 @@ public class SubLinkMap implements ISubLink {
 
     public Long id;
     public String map;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
 }

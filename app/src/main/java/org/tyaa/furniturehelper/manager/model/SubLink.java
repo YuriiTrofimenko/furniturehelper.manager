@@ -17,4 +17,8 @@ public class SubLink implements ISubLink {
     public Drawable drawable;
 
 
+    @Override
+    public Long getId() {
+        return id;
+    }
 }

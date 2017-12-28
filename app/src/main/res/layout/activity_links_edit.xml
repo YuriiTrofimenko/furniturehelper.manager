@@ -75,27 +75,160 @@
             android:layout_weight="15"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:orientation="horizontal">
 
-            <Button
-                android:text="Cancel"
-                android:layout_margin="10dp"
-                android:layout_width="0dp"
+            <!--<Button-->
+                <!--android:text="Cancel"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"/>-->
+            <!--<Button-->
+                <!--android:text="+"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"/>-->
+            <!--<Button-->
+                <!--android:text="Ok"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"/>-->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
-            <Button
-                android:text="+"
-                android:layout_margin="10dp"
-                android:layout_width="0dp"
+                android:orientation="horizontal">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:fillViewport="true"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <LinearLayout
+                            android:id="@+id/addTextLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:padding="2dp"
+                            android:layout_margin="10dp"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <org.tyaa.furniturehelper.manager.widget.RatioImageView
+                                android:id="@+id/addTextImageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/addtext"
+                                android:layout_gravity="center"
+                                android:clickable="true"
+                                android:focusable="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/addLinkLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:padding="2dp"
+                            android:layout_margin="10dp"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <org.tyaa.furniturehelper.manager.widget.RatioImageView
+                                android:id="@+id/addLinkImageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/addlink"
+                                android:layout_gravity="center"
+                                android:clickable="true"
+                                android:focusable="true"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/addMapLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:padding="2dp"
+                            android:layout_margin="10dp"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <org.tyaa.furniturehelper.manager.widget.RatioImageView
+                                android:id="@+id/addMapImageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/google_maps"
+                                android:layout_gravity="center"
+                                android:clickable="true"
+                                android:focusable="true"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/addImgLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:padding="2dp"
+                            android:layout_margin="10dp"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <org.tyaa.furniturehelper.manager.widget.RatioImageView
+                                android:id="@+id/addImgImageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/addimage"
+                                android:layout_gravity="center"
+                                android:clickable="true"
+                                android:focusable="true"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/addPhotoLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:padding="2dp"
+                            android:layout_margin="10dp"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <org.tyaa.furniturehelper.manager.widget.RatioImageView
+                                android:id="@+id/addPhotoImageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/addphoto"
+                                android:layout_gravity="center"
+                                android:clickable="true"
+                                android:focusable="true"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
-            <Button
-                android:text="Ok"
-                android:layout_margin="10dp"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:orientation="horizontal"
+                android:weightSum="11"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/inputTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"/>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:src="@android:drawable/ic_input_add"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="Add a new attachment" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>
