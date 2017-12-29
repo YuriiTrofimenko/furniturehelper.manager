@@ -12,10 +12,17 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import org.tyaa.furniturehelper.manager.adapter.EntitiesModelsAdapter;
 import org.tyaa.furniturehelper.manager.common.Global;
 import org.tyaa.furniturehelper.manager.common.Utility;
 import org.tyaa.furniturehelper.manager.databinding.ActivityLinksEditBinding;
+import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
 
 import java.io.ByteArrayOutputStream;
@@ -24,7 +31,34 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class LinksEditActivity extends AppCompatActivity {
+
+    //Панель кнопок добавления прикреплений
+    @BindView(R.id.attIconsLinearLayout)
+    LinearLayout mAttIconsLinearLayout;
+
+    //Панель полей ввода содержимого прикреплений
+    @BindView(R.id.inputsLinearLayout)
+    LinearLayout mInputsLinearLayout;
+
+    //Поле ввода содержимого текстового прикрепления
+    @BindView(R.id.inputTextTextView)
+    EditText mInputTextTextView;
+    //Поле ввода содержимого ссылочного прикрепления
+    @BindView(R.id.inputLinkTextView)
+    EditText mInputLinkTextView;
+    //Поле ввода содержимого прикрепления карты
+    @BindView(R.id.inputMapTextView)
+    EditText mInputMapTextView;
+
+    //Кнопка добавления текстового или ссылочного прикрепления
+    //после того, как его содержимое введено
+    //@BindView(R.id.doAddImageView)
+    //ImageView mDoAddImageView;
 
     private Long mLinksId;
     private LinkListItem mLinkListItem;
@@ -39,6 +73,8 @@ public class LinksEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_links_edit);
+
+        //Toast.makeText(this, String.valueOf(mAttIconsLinearLayout.getVisibility()), Toast.LENGTH_SHORT).show();
 
         mLinksId =
                 getIntent().getLongExtra(BusinessCardActivity.SELECTED_LINK_LIST_ITEM_TITLE, 0);
@@ -63,6 +99,55 @@ public class LinksEditActivity extends AppCompatActivity {
         mLinkListItem.subLinks.setLink_list_item(mLinkListItem);
         activityLinksEditBinding.setItems(mLinkListItem.subLinks);
         //activityLinksEditBinding.setLink_list_item(mLinkListItem);
+        ButterKnife.bind(this);
+    }
+
+    //Обработчик клика для кнопок добавления прикреплений
+    @OnClick({
+            R.id.addTextImageView
+            , R.id.addLinkImageView
+            , R.id.addMapImageView
+            , R.id.doAddImageView})
+    void onClick(View view) {
+
+        switch (view.getId()) {
+
+            case R.id.addTextImageView:
+                // ...
+                mAttIconsLinearLayout.setVisibility(View.GONE);
+                mInputsLinearLayout.setVisibility(View.VISIBLE);
+                mInputTextTextView.setVisibility(View.VISIBLE);
+                //Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.addLinkImageView:
+                // ...
+                break;
+            case R.id.addMapImageView:
+                // ...
+                break;
+            case R.id.doAddImageView:
+                // ...
+                mAttIconsLinearLayout.setVisibility(View.VISIBLE);
+                mInputsLinearLayout.setVisibility(View.GONE);
+                mInputTextTextView.setVisibility(View.GONE);
+
+                String newText =
+                        mInputTextTextView.getText().toString();
+                Log.d("asd3", newText);
+                if (!newText.equals("")){
+
+                    Log.d("asd4", "yes");
+                    LinkTextItem linkTextItem =
+                            new LinkTextItem();
+                    linkTextItem.setText(newText);
+                    Global.greenDAOFacade.createLink(linkTextItem, mLinksId);
+                    mLinkListItem.subLinks.mSubLinks.add(
+                            EntitiesModelsAdapter.linkItemToSubLink(linkTextItem)
+                    );
+                }
+
+                break;
+        }
     }
 
     public void selectImage() {

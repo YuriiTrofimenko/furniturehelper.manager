@@ -8,6 +8,7 @@ import org.tyaa.furniturehelper.manager.entity.LinkMapItem;
 import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
 import org.tyaa.furniturehelper.manager.entity.LinkUrlItem;
 import org.tyaa.furniturehelper.manager.entity.LinksGroup;
+import org.tyaa.furniturehelper.manager.entity.interfaces.ILinkItem;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
 import org.tyaa.furniturehelper.manager.model.SubLinkImg;
 import org.tyaa.furniturehelper.manager.model.SubLinkLink;
@@ -35,7 +36,8 @@ public class EntitiesModelsAdapter {
 
             LinkListItem linkListItem =
                     new LinkListItem(
-                            linksGroup.getTitle()
+                            linksGroup.getId()
+                            , linksGroup.getTitle()
                             , Utility.uriStringToDrawable(linksGroup.getDrawable())
                             , linksGroup.getChecked()
                             , new SubLinkList()
@@ -87,7 +89,7 @@ public class EntitiesModelsAdapter {
             Collections.sort(linkListItem.subLinks.mSubLinks, new Comparator<ISubLink>() {
                 @Override
                 public int compare(ISubLink o1, ISubLink o2) {
-                    return o2.getId().intValue() - o1.getId().intValue();
+                    return o1.getId().intValue() - o2.getId().intValue();
                 }
             });
 
@@ -95,5 +97,27 @@ public class EntitiesModelsAdapter {
         }
 
         return linkListItems;
+    }
+
+    public static ISubLink linkItemToSubLink(ILinkItem _linkItem){
+
+        ISubLink subLink = null;
+
+        if (_linkItem instanceof LinkTextItem) {
+
+            LinkTextItem linkTextItem = (LinkTextItem) _linkItem;
+            SubLinkText subLinkText = new SubLinkText();
+            subLinkText.id = linkTextItem.getId();
+            subLinkText.text = linkTextItem.getText();
+            subLink = subLinkText;
+        } else if (_linkItem instanceof LinkUrlItem) {
+
+        } else if (_linkItem instanceof LinkMapItem) {
+
+        } else /*if (_linkItem instanceof LinkImgItem)*/ {
+
+        }
+
+        return subLink;
     }
 }

@@ -31,17 +31,17 @@ public class Generator {
         mContext = CurrentApplication.getAppContext();
     }
 
-    public static ObservableArrayList<LinkListItem> getLinkListBasis(){
+    /*public static ObservableArrayList<LinkListItem> getLinkListBasis(){
 
         Context context = CurrentApplication.getAppContext();
 
         ObservableArrayList<LinkListItem> linkListItems =
                 new ObservableArrayList<>();
 
-        /*SubLink subLink = new SubLink();
+        SubLink subLink = new SubLink();
         subLink.text = "test text";
         subLink.link = "test link";
-        subLink.drawable = Global.EMPTY_DRAWABLE;*/
+        subLink.drawable = Global.EMPTY_DRAWABLE;
 
         LinkListItem linkListItem =
                 new LinkListItem(
@@ -71,7 +71,7 @@ public class Generator {
 
         linkListItems.add(linkListItem);
 
-        /*linkListItem =
+        linkListItem =
                 new LinkListItem(
                         "Facebook"
                         , context.getResources().getDrawable(R.drawable.facebook)
@@ -126,9 +126,9 @@ public class Generator {
         linkListItem.subLinks.mSubLinks.add(subLink);
         linkListItem.subLinks.mSubLinks.add(subLink);
         linkListItem.subLinks.mSubLinks.add(subLink);
-        linkListItems.add(linkListItem);*/
+        linkListItems.add(linkListItem);
         return linkListItems;
-    }
+    }*/
 
     /**
      * Метод создания демонстрационных данных ссылок для БД
@@ -214,6 +214,9 @@ public class Generator {
         Global.greenDAOFacade.createLink(linkUrlItem);
         //linksGroup.linkUrlItems = new ArrayList<>();
         linksGroup.linkUrlItems.add(linkUrlItem);
+
+        Global.greenDAOFacade.updateLinksGroup(linksGroup);
+
         /**
          * Добаление группы, заполненной элементами, в список
          * */
@@ -246,6 +249,9 @@ public class Generator {
         Global.greenDAOFacade.createLink(linkUrlItem);
         linksGroup.linkUrlItems = new ArrayList<>();
         linksGroup.linkUrlItems.add(linkUrlItem);
+
+        Global.greenDAOFacade.updateLinksGroup(linksGroup);
+
         /**
          * Добаление группы, заполненной элементами, в список
          * */

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LinkListItem {
 
-    private static Long count = 0L;
+    //private static Long count = 0L;
 
     private Long id;
     public String title;
@@ -20,15 +20,15 @@ public class LinkListItem {
 
     public LinkListItem() {
 
-        id = count;
-        count++;
+        //id = count;
+        //count++;
     }
 
-    public LinkListItem(String title, Drawable drawable, boolean checked, SubLinkList subLinks) {
+    public LinkListItem(Long id, String title, Drawable drawable, boolean checked, SubLinkList subLinks) {
 
-        id = count;
-        count++;
-
+        //id = count;
+        //count++;
+        this.id = id;
         this.title = title;
         this.drawable = drawable;
         this.checked = checked;

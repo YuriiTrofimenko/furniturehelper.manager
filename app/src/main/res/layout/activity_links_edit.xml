@@ -96,6 +96,7 @@
                 <!--android:layout_height="match_parent"-->
                 <!--android:layout_weight="1"/>-->
             <LinearLayout
+                android:id="@+id/attIconsLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -118,7 +119,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:padding="2dp"
-                            android:layout_margin="10dp"
+                            android:layout_margin="20dp"
                             android:orientation="vertical"
                             android:layout_weight="1">
 
@@ -137,7 +138,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:padding="2dp"
-                            android:layout_margin="10dp"
+                            android:layout_margin="20dp"
                             android:orientation="vertical"
                             android:layout_weight="1">
 
@@ -156,7 +157,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:padding="2dp"
-                            android:layout_margin="10dp"
+                            android:layout_margin="20dp"
                             android:orientation="vertical"
                             android:layout_weight="1">
 
@@ -175,7 +176,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:padding="2dp"
-                            android:layout_margin="10dp"
+                            android:layout_margin="20dp"
                             android:orientation="vertical"
                             android:layout_weight="1">
 
@@ -193,7 +194,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:padding="2dp"
-                            android:layout_margin="10dp"
+                            android:layout_margin="20dp"
                             android:orientation="vertical"
                             android:layout_weight="1">
 
@@ -211,18 +212,33 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/inputsLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="11"
                 android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/inputTextView"
+                <EditText
+                    android:id="@+id/inputTextTextView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="10"/>
+                    android:layout_weight="10"
+                    android:visibility="gone"/>
+                <EditText
+                    android:id="@+id/inputLinkTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:visibility="gone"/>
+                <EditText
+                    android:id="@+id/inputMapTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:visibility="gone"/>
                 <ImageView
+                    android:id="@+id/doAddImageView"
                     android:layout_width="0dp"
                     android:src="@android:drawable/ic_input_add"
                     android:layout_height="match_parent"

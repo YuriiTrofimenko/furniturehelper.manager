@@ -46,7 +46,7 @@ public class Global {
      * */
     private static void initRepository(){
 
-        greenDAOFacade.clearLinksGroups();
+        //greenDAOFacade.clearLinksGroups();
         //Пытаемся получить список всех групп ссылок из БД
         linksGroupList = greenDAOFacade.getAllLinksGroups();
         //Если ничего не получено - значит БД еще не создавалась
@@ -55,21 +55,9 @@ public class Global {
 
             Log.d("MyLog", "get groups 2");
             //Создаем список групп, заполненных элементами
-            Generator.generateLinksGroups();
+            linksGroupList = Generator.generateLinksGroups();
 
-            /*for (LinksGroup linksGroup : Generator.generateLinksGroups()) {
-
-                //Делаем в БД запись о каждой группе
-                greenDAOFacade.createLinksGroup(
-                        linksGroup.getTitle()
-                        , linksGroup.getChecked()
-                        , linksGroup.getDrawable()
-                );
-                for (ILinkItem linkItem : linksGroup.links) {
-
-                }
-            }*/
-            linksGroupList = greenDAOFacade.getAllLinksGroups();
+            //linksGroupList = greenDAOFacade.getAllLinksGroups();
         }
     }
 }
