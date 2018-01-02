@@ -8,12 +8,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.AnyRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -148,5 +150,52 @@ public class Utility {
                 + '/' + res.getResourceEntryName(resId));
         /** return uri */
         return resUri;
+    }
+
+    /*public static String uriStringFromGalleryUri(@NonNull Context context, Uri contentUri) {
+
+        String res = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor =
+                context.getContentResolver().query(
+                        contentUri
+                        , proj
+                        , null
+                        , null
+                        , null
+                );
+        if(cursor.moveToFirst()){;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        Log.d("asd", res);
+        return res;
+    }*/
+
+    public static final String bitmapToUriString(@NonNull Context _context,
+                                                     Bitmap _bitmap
+                                                    , String _fileName
+                                                ) {
+
+        mBitmap = _bitmap;
+        // Get the external storage directory path
+        String path = Environment.getExternalStorageDirectory().toString();
+        // Create a file to save the image
+        mFile =
+                new File(path, _fileName + "_copy.png");
+        try{
+            OutputStream stream = null;
+            stream = new FileOutputStream(mFile);
+            mBitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+            stream.flush();
+            stream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Parse the saved image path to uri
+        return mFile.getAbsolutePath();
     }
 }

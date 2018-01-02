@@ -22,6 +22,7 @@ import org.tyaa.furniturehelper.manager.adapter.EntitiesModelsAdapter;
 import org.tyaa.furniturehelper.manager.common.Global;
 import org.tyaa.furniturehelper.manager.common.Utility;
 import org.tyaa.furniturehelper.manager.databinding.ActivityLinksEditBinding;
+import org.tyaa.furniturehelper.manager.entity.LinkImgItem;
 import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
 
@@ -67,6 +68,18 @@ public class LinksEditActivity extends AppCompatActivity {
     private static final int SELECT_FILE = 0;
     private static final int REQUEST_CAMERA = 1;
 
+    private enum SelectedAttachmentType {
+
+        Empty
+        , Text
+        , Link
+        , Map
+        , Image
+        , Camera
+    }
+
+    private SelectedAttachmentType mSelectedAttachmentType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -107,6 +120,8 @@ public class LinksEditActivity extends AppCompatActivity {
             R.id.addTextImageView
             , R.id.addLinkImageView
             , R.id.addMapImageView
+            , R.id.addImgImageView
+            , R.id.addPhotoImageView
             , R.id.doAddImageView})
     void onClick(View view) {
 
@@ -114,6 +129,7 @@ public class LinksEditActivity extends AppCompatActivity {
 
             case R.id.addTextImageView:
                 // ...
+                mSelectedAttachmentType = SelectedAttachmentType.Text;
                 mAttIconsLinearLayout.setVisibility(View.GONE);
                 mInputsLinearLayout.setVisibility(View.VISIBLE);
                 mInputTextTextView.setVisibility(View.VISIBLE);
@@ -125,27 +141,50 @@ public class LinksEditActivity extends AppCompatActivity {
             case R.id.addMapImageView:
                 // ...
                 break;
+            case R.id.addImgImageView:
+                // ...
+                mSelectedAttachmentType = SelectedAttachmentType.Image;
+                galleryIntent();
+                break;
+            case R.id.addPhotoImageView:
+                // ...
+                //mSelectedAttachmentType = SelectedAttachmentType.Text;
+                //mAttIconsLinearLayout.setVisibility(View.GONE);
+                //mInputsLinearLayout.setVisibility(View.VISIBLE);
+                //mInputTextTextView.setVisibility(View.VISIBLE);
+                //Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.doAddImageView:
                 // ...
-                mAttIconsLinearLayout.setVisibility(View.VISIBLE);
-                mInputsLinearLayout.setVisibility(View.GONE);
-                mInputTextTextView.setVisibility(View.GONE);
 
-                String newText =
-                        mInputTextTextView.getText().toString();
-                Log.d("asd3", newText);
-                if (!newText.equals("")){
 
-                    Log.d("asd4", "yes");
-                    LinkTextItem linkTextItem =
-                            new LinkTextItem();
-                    linkTextItem.setText(newText);
-                    Global.greenDAOFacade.createLink(linkTextItem, mLinksId);
-                    mLinkListItem.subLinks.mSubLinks.add(
-                            EntitiesModelsAdapter.linkItemToSubLink(linkTextItem)
-                    );
+                switch (mSelectedAttachmentType) {
+
+                    case Text: {
+
+                        mAttIconsLinearLayout.setVisibility(View.VISIBLE);
+                        mInputsLinearLayout.setVisibility(View.GONE);
+                        mInputTextTextView.setVisibility(View.GONE);
+
+                        String newText =
+                                mInputTextTextView.getText().toString();
+                        if (!newText.equals("")) {
+
+                            LinkTextItem linkTextItem =
+                                    new LinkTextItem();
+                            linkTextItem.setText(newText);
+                            Global.greenDAOFacade.createLink(linkTextItem, mLinksId);
+                            mLinkListItem.subLinks.mSubLinks.add(
+                                    EntitiesModelsAdapter.linkItemToSubLink(linkTextItem)
+                            );
+                        }
+                        break;
+                    }
+                    case Image: {
+
+                        break;
+                    }
                 }
-
                 break;
         }
     }
@@ -243,6 +282,7 @@ public class LinksEditActivity extends AppCompatActivity {
 
             if (requestCode == SELECT_FILE){
 
+                Log.d("asd", "onActivityResult");
                 onSelectFromGalleryResult(data);
             }
             else if (requestCode == REQUEST_CAMERA){
@@ -252,18 +292,42 @@ public class LinksEditActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Обработчик выбора изображения из галлереи
+     * */
     @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
 
         Bitmap bm = null;
         if (data != null) {
             try {
-                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                bm = MediaStore.Images.Media.getBitmap(
+                        getApplicationContext().getContentResolver()
+                        , data.getData()
+                );
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //Log.d("asd", Utility.uriStringFromGalleryUri(this, data.getData()));
+
+            //Log.d("asd", MediaStore.Images.Media.INTERNAL_CONTENT_URI.toString());
+            //Log.d("asd", (new File(data.getData().toString())).getName());
+            String uriString =
+                    Utility.bitmapToUriString(
+                            this
+                            , bm
+                            , new File(data.getData().toString()).getName()
+                    );
+            Log.d("asd", uriString);
+            //bitmapToUriString
+            LinkImgItem linkImgItem = new LinkImgItem();
+            linkImgItem.setDrawable(uriString);
+            Global.greenDAOFacade.createLink(linkImgItem, mLinksId);
+            mLinkListItem.subLinks.mSubLinks.add(
+                    EntitiesModelsAdapter.linkItemToSubLink(linkImgItem)
+            );
         }
-        Global.selectedImageView.setImageBitmap(bm);
+        //Global.selectedImageView.setImageBitmap(bm);
     }
 
     private void onCaptureImageResult(Intent data) {

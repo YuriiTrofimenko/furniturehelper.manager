@@ -116,6 +116,11 @@ public class EntitiesModelsAdapter {
 
         } else /*if (_linkItem instanceof LinkImgItem)*/ {
 
+            LinkImgItem linkImgItem = (LinkImgItem) _linkItem;
+            SubLinkImg subLinkImg = new SubLinkImg();
+            subLinkImg.id = linkImgItem.getId();
+            subLinkImg.drawable = Utility.uriStringToDrawable(linkImgItem.getDrawable());
+            subLink = subLinkImg;
         }
 
         return subLink;
