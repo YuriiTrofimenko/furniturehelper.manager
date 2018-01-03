@@ -49,6 +49,10 @@ public class SubLinkList implements ISubLinkList {
             public Long getId() {
                 return mSubLink.getId();
             }
+            @Override
+            public String getGuid() {
+                return mSubLink.getGuid();
+            }
         });
     }
 

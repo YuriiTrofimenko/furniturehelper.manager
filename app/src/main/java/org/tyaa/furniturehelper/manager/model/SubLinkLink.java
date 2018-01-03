@@ -12,9 +12,15 @@ public class SubLinkLink implements ISubLink {
 
     public Long id;
     public String link;
+    public String guid;
 
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String getGuid() {
+        return guid;
     }
 }

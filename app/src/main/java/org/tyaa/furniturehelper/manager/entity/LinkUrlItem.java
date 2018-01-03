@@ -27,6 +27,13 @@ public class LinkUrlItem implements ILinkItem {
     @NotNull
     private String link;
 
+    /**
+     * GUID
+     * */
+    @Property(nameInDb = "guid")
+    @NotNull
+    private String guid;
+
     //ИД "Ссылки", к которой принадлежит данное прикрепление
     private Long linksGroupId;
 
@@ -41,10 +48,12 @@ private transient DaoSession daoSession;
 @Generated(hash = 471976578)
 private transient LinkUrlItemDao myDao;
 
-@Generated(hash = 513084890)
-public LinkUrlItem(Long id, @NotNull String link, Long linksGroupId) {
+@Generated(hash = 1648849604)
+public LinkUrlItem(Long id, @NotNull String link, @NotNull String guid,
+        Long linksGroupId) {
     this.id = id;
     this.link = link;
+    this.guid = guid;
     this.linksGroupId = linksGroupId;
 }
 
@@ -143,6 +152,14 @@ public void update() {
         throw new DaoException("Entity is detached from DAO context");
     }
     myDao.update(this);
+}
+
+public String getGuid() {
+    return this.guid;
+}
+
+public void setGuid(String guid) {
+    this.guid = guid;
 }
 
 /** called by internal mechanisms, do not call yourself. */

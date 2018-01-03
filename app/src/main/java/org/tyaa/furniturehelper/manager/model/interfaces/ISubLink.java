@@ -7,4 +7,5 @@ package org.tyaa.furniturehelper.manager.model.interfaces;
 public interface ISubLink {
 
     Long getId();
+    String getGuid();
 }

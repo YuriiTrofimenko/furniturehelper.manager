@@ -12,9 +12,15 @@ public class SubLinkImg implements ISubLink {
 
     public Long id;
     public Drawable drawable;
+    public String guid;
 
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String getGuid() {
+        return guid;
     }
 }

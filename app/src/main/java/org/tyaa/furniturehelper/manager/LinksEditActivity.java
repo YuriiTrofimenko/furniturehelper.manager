@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -19,11 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.tyaa.furniturehelper.manager.adapter.EntitiesModelsAdapter;
+import org.tyaa.furniturehelper.manager.common.Generator;
 import org.tyaa.furniturehelper.manager.common.Global;
 import org.tyaa.furniturehelper.manager.common.Utility;
 import org.tyaa.furniturehelper.manager.databinding.ActivityLinksEditBinding;
 import org.tyaa.furniturehelper.manager.entity.LinkImgItem;
 import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
+import org.tyaa.furniturehelper.manager.entity.LinkUrlItem;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
 
 import java.io.ByteArrayOutputStream;
@@ -137,7 +140,16 @@ public class LinksEditActivity extends AppCompatActivity {
                 //Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.addLinkImageView:
-                // ...
+                // Кнопка добавления ссылки из браузера
+                mSelectedAttachmentType = SelectedAttachmentType.Link;
+                mAttIconsLinearLayout.setVisibility(View.GONE);
+                mInputsLinearLayout.setVisibility(View.VISIBLE);
+                mInputLinkTextView.setVisibility(View.VISIBLE);
+
+                String url = "http://www.google.com";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
                 break;
             case R.id.addMapImageView:
                 // ...
@@ -171,9 +183,31 @@ public class LinksEditActivity extends AppCompatActivity {
                             LinkTextItem linkTextItem =
                                     new LinkTextItem();
                             linkTextItem.setText(newText);
+                            linkTextItem.setGuid(Generator.generateGuid());
                             Global.greenDAOFacade.createLink(linkTextItem, mLinksId);
                             mLinkListItem.subLinks.mSubLinks.add(
                                     EntitiesModelsAdapter.linkItemToSubLink(linkTextItem)
+                            );
+                        }
+                        break;
+                    }
+                    case Link: {
+
+                        mAttIconsLinearLayout.setVisibility(View.VISIBLE);
+                        mInputsLinearLayout.setVisibility(View.GONE);
+                        mInputLinkTextView.setVisibility(View.GONE);
+
+                        String newLink =
+                                mInputLinkTextView.getText().toString();
+                        if (!newLink.equals("")) {
+
+                            LinkUrlItem linkUrlItem =
+                                    new LinkUrlItem();
+                            linkUrlItem.setLink(newLink);
+                            linkUrlItem.setGuid(Generator.generateGuid());
+                            Global.greenDAOFacade.createLink(linkUrlItem, mLinksId);
+                            mLinkListItem.subLinks.mSubLinks.add(
+                                    EntitiesModelsAdapter.linkItemToSubLink(linkUrlItem)
                             );
                         }
                         break;
@@ -352,6 +386,7 @@ public class LinksEditActivity extends AppCompatActivity {
 
         LinkImgItem linkImgItem = new LinkImgItem();
         linkImgItem.setDrawable(_uriString);
+        linkImgItem.setGuid(Generator.generateGuid());
         Global.greenDAOFacade.createLink(linkImgItem, mLinksId);
         mLinkListItem.subLinks.mSubLinks.add(
                 EntitiesModelsAdapter.linkItemToSubLink(linkImgItem)

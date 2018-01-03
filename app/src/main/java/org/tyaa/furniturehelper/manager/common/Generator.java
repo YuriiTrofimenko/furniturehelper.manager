@@ -16,7 +16,9 @@ import org.tyaa.furniturehelper.manager.model.SubLinkList;
 import org.tyaa.furniturehelper.manager.model.SubLinkText;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by yurii on 30.11.17.
@@ -155,6 +157,7 @@ public class Generator {
          * */
         LinkTextItem linkTextItem = new LinkTextItem();
         linkTextItem.setText("Отзывы о нас");
+        linkTextItem.setGuid(Generator.generateGuid());
         linkTextItem.setLinksGroup(linksGroup);
         Global.greenDAOFacade.createLink(linkTextItem);
         linksGroup.linkTextItems = new ArrayList<>();
@@ -165,6 +168,7 @@ public class Generator {
         LinkUrlItem linkUrlItem = new LinkUrlItem();
         linkUrlItem.setLink("www.vk.com/topic-115792435_34460571");
         linkUrlItem.setLinksGroup(linksGroup);
+        linkUrlItem.setGuid(Generator.generateGuid());
         Global.greenDAOFacade.createLink(linkUrlItem);
         linksGroup.linkUrlItems = new ArrayList<>();
         linksGroup.linkUrlItems.add(linkUrlItem);
@@ -174,6 +178,7 @@ public class Generator {
         LinkImgItem linkImgItem = new LinkImgItem();
         linkImgItem.setDrawable(Utility.drawableToURIString(mContext, R.drawable.lidzalogo));
         linkImgItem.setLinksGroup(linksGroup);
+        linkImgItem.setGuid(Generator.generateGuid());
         Global.greenDAOFacade.createLink(linkImgItem);
         linksGroup.linkImgItems = new ArrayList<>();
         linksGroup.linkImgItems.add(linkImgItem);
@@ -184,6 +189,7 @@ public class Generator {
         linkTextItem = new LinkTextItem();
         linkTextItem.setText("Шкафчик мебельная торговая сеть в Мариуполе");
         linkTextItem.setLinksGroup(linksGroup);
+        linkTextItem.setGuid(Generator.generateGuid());
         Global.greenDAOFacade.createLink(linkTextItem);
         //linksGroup.linkTextItems = new ArrayList<>();
         linksGroup.linkTextItems.add(linkTextItem);
@@ -193,6 +199,7 @@ public class Generator {
         linkUrlItem = new LinkUrlItem();
         linkUrlItem.setLink("www.vk.com/lidzacom");
         linkUrlItem.setLinksGroup(linksGroup);
+        linkUrlItem.setGuid(Generator.generateGuid());
         Global.greenDAOFacade.createLink(linkUrlItem);
         //linksGroup.linkUrlItems = new ArrayList<>();
         linksGroup.linkUrlItems.add(linkUrlItem);
@@ -202,6 +209,7 @@ public class Generator {
         linkTextItem = new LinkTextItem();
         linkTextItem.setText("Александр Дорошеко");
         linkTextItem.setLinksGroup(linksGroup);
+        linkTextItem.setGuid(Generator.generateGuid());
         Global.greenDAOFacade.createLink(linkTextItem);
         //linksGroup.linkTextItems = new ArrayList<>();
         linksGroup.linkTextItems.add(linkTextItem);
@@ -211,6 +219,7 @@ public class Generator {
         linkUrlItem = new LinkUrlItem();
         linkUrlItem.setLink("https://vk.com/shkafchik30");
         linkUrlItem.setLinksGroup(linksGroup);
+        linkUrlItem.setGuid(Generator.generateGuid());
         Global.greenDAOFacade.createLink(linkUrlItem);
         //linksGroup.linkUrlItems = new ArrayList<>();
         linksGroup.linkUrlItems.add(linkUrlItem);
@@ -237,6 +246,7 @@ public class Generator {
         linkTextItem = new LinkTextItem();
         linkTextItem.setText("Шкафчик торговая сеть мебельных магазинов в Мариуполе");
         linkTextItem.setLinksGroup(linksGroup);
+        linkTextItem.setGuid(Generator.generateGuid());
         Global.greenDAOFacade.createLink(linkTextItem);
         linksGroup.linkTextItems = new ArrayList<>();
         linksGroup.linkTextItems.add(linkTextItem);
@@ -246,6 +256,7 @@ public class Generator {
         linkUrlItem = new LinkUrlItem();
         linkUrlItem.setLink("https://www.facebook.com/SHKAFCHIK30");
         linkUrlItem.setLinksGroup(linksGroup);
+        linkUrlItem.setGuid(Generator.generateGuid());
         Global.greenDAOFacade.createLink(linkUrlItem);
         linksGroup.linkUrlItems = new ArrayList<>();
         linksGroup.linkUrlItems.add(linkUrlItem);
@@ -258,5 +269,11 @@ public class Generator {
         linksGroups.add(linksGroup);
 
         return linksGroups;
+    }
+
+    public static String generateGuid() {
+
+        //return UUID.randomUUID().toString();
+        return String.valueOf(new Date().getTime());
     }
 }

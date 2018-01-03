@@ -15,10 +15,15 @@ public class SubLink implements ISubLink {
     public String text;
     public String link;
     public Drawable drawable;
-
+    public String guid;
 
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String getGuid() {
+        return guid;
     }
 }

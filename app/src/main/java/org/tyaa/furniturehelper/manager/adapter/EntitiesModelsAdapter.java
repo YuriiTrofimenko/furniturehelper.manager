@@ -1,6 +1,7 @@
 package org.tyaa.furniturehelper.manager.adapter;
 
 import android.databinding.ObservableArrayList;
+import android.util.Log;
 
 import org.tyaa.furniturehelper.manager.common.Utility;
 import org.tyaa.furniturehelper.manager.entity.LinkImgItem;
@@ -49,6 +50,7 @@ public class EntitiesModelsAdapter {
                     SubLinkText subLinkText = new SubLinkText();
                     subLinkText.id = linkTextItem.getId();
                     subLinkText.text = linkTextItem.getText();
+                    subLinkText.guid = linkTextItem.getGuid();
                     linkListItem.subLinks.mSubLinks.add(subLinkText);
                 }
             }
@@ -60,6 +62,7 @@ public class EntitiesModelsAdapter {
                     SubLinkLink subLinkLink = new SubLinkLink();
                     subLinkLink.id = linkUrlItem.getId();
                     subLinkLink.link = linkUrlItem.getLink();
+                    subLinkLink.guid = linkUrlItem.getGuid();
                     linkListItem.subLinks.mSubLinks.add(subLinkLink);
                 }
             }
@@ -71,6 +74,7 @@ public class EntitiesModelsAdapter {
                     SubLinkMap subLinkMap = new SubLinkMap();
                     subLinkMap.id = linkMapItem.getId();
                     subLinkMap.map = linkMapItem.getLink();
+                    subLinkMap.guid = linkMapItem.getGuid();
                     linkListItem.subLinks.mSubLinks.add(subLinkMap);
                 }
             }
@@ -82,6 +86,7 @@ public class EntitiesModelsAdapter {
                     SubLinkImg subLinkImg = new SubLinkImg();
                     subLinkImg.id = linkImgItem.getId();
                     subLinkImg.drawable = Utility.uriStringToDrawable(linkImgItem.getDrawable());
+                    subLinkImg.guid = linkImgItem.getGuid();
                     linkListItem.subLinks.mSubLinks.add(subLinkImg);
                 }
             }
@@ -89,11 +94,17 @@ public class EntitiesModelsAdapter {
             Collections.sort(linkListItem.subLinks.mSubLinks, new Comparator<ISubLink>() {
                 @Override
                 public int compare(ISubLink o1, ISubLink o2) {
-                    return o1.getId().intValue() - o2.getId().intValue();
+                    //return o1.getId().intValue() - o2.getId().intValue();
+                    return  o1.getGuid().compareTo(o2.getGuid());
                 }
             });
 
             linkListItems.add(linkListItem);
+        }
+
+        for (ISubLink subLink:
+        linkListItems.get(0).subLinks.mSubLinks) {
+            Log.d("asd", subLink.getGuid());
         }
 
         return linkListItems;
@@ -109,17 +120,31 @@ public class EntitiesModelsAdapter {
             SubLinkText subLinkText = new SubLinkText();
             subLinkText.id = linkTextItem.getId();
             subLinkText.text = linkTextItem.getText();
+            subLinkText.guid = linkTextItem.getGuid();
             subLink = subLinkText;
         } else if (_linkItem instanceof LinkUrlItem) {
 
+            LinkUrlItem linkUrlItem = (LinkUrlItem) _linkItem;
+            SubLinkLink subLinkLink = new SubLinkLink();
+            subLinkLink.id = linkUrlItem.getId();
+            subLinkLink.link = linkUrlItem.getLink();
+            subLinkLink.guid = linkUrlItem.getGuid();
+            subLink = subLinkLink;
         } else if (_linkItem instanceof LinkMapItem) {
 
+            LinkMapItem linkMapItem = (LinkMapItem) _linkItem;
+            SubLinkMap subLinkMap = new SubLinkMap();
+            subLinkMap.id = linkMapItem.getId();
+            subLinkMap.map = linkMapItem.getLink();
+            subLinkMap.guid = linkMapItem.getGuid();
+            subLink = subLinkMap;
         } else /*if (_linkItem instanceof LinkImgItem)*/ {
 
             LinkImgItem linkImgItem = (LinkImgItem) _linkItem;
             SubLinkImg subLinkImg = new SubLinkImg();
             subLinkImg.id = linkImgItem.getId();
             subLinkImg.drawable = Utility.uriStringToDrawable(linkImgItem.getDrawable());
+            subLinkImg.guid = linkImgItem.getGuid();
             subLink = subLinkImg;
         }
 

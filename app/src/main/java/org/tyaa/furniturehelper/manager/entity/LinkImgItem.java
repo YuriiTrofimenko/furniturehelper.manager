@@ -30,6 +30,13 @@ public class LinkImgItem implements ILinkItem {
     @NotNull
     private String drawable;
 
+    /**
+     * GUID
+     * */
+    @Property(nameInDb = "guid")
+    @NotNull
+    private String guid;
+
     //ИД "Ссылки", к которой принадлежит данное прикрепление
     private Long linksGroupId;
 
@@ -44,10 +51,12 @@ private transient DaoSession daoSession;
 @Generated(hash = 2022721852)
 private transient LinkImgItemDao myDao;
 
-@Generated(hash = 933929155)
-public LinkImgItem(Long id, @NotNull String drawable, Long linksGroupId) {
+@Generated(hash = 171562668)
+public LinkImgItem(Long id, @NotNull String drawable, @NotNull String guid,
+        Long linksGroupId) {
     this.id = id;
     this.drawable = drawable;
+    this.guid = guid;
     this.linksGroupId = linksGroupId;
 }
 
@@ -146,6 +155,14 @@ public void update() {
         throw new DaoException("Entity is detached from DAO context");
     }
     myDao.update(this);
+}
+
+public String getGuid() {
+    return this.guid;
+}
+
+public void setGuid(String guid) {
+    this.guid = guid;
 }
 
 /** called by internal mechanisms, do not call yourself. */
