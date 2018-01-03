@@ -128,7 +128,8 @@ public class LinksEditActivity extends AppCompatActivity {
         switch (view.getId()) {
 
             case R.id.addTextImageView:
-                // ...
+                // Кнопка для начала процесса добавления текстового прикрепления,
+                //после ее нажатия появляется поле ввода текста и кнопка "+" для его добавления
                 mSelectedAttachmentType = SelectedAttachmentType.Text;
                 mAttIconsLinearLayout.setVisibility(View.GONE);
                 mInputsLinearLayout.setVisibility(View.VISIBLE);
@@ -142,21 +143,18 @@ public class LinksEditActivity extends AppCompatActivity {
                 // ...
                 break;
             case R.id.addImgImageView:
-                // ...
+                // Кнопка добавления изображения из галлереи
                 mSelectedAttachmentType = SelectedAttachmentType.Image;
                 galleryIntent();
                 break;
             case R.id.addPhotoImageView:
-                // ...
-                //mSelectedAttachmentType = SelectedAttachmentType.Text;
-                //mAttIconsLinearLayout.setVisibility(View.GONE);
-                //mInputsLinearLayout.setVisibility(View.VISIBLE);
-                //mInputTextTextView.setVisibility(View.VISIBLE);
-                //Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
+                // Кнопка добавления изображения, получаемого от камеры
+                mSelectedAttachmentType = SelectedAttachmentType.Image;
+                cameraIntent();
                 break;
             case R.id.doAddImageView:
-                // ...
-
+                // Кнопка "+", которую нужно кликнуть после ввода текста
+                //или вставки ссылки / ссылки на карту, чтобы добавить прикрепление
 
                 switch (mSelectedAttachmentType) {
 
@@ -282,7 +280,6 @@ public class LinksEditActivity extends AppCompatActivity {
 
             if (requestCode == SELECT_FILE){
 
-                Log.d("asd", "onActivityResult");
                 onSelectFromGalleryResult(data);
             }
             else if (requestCode == REQUEST_CAMERA){
@@ -308,32 +305,32 @@ public class LinksEditActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //Log.d("asd", Utility.uriStringFromGalleryUri(this, data.getData()));
-
-            //Log.d("asd", MediaStore.Images.Media.INTERNAL_CONTENT_URI.toString());
-            //Log.d("asd", (new File(data.getData().toString())).getName());
             String uriString =
                     Utility.bitmapToUriString(
                             this
                             , bm
                             , new File(data.getData().toString()).getName()
                     );
-            Log.d("asd", uriString);
-            //bitmapToUriString
-            LinkImgItem linkImgItem = new LinkImgItem();
-            linkImgItem.setDrawable(uriString);
-            Global.greenDAOFacade.createLink(linkImgItem, mLinksId);
-            mLinkListItem.subLinks.mSubLinks.add(
-                    EntitiesModelsAdapter.linkItemToSubLink(linkImgItem)
-            );
+            addImgAttachment(uriString);
         }
         //Global.selectedImageView.setImageBitmap(bm);
     }
 
+    /**
+     * Обработчик получения изображения с камеры
+     * */
     private void onCaptureImageResult(Intent data) {
 
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        Bitmap bm = (Bitmap) data.getExtras().get("data");
+        String uriString =
+                Utility.bitmapToUriString(
+                        this
+                        , bm
+                        , System.currentTimeMillis() + ""
+                );
+        addImgAttachment(uriString);
+
+        /*ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
@@ -347,7 +344,17 @@ public class LinksEditActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        Global.selectedImageView.setImageBitmap(thumbnail);
+        }*/
+        //Global.selectedImageView.setImageBitmap(thumbnail);
+    }
+
+    private void addImgAttachment(String _uriString){
+
+        LinkImgItem linkImgItem = new LinkImgItem();
+        linkImgItem.setDrawable(_uriString);
+        Global.greenDAOFacade.createLink(linkImgItem, mLinksId);
+        mLinkListItem.subLinks.mSubLinks.add(
+                EntitiesModelsAdapter.linkItemToSubLink(linkImgItem)
+        );
     }
 }
