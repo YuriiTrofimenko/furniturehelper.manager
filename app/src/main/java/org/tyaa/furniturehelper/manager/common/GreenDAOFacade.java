@@ -203,9 +203,29 @@ public class GreenDAOFacade {
         } else if (_linkItem instanceof LinkUrlItem) {
 
             //id = mLinkUrlItemDao.insert((LinkUrlItem)_linkItem);
+            LinkUrlItem linkItem = (LinkUrlItem) _linkItem;
+            LinksGroup linksGroup = getLinksGroupById(_groupId);
+            linkItem.setLinksGroup(linksGroup);
+            id = mLinkUrlItemDao.insert(linkItem);
+            if (linksGroup.linkUrlItems == null) {
+
+                linksGroup.linkUrlItems = new ArrayList<>();
+            }
+            linksGroup.linkUrlItems.add(linkItem);
+            mLinksGroupDao.update(linksGroup);
         } else if (_linkItem instanceof LinkMapItem) {
 
             //id = mLinkMapItemDao.insert((LinkMapItem)_linkItem);
+            LinkMapItem linkItem = (LinkMapItem) _linkItem;
+            LinksGroup linksGroup = getLinksGroupById(_groupId);
+            linkItem.setLinksGroup(linksGroup);
+            id = mLinkMapItemDao.insert(linkItem);
+            if (linksGroup.linkMapItems == null) {
+
+                linksGroup.linkMapItems = new ArrayList<>();
+            }
+            linksGroup.linkMapItems.add(linkItem);
+            mLinksGroupDao.update(linksGroup);
         } else /*if (_linkItem instanceof LinkImgItem)*/ {
 
             //id = mLinkImgItemDao.insert((LinkImgItem)_linkItem);

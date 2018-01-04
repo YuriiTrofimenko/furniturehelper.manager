@@ -11,7 +11,8 @@ import org.tyaa.furniturehelper.manager.BusinessCardActivity;
 public class CallReceiver extends BroadcastReceiver {
 
     private static String mPhoneNumber = "";
-    public static final String EXTRA_PHONE_NUMBER = "org.tyaa.furniturehelper.manager.receiver.phone_number";
+    public static final String EXTRA_PHONE_NUMBER =
+            "org.tyaa.furniturehelper.manager.receiver.phone_number";
 
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -30,8 +30,8 @@ public class CurrentApplication extends Application {
         Database db = helper.getWritableDb();
         DaoMaster daoMaster = new DaoMaster(db);
         mDaoSession = daoMaster.newSession();
-        //DaoMaster.dropAllTables(db, true);
-        //DaoMaster.createAllTables(db, true);
+        DaoMaster.dropAllTables(db, true);
+        DaoMaster.createAllTables(db, true);
     }
 
     public static Context getAppContext() {

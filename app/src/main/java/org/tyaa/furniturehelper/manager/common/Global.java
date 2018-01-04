@@ -27,6 +27,7 @@ public class Global {
     public static int selectedSubLinkPos;
     public static GreenDAOFacade greenDAOFacade;
     public static List<LinksGroup> linksGroupList;
+    public static String currentUrl;
 
     static {
 

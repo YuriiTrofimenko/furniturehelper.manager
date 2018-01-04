@@ -25,6 +25,7 @@ import org.tyaa.furniturehelper.manager.common.Global;
 import org.tyaa.furniturehelper.manager.common.Utility;
 import org.tyaa.furniturehelper.manager.databinding.ActivityLinksEditBinding;
 import org.tyaa.furniturehelper.manager.entity.LinkImgItem;
+import org.tyaa.furniturehelper.manager.entity.LinkMapItem;
 import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
 import org.tyaa.furniturehelper.manager.entity.LinkUrlItem;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
@@ -70,6 +71,9 @@ public class LinksEditActivity extends AppCompatActivity {
 
     private static final int SELECT_FILE = 0;
     private static final int REQUEST_CAMERA = 1;
+    private static final int REQUEST_WEB = 2;
+    public static final String EXTRA_WEB_URL =
+            "org.tyaa.furniturehelper.manager.receiver.web_url";
 
     private enum SelectedAttachmentType {
 
@@ -90,13 +94,9 @@ public class LinksEditActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_links_edit);
 
-        //Toast.makeText(this, String.valueOf(mAttIconsLinearLayout.getVisibility()), Toast.LENGTH_SHORT).show();
-
         mLinksId =
                 getIntent().getLongExtra(BusinessCardActivity.SELECTED_LINK_LIST_ITEM_TITLE, 0);
                 //getIntent().getStringExtra(BusinessCardActivity.SELECTED_LINK_LIST_ITEM_TITLE);
-
-        //Log.d("asd", String.valueOf(mLinksPos));
 
         for (LinkListItem linkListItem : Global.LINK_LIST.mLinkItemList) {
 
@@ -146,10 +146,13 @@ public class LinksEditActivity extends AppCompatActivity {
                 mInputsLinearLayout.setVisibility(View.VISIBLE);
                 mInputLinkTextView.setVisibility(View.VISIBLE);
 
-                String url = "http://www.google.com";
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                startActivity(intent);
+                String urlString = "http://www.google.com";
+                //Intent intent = new Intent(Intent.ACTION_VIEW);
+                //intent.setData(Uri.parse(url));
+                Intent webIntent = new Intent(this, WebActivity.class);
+                webIntent.putExtra(this.EXTRA_WEB_URL, urlString);
+                //startActivity(webIntent);
+                startActivityForResult(webIntent, REQUEST_WEB);
                 break;
             case R.id.addMapImageView:
                 // ...
@@ -208,6 +211,27 @@ public class LinksEditActivity extends AppCompatActivity {
                             Global.greenDAOFacade.createLink(linkUrlItem, mLinksId);
                             mLinkListItem.subLinks.mSubLinks.add(
                                     EntitiesModelsAdapter.linkItemToSubLink(linkUrlItem)
+                            );
+                        }
+                        break;
+                    }
+                    case Map: {
+
+                        mAttIconsLinearLayout.setVisibility(View.VISIBLE);
+                        mInputsLinearLayout.setVisibility(View.GONE);
+                        mInputMapTextView.setVisibility(View.GONE);
+
+                        String newMap =
+                                mInputMapTextView.getText().toString();
+                        if (!newMap.equals("")) {
+
+                            LinkMapItem linkMapItem =
+                                    new LinkMapItem();
+                            linkMapItem.setLink(newMap);
+                            linkMapItem.setGuid(Generator.generateGuid());
+                            Global.greenDAOFacade.createLink(linkMapItem, mLinksId);
+                            mLinkListItem.subLinks.mSubLinks.add(
+                                    EntitiesModelsAdapter.linkItemToSubLink(linkMapItem)
                             );
                         }
                         break;
@@ -320,6 +344,9 @@ public class LinksEditActivity extends AppCompatActivity {
 
                 onCaptureImageResult(data);
             }
+        } else if (resultCode == WebActivity.RESULT_WEB){
+
+            mInputLinkTextView.setText(Global.currentUrl);
         }
     }
 
@@ -392,4 +419,6 @@ public class LinksEditActivity extends AppCompatActivity {
                 EntitiesModelsAdapter.linkItemToSubLink(linkImgItem)
         );
     }
+
+
 }
