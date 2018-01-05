@@ -72,8 +72,11 @@ public class LinksEditActivity extends AppCompatActivity {
     private static final int SELECT_FILE = 0;
     private static final int REQUEST_CAMERA = 1;
     private static final int REQUEST_WEB = 2;
+    private static final int REQUEST_MAP_WEB = 3;
     public static final String EXTRA_WEB_URL =
-            "org.tyaa.furniturehelper.manager.receiver.web_url";
+            "org.tyaa.furniturehelper.manager.LinksEditActivity.web_url";
+    public static final String EXTRA_WEB_MAP_URL =
+            "org.tyaa.furniturehelper.manager.LinksEditActivity.web_map_url";
 
     private enum SelectedAttachmentType {
 
@@ -150,12 +153,24 @@ public class LinksEditActivity extends AppCompatActivity {
                 //Intent intent = new Intent(Intent.ACTION_VIEW);
                 //intent.setData(Uri.parse(url));
                 Intent webIntent = new Intent(this, WebActivity.class);
-                webIntent.putExtra(this.EXTRA_WEB_URL, urlString);
+                webIntent.putExtra(EXTRA_WEB_URL, urlString);
                 //startActivity(webIntent);
                 startActivityForResult(webIntent, REQUEST_WEB);
                 break;
             case R.id.addMapImageView:
-                // ...
+                // Кнопка добавления ссылки на карту из браузера
+                mSelectedAttachmentType = SelectedAttachmentType.Map;
+                mAttIconsLinearLayout.setVisibility(View.GONE);
+                mInputsLinearLayout.setVisibility(View.VISIBLE);
+                mInputMapTextView.setVisibility(View.VISIBLE);
+
+                String urlMapString = "https://www.google.com/maps";
+                //Intent webMapIntent = new Intent(this, WebActivity.class);
+                Intent webMapIntent = new Intent(Intent.ACTION_VIEW);
+                //webMapIntent.putExtra(EXTRA_WEB_MAP_URL, urlMapString);
+                webMapIntent.setData(Uri.parse(urlMapString));
+                //startActivityForResult(webMapIntent, REQUEST_MAP_WEB);
+                startActivity(webMapIntent);
                 break;
             case R.id.addImgImageView:
                 // Кнопка добавления изображения из галлереи
@@ -191,6 +206,7 @@ public class LinksEditActivity extends AppCompatActivity {
                             mLinkListItem.subLinks.mSubLinks.add(
                                     EntitiesModelsAdapter.linkItemToSubLink(linkTextItem)
                             );
+                            mInputTextTextView.setText("");
                         }
                         break;
                     }
@@ -212,6 +228,7 @@ public class LinksEditActivity extends AppCompatActivity {
                             mLinkListItem.subLinks.mSubLinks.add(
                                     EntitiesModelsAdapter.linkItemToSubLink(linkUrlItem)
                             );
+                            mInputLinkTextView.setText("");
                         }
                         break;
                     }
@@ -233,6 +250,7 @@ public class LinksEditActivity extends AppCompatActivity {
                             mLinkListItem.subLinks.mSubLinks.add(
                                     EntitiesModelsAdapter.linkItemToSubLink(linkMapItem)
                             );
+                            mInputMapTextView.setText("");
                         }
                         break;
                     }
@@ -347,6 +365,9 @@ public class LinksEditActivity extends AppCompatActivity {
         } else if (resultCode == WebActivity.RESULT_WEB){
 
             mInputLinkTextView.setText(Global.currentUrl);
+        } else if (resultCode == WebActivity.RESULT_MAP_WEB){
+
+            mInputMapTextView.setText(Global.currentUrl);
         }
     }
 

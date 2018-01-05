@@ -1,15 +1,13 @@
 package org.tyaa.furniturehelper.manager;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,7 +20,15 @@ public class WebActivity extends AppCompatActivity {
 
     private String mWebUrl;
     private WebView mWebView;
-    public static final int RESULT_WEB = 2;
+    public static final int RESULT_WEB = 0;
+    public static final int RESULT_MAP_WEB = 1;
+    private enum Mode {
+
+        Link
+        , Map
+        , Nothing
+    }
+    private Mode mCurrentMode = Mode.Nothing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +40,16 @@ public class WebActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        mWebUrl = getIntent().getStringExtra(LinksEditActivity.EXTRA_WEB_URL);
+        Intent incomingIntent = getIntent();
+        if (incomingIntent.hasExtra(LinksEditActivity.EXTRA_WEB_URL)){
+
+            mCurrentMode = Mode.Link;
+            mWebUrl = incomingIntent.getStringExtra(LinksEditActivity.EXTRA_WEB_URL);
+        } else if (incomingIntent.hasExtra(LinksEditActivity.EXTRA_WEB_MAP_URL)){
+
+            mCurrentMode = Mode.Map;
+            mWebUrl = incomingIntent.getStringExtra(LinksEditActivity.EXTRA_WEB_MAP_URL);
+        }
 
         final ProgressBar progressBar = (ProgressBar)findViewById(R.id.webProgressBar);
         progressBar.setMax(100); // значения в диапазоне 0-100
@@ -50,7 +65,14 @@ public class WebActivity extends AppCompatActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
                 Global.currentUrl = url;
-                setResult(WebActivity.RESULT_WEB);
+                if (mCurrentMode == Mode.Link){
+
+                    setResult(WebActivity.RESULT_WEB);
+                } else if (mCurrentMode == Mode.Map){
+
+                    setResult(WebActivity.RESULT_MAP_WEB);
+                }
+
                 return false;
             }
 
@@ -81,10 +103,8 @@ public class WebActivity extends AppCompatActivity {
 
                 titleTextView.setText(title);
             }
-
-
         });
-
+        Log.d("asd", mWebUrl);
         mWebView.loadUrl(mWebUrl);
     }
 
@@ -99,12 +119,5 @@ public class WebActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-
-
-        return super.onCreateView(parent, name, context, attrs);
     }
 }
