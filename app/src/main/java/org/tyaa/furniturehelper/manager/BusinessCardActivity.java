@@ -1,6 +1,7 @@
 package org.tyaa.furniturehelper.manager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
@@ -81,10 +82,19 @@ public class BusinessCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_business_card);
         //ButterKnife.bind(this);
 
-        mPhoneNumber =
-                getIntent().getStringExtra(CallReceiver.EXTRA_PHONE_NUMBER);
-        Toast.makeText(this, mPhoneNumber,
-                Toast.LENGTH_SHORT).show();
+        Intent incomingIntent = getIntent();
+
+        if (incomingIntent.hasExtra(CallReceiver.EXTRA_PHONE_NUMBER)){
+
+            mPhoneNumber =
+                    getIntent().getStringExtra(CallReceiver.EXTRA_PHONE_NUMBER);
+            Toast.makeText(this, mPhoneNumber,
+                    Toast.LENGTH_SHORT).show();
+        } else {
+
+            Toast.makeText(this, "TODO",
+                    Toast.LENGTH_SHORT).show();
+        }
 
         ActivityBusinessCardBinding activityBusinessCardBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_business_card);
