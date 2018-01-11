@@ -54,6 +54,8 @@ public class BusinessCardActivity extends AppCompatActivity {
 
     private String mPhoneNumber = "";
 
+    private ActivityBusinessCardBinding mActivityBusinessCardBinding;
+
     public static final String SELECTED_LINK_LIST_ITEM_TITLE =
             "org.tyaa.furniturehelper.manager.AppCompatActivity.SELECTED_TITLE";
 
@@ -96,10 +98,10 @@ public class BusinessCardActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
 
-        ActivityBusinessCardBinding activityBusinessCardBinding =
+        mActivityBusinessCardBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_business_card);
         final LinkList linkList = Global.LINK_LIST;
-        activityBusinessCardBinding.setItems(linkList);
+        mActivityBusinessCardBinding.setItems(linkList);
         //activityBusinessCardBinding.
 
         mViberTabLayout = (LinearLayout) findViewById(R.id.viberTabLayout);
@@ -187,5 +189,13 @@ public class BusinessCardActivity extends AppCompatActivity {
                         .setBackgroundColor(Color.parseColor("#CCCCCC"));
             }
         });*/
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //mActivityBusinessCardBinding.notifyChange();
+        //mActivityBusinessCardBinding.executePendingBindings();
+        mActivityBusinessCardBinding.invalidateAll();
     }
 }

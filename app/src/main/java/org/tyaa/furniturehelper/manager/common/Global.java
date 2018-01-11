@@ -4,6 +4,7 @@ import android.databinding.ObservableArrayList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import org.tyaa.furniturehelper.manager.R;
@@ -23,6 +24,8 @@ public class Global {
 
     public static final LinkList LINK_LIST;
     public static ImageView selectedImageView;
+    //
+    public static ImageButton currentGroupImageButton;
     public static final Drawable EMPTY_DRAWABLE;
     public static int selectedSubLinkPos;
     public static GreenDAOFacade greenDAOFacade;

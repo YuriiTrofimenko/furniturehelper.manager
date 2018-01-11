@@ -85,7 +85,7 @@ public class LinkListItemAdapter extends BaseAdapter {
                     BusinessCardActivity.SELECTED_LINK_LIST_ITEM_TITLE
                     , mList.get(i).getId()
             );
-            v.getContext().startActivity(intent);
+            ((BusinessCardActivity)v.getContext()).startActivityForResult(intent, 100);
         });
 
         return binding.getRoot();

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import org.tyaa.furniturehelper.manager.LinksEditActivity;
@@ -71,6 +72,23 @@ public class LinkListSubItemAdapter extends BaseAdapter {
 
         //LinkBinding binding = null;
         //LinkTextBinding linkTextBinding = null;
+
+        /*View linksGroupView =
+                mInflater.inflate(R.layout.activity_links_edit, viewGroup, false);
+
+        ImageButton linksGroupImageButton =
+                linksGroupView.findViewById(R.id.linksGroupImageButton);
+
+        linksGroupImageButton
+                .setOnLongClickListener(v -> {
+
+                    //Log.d("MySpy", "ТУДУ!");
+                    Global.currentGroupImageButton = (ImageButton)v;
+                    //Global.selectedSubLinkPos = i;
+                    //((LinksEditActivity)binding.getRoot().getContext()).selectImage();
+                    ((LinksEditActivity)linksGroupView.getContext()).groupImgGalleryIntent();
+                    return true;
+                });*/
 
         ISubLink currentSubLink = mList.get(i);
 

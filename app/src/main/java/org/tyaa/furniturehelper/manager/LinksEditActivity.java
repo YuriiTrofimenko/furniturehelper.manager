@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import org.tyaa.furniturehelper.manager.entity.LinkImgItem;
 import org.tyaa.furniturehelper.manager.entity.LinkMapItem;
 import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
 import org.tyaa.furniturehelper.manager.entity.LinkUrlItem;
+import org.tyaa.furniturehelper.manager.entity.LinksGroup;
 import org.tyaa.furniturehelper.manager.model.LinkListItem;
 
 import java.io.ByteArrayOutputStream;
@@ -39,8 +41,13 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 public class LinksEditActivity extends AppCompatActivity {
+
+    //Картинка группы ссылок
+    @BindView(R.id.linksGroupImageButton)
+    ImageButton mLinksGroupImageButton;
 
     //Панель кнопок добавления прикреплений
     @BindView(R.id.attIconsLinearLayout)
@@ -65,14 +72,17 @@ public class LinksEditActivity extends AppCompatActivity {
     //@BindView(R.id.doAddImageView)
     //ImageView mDoAddImageView;
 
+    private ActivityLinksEditBinding mActivityLinksEditBinding;
+
     private Long mLinksId;
     private LinkListItem mLinkListItem;
     private String mUserChosenTask;
 
-    private static final int SELECT_FILE = 0;
+    private static final int REQUEST_SELECT_FILE_FOR_ITEM = 0;
     private static final int REQUEST_CAMERA = 1;
     private static final int REQUEST_WEB = 2;
     private static final int REQUEST_MAP_WEB = 3;
+    private static final int REQUEST_SELECT_FILE_FOR_GROUP = 4;
     public static final String EXTRA_WEB_URL =
             "org.tyaa.furniturehelper.manager.LinksEditActivity.web_url";
     public static final String EXTRA_WEB_MAP_URL =
@@ -86,6 +96,12 @@ public class LinksEditActivity extends AppCompatActivity {
         , Map
         , Image
         , Camera
+    }
+
+    private enum ImageTarget {
+
+        Item
+        , Group
     }
 
     private SelectedAttachmentType mSelectedAttachmentType;
@@ -103,7 +119,7 @@ public class LinksEditActivity extends AppCompatActivity {
 
         for (LinkListItem linkListItem : Global.LINK_LIST.mLinkItemList) {
 
-            //Log.d("asd2", linkListItem.title);
+            //
             if (linkListItem.getId() == mLinksId){
 
                 mLinkListItem = linkListItem;
@@ -112,11 +128,10 @@ public class LinksEditActivity extends AppCompatActivity {
 
         //mLinkListItem = Global.LINK_LIST.mLinkItemList.get(mLinksPos);
 
-        //Log.d("asd2", mLinkListItem.title);
-        ActivityLinksEditBinding activityLinksEditBinding =
+        mActivityLinksEditBinding =
                 DataBindingUtil.setContentView(this, R.layout.activity_links_edit);
         mLinkListItem.subLinks.setLink_list_item(mLinkListItem);
-        activityLinksEditBinding.setItems(mLinkListItem.subLinks);
+        mActivityLinksEditBinding.setItems(mLinkListItem.subLinks);
         //activityLinksEditBinding.setLink_list_item(mLinkListItem);
         ButterKnife.bind(this);
     }
@@ -263,6 +278,22 @@ public class LinksEditActivity extends AppCompatActivity {
         }
     }
 
+    //Обработчик клика для изменения картинки и заголовка группы
+    @OnLongClick({
+            R.id.linksGroupImageButton
+            })
+    boolean onLongClick(View view) {
+
+        switch (view.getId()) {
+
+            case R.id.linksGroupImageButton:
+                //
+                groupImgGalleryIntent();
+                break;
+        }
+        return true;
+    }
+
     public void selectImage() {
 
         final CharSequence[] items = {
@@ -316,7 +347,15 @@ public class LinksEditActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_SELECT_FILE_FOR_ITEM);
+    }
+
+    public void groupImgGalleryIntent() {
+
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_SELECT_FILE_FOR_GROUP);
     }
 
     private void cameraIntent() {
@@ -354,9 +393,13 @@ public class LinksEditActivity extends AppCompatActivity {
 
         if (resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == SELECT_FILE){
+            if (requestCode == REQUEST_SELECT_FILE_FOR_ITEM){
 
-                onSelectFromGalleryResult(data);
+                onSelectFromGalleryResult(data, ImageTarget.Item);
+            }
+            else if (requestCode == REQUEST_SELECT_FILE_FOR_GROUP){
+
+                onSelectFromGalleryResult(data, ImageTarget.Group);
             }
             else if (requestCode == REQUEST_CAMERA){
 
@@ -375,25 +418,33 @@ public class LinksEditActivity extends AppCompatActivity {
      * Обработчик выбора изображения из галлереи
      * */
     @SuppressWarnings("deprecation")
-    private void onSelectFromGalleryResult(Intent data) {
+    private void onSelectFromGalleryResult(Intent _data, ImageTarget _imageTarget) {
 
         Bitmap bm = null;
-        if (data != null) {
+        if (_data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(
                         getApplicationContext().getContentResolver()
-                        , data.getData()
+                        , _data.getData()
                 );
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             String uriString =
                     Utility.bitmapToUriString(
                             this
                             , bm
-                            , new File(data.getData().toString()).getName()
+                            , new File(_data.getData().toString()).getName()
                     );
-            addImgAttachment(uriString);
+
+            if (_imageTarget == ImageTarget.Item) {
+
+                addImgAttachment(uriString);
+            } else if (_imageTarget == ImageTarget.Group) {
+
+                changeGroupImg(bm, uriString);
+            }
         }
         //Global.selectedImageView.setImageBitmap(bm);
     }
@@ -441,5 +492,39 @@ public class LinksEditActivity extends AppCompatActivity {
         );
     }
 
+    private void changeGroupImg(Bitmap _bitmap, String _uriString){
 
+        //Global.currentGroupImageButton.setImageBitmap(_bitmap);
+
+        //mLinksGroupImageButton.setImageBitmap(_bitmap);
+
+        mLinkListItem.drawable = Utility.uriStringToDrawable(_uriString);
+        //mActivityLinksEditBinding.notifyChange();
+        //mActivityLinksEditBinding.executePendingBindings();
+        mActivityLinksEditBinding.invalidateAll();
+
+        LinksGroup linksGroup = null;
+
+        for (LinksGroup _linksGroup : Global.linksGroupList) {
+
+            //Log.d("asd", _linksGroup.getId() + " " + mLinksId);
+            //
+            if (_linksGroup.getId() == mLinksId){
+
+                linksGroup = _linksGroup;
+            }
+        }
+
+        Log.d("asd1", linksGroup.getDrawable());
+        linksGroup.setDrawable(_uriString);
+
+        if (linksGroup != null) {
+
+            Log.d("asd2", linksGroup.getDrawable());
+            Global.greenDAOFacade.updateLinksGroup(linksGroup);
+        }
+        /*mLinkListItem.subLinks.mSubLinks.add(
+                EntitiesModelsAdapter.linkItemToSubLink(linkImgItem)
+        );*/
+    }
 }
