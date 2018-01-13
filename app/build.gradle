@@ -43,4 +43,5 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.2'
     //apt 'com.jakewharton:butterknife-compiler:8.+'
     testCompile 'junit:junit:4.12'
+    compile project(':furnituresender')
 }
