@@ -3,10 +3,9 @@ package org.tyaa.furnituresender.messagehelper;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 
-import org.tyaa.furnituresender.model.LinkListItem;
-
 import java.util.HashMap;
 
+import org.tyaa.fhelpermodel.LinkListItem;
 import org.tyaa.furnituresender.messageproviders.base.IMessageProvider;
 
 /**
@@ -14,6 +13,7 @@ import org.tyaa.furnituresender.messageproviders.base.IMessageProvider;
 This type can send messages via different message providers
  */
 public final class MessageHelper{
+
 	private static final HashMap<String, ProviderData> providers = new HashMap<>();
 	private static final MessageHelper instance = new MessageHelper();
 	private static Context context;

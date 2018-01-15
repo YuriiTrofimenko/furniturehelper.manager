@@ -1,1 +1,1 @@
-include ':app', ':furnituresender'
+include ':app', ':furnituresender', ':model'

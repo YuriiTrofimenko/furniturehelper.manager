@@ -1,40 +1,49 @@
 package org.tyaa.furniturehelper.manager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import org.tyaa.fhelpermodel.LinkList;
 import org.tyaa.furniturehelper.manager.common.Global;
 import org.tyaa.furniturehelper.manager.databinding.ActivityBusinessCardBinding;
-import org.tyaa.furniturehelper.manager.model.LinkList;
-import org.tyaa.furniturehelper.manager.model.LinkListItem;
 import org.tyaa.furniturehelper.manager.receiver.CallReceiver;
+import org.tyaa.furnituresender.messagehelper.MessageHelper;
+import org.tyaa.furnituresender.messageproviders.SMSProvider;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import butterknife.BindViews;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
-import butterknife.OnTouch;
 
 public class BusinessCardActivity extends AppCompatActivity {
 
     //@BindViews({R.id.viberTabLayout, R.id.whatsappTabLayout, R.id.telegramTabLayout, R.id.smsTabLayout})
     //List<View> mTabs;
+
+    //Кнопка-картинка выхода из главной эктивити приложения
+    @BindView(R.id.exitImageButton)
+    ImageButton mExitImageButton;
+
+    //Кнопка-картинка добавления новой группы ссылок
+    @BindView(R.id.addGroupImageButton)
+    ImageButton mAddGroupImageButton;
+
+    //Кнопка-картинка отправки всех групп ссылок
+    @BindView(R.id.sendImageButton)
+    ImageButton mSendImageButton;
 
     private LinearLayout mViberTabLayout;
     private LinearLayout mWhatsappTabLayout;
@@ -53,6 +62,18 @@ public class BusinessCardActivity extends AppCompatActivity {
     private ListView mLinkListView;
 
     private String mPhoneNumber = "";
+
+    private enum Provider {
+
+        Viber
+        , Whatsapp
+        , Telegram
+        , Sms
+    }
+
+    private Map<Integer, Provider> mProvidersSet = new HashMap<>();
+
+    private Provider mSelectedProvider = Provider.Viber;
 
     private ActivityBusinessCardBinding mActivityBusinessCardBinding;
 
@@ -81,8 +102,12 @@ public class BusinessCardActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        mProvidersSet.put(0, Provider.Viber);
+        mProvidersSet.put(1, Provider.Whatsapp);
+        mProvidersSet.put(2, Provider.Telegram);
+        mProvidersSet.put(3, Provider.Sms);
+
         setContentView(R.layout.activity_business_card);
-        //ButterKnife.bind(this);
 
         Intent incomingIntent = getIntent();
 
@@ -129,6 +154,7 @@ public class BusinessCardActivity extends AppCompatActivity {
 
             final int currentTabIdx = tabIdx;
             imageView.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
 
@@ -139,12 +165,15 @@ public class BusinessCardActivity extends AppCompatActivity {
                     }
                     mTabLayouts.get(currentTabIdx)
                         .setBackgroundColor(Color.parseColor("#CCCCCC"));
+                    mSelectedProvider = mProvidersSet.get(currentTabIdx);
                 }
             });
             tabIdx++;
         }
 
         mLinkListView = (ListView) findViewById(R.id.listView);
+
+        ButterKnife.bind(this);
 
         /*mLinkListView.setOnItemLongClickListener((parent, view, position, id) -> {
 
@@ -189,6 +218,47 @@ public class BusinessCardActivity extends AppCompatActivity {
                         .setBackgroundColor(Color.parseColor("#CCCCCC"));
             }
         });*/
+    }
+
+    //Обработчик клика для кнопок добавления прикреплений
+    @OnClick({
+            R.id.exitImageButton
+            , R.id.addGroupImageButton
+            , R.id.sendImageButton
+            , R.id.fab
+    })
+    void onClick(View view) {
+        //Log.i("asd", "Test text 0");
+        switch (view.getId()) {
+
+            case R.id.exitImageButton:
+                //
+                break;
+            case R.id.addGroupImageButton:
+                //
+
+                break;
+            case R.id.sendImageButton:
+                //
+                /*Toast.makeText(
+                        this
+                        , "Test text", Toast.LENGTH_LONG).show();
+                Log.i("asd", "Test text");*/
+                switch (mSelectedProvider){
+
+                    case Sms: {
+
+                        MessageHelper messageHelper = MessageHelper.getInstance(this);
+                        messageHelper.registerProvider(mSelectedProvider.name(), new SMSProvider());
+                        messageHelper.sendMessages(Global.LINK_LIST.mLinkItemList);
+                        break;
+                    }
+                }
+                break;
+            case R.id.fab:
+                //
+                break;
+        }
     }
 
     @Override

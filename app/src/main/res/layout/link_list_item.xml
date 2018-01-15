@@ -6,7 +6,7 @@
         <!--<import type="android.view.View.OnClickListener"/>-->
         <variable
             name="item"
-            type="org.tyaa.furniturehelper.manager.model.LinkListItem"/>
+            type="org.tyaa.fhelpermodel.LinkListItem"/>
         <!--<variable-->
             <!--name="onLinkListItemClick"-->
             <!--type="android.view.View.OnClickListener"/>-->

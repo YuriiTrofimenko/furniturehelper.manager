@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="items" type="org.tyaa.furniturehelper.manager.model.LinkList"/>
+        <variable name="items" type="org.tyaa.fhelpermodel.LinkList"/>
     </data>
 
     <FrameLayout
@@ -184,24 +184,36 @@
                 android:orientation="horizontal"
                 android:weightSum="100">
 
-                <Button
+                <ImageButton
+                    android:id="@+id/exitImageButton"
                     android:text="Cancel"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="25"/>
-                <Button
+                    android:layout_weight="25"
+                    android:clickable="true"
+                    android:focusable="true"/>
+                <ImageButton
+                    android:id="@+id/addGroupImageButton"
                     android:text="+"
+                    android:src="@android:drawable/ic_menu_add"
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="25"/>
-                <Button
-                    android:text="Ok"
+                    android:layout_weight="25"
+                    android:clickable="true"
+                    android:focusable="true"/>
+                <ImageButton
+                    android:id="@+id/sendImageButton"
+                    android:text="Send"
+                    android:src="@android:drawable/ic_menu_send"
                     android:layout_margin="5dp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="25"/>
+                    android:layout_weight="25"
+                    android:clickable="true"
+                    android:focusable="true"/>
 
                 <LinearLayout
                     android:layout_width="0dp"

@@ -1,19 +1,14 @@
 package org.tyaa.furniturehelper.manager.common;
 
-import android.databinding.ObservableArrayList;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import org.tyaa.fhelpermodel.LinkList;
 import org.tyaa.furniturehelper.manager.R;
 import org.tyaa.furniturehelper.manager.adapter.EntitiesModelsAdapter;
 import org.tyaa.furniturehelper.manager.entity.LinksGroup;
-import org.tyaa.furniturehelper.manager.entity.interfaces.ILinkItem;
-import org.tyaa.furniturehelper.manager.model.LinkList;
-import org.tyaa.furniturehelper.manager.model.LinkListItem;
-
 import java.util.List;
 
 /**

@@ -1,7 +1,6 @@
 package org.tyaa.furniturehelper.manager.common;
 
 import android.content.Context;
-import android.databinding.ObservableArrayList;
 import android.util.Log;
 
 import org.tyaa.furniturehelper.manager.R;
@@ -9,16 +8,10 @@ import org.tyaa.furniturehelper.manager.entity.LinkImgItem;
 import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
 import org.tyaa.furniturehelper.manager.entity.LinkUrlItem;
 import org.tyaa.furniturehelper.manager.entity.LinksGroup;
-import org.tyaa.furniturehelper.manager.model.LinkListItem;
-import org.tyaa.furniturehelper.manager.model.SubLinkImg;
-import org.tyaa.furniturehelper.manager.model.SubLinkLink;
-import org.tyaa.furniturehelper.manager.model.SubLinkList;
-import org.tyaa.furniturehelper.manager.model.SubLinkText;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by yurii on 30.11.17.

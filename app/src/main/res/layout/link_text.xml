@@ -6,7 +6,7 @@
     android:paddingBottom="10dp">
 
     <data>
-        <variable name="item" type="org.tyaa.furniturehelper.manager.model.SubLinkText"/>
+        <variable name="item" type="org.tyaa.fhelpermodel.SubLinkText"/>
     </data>
 
     <FrameLayout

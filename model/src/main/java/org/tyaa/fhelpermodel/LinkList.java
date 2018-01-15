@@ -1,9 +1,9 @@
-package org.tyaa.furnituresender.model;
+package org.tyaa.fhelpermodel;
 
 import android.databinding.ObservableArrayList;
 import android.view.View;
 
-import org.tyaa.furnituresender.model.interfaces.ILinkList;
+import org.tyaa.fhelpermodel.interfaces.ILinkList;
 
 /**
  * Created by yurii on 30.11.17.

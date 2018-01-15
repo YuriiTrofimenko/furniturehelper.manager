@@ -9,17 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import org.tyaa.fhelpermodel.LinkListItem;
 import org.tyaa.furniturehelper.manager.BusinessCardActivity;
 import org.tyaa.furniturehelper.manager.LinksEditActivity;
 import org.tyaa.furniturehelper.manager.R;
 import org.tyaa.furniturehelper.manager.databinding.LinkListItemBinding;
-import org.tyaa.furniturehelper.manager.model.LinkListItem;
-import org.tyaa.furniturehelper.manager.viewmodel.LinkListViewModel;
-
 /**
  * Created by yurii on 30.11.17.
  */

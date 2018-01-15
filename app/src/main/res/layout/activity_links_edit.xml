@@ -4,10 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="items" type="org.tyaa.furniturehelper.manager.model.SubLinkList"/>
+        <variable name="items" type="org.tyaa.fhelpermodel.SubLinkList"/>
         <!--<variable-->
             <!--name="link_list_item"-->
-            <!--type="org.tyaa.furniturehelper.manager.model.LinkListItem"/>-->
+            <!--tyorg.tyaa.model.modelodel.LinkListItem"/>-->
     </data>
 
     <LinearLayout

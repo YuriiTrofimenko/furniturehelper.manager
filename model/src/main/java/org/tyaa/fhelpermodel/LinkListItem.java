@@ -1,4 +1,4 @@
-package org.tyaa.furnituresender.model;
+package org.tyaa.fhelpermodel;
 
 import android.graphics.drawable.Drawable;
 

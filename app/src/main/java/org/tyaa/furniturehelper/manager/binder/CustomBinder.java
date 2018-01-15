@@ -1,19 +1,13 @@
 package org.tyaa.furniturehelper.manager.binder;
 
 import android.databinding.BindingAdapter;
-import android.databinding.InverseBindingAdapter;
 import android.databinding.ObservableArrayList;
-import android.databinding.ObservableField;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import org.tyaa.fhelpermodel.LinkListItem;
+import org.tyaa.fhelpermodel.interfaces.ISubLink;
 import org.tyaa.furniturehelper.manager.adapter.LinkListItemAdapter;
 import org.tyaa.furniturehelper.manager.adapter.LinkListSubItemAdapter;
-import org.tyaa.furniturehelper.manager.model.SubLink;
-import org.tyaa.furniturehelper.manager.model.LinkListItem;
-import org.tyaa.furniturehelper.manager.model.interfaces.ISubLink;
 
 /**
  * Created by yurii on 30.11.17.

@@ -1,4 +1,4 @@
-package org.tyaa.furnituresender.model.interfaces;
+package org.tyaa.fhelpermodel.interfaces;
 
 import android.databinding.ObservableArrayList;
 import android.view.View;

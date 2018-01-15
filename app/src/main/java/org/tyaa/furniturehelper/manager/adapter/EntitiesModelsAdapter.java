@@ -3,6 +3,13 @@ package org.tyaa.furniturehelper.manager.adapter;
 import android.databinding.ObservableArrayList;
 import android.util.Log;
 
+import org.tyaa.fhelpermodel.LinkListItem;
+import org.tyaa.fhelpermodel.SubLinkImg;
+import org.tyaa.fhelpermodel.SubLinkLink;
+import org.tyaa.fhelpermodel.SubLinkList;
+import org.tyaa.fhelpermodel.SubLinkMap;
+import org.tyaa.fhelpermodel.SubLinkText;
+import org.tyaa.fhelpermodel.interfaces.ISubLink;
 import org.tyaa.furniturehelper.manager.common.Utility;
 import org.tyaa.furniturehelper.manager.entity.LinkImgItem;
 import org.tyaa.furniturehelper.manager.entity.LinkMapItem;
@@ -10,13 +17,6 @@ import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
 import org.tyaa.furniturehelper.manager.entity.LinkUrlItem;
 import org.tyaa.furniturehelper.manager.entity.LinksGroup;
 import org.tyaa.furniturehelper.manager.entity.interfaces.ILinkItem;
-import org.tyaa.furniturehelper.manager.model.LinkListItem;
-import org.tyaa.furniturehelper.manager.model.SubLinkImg;
-import org.tyaa.furniturehelper.manager.model.SubLinkLink;
-import org.tyaa.furniturehelper.manager.model.SubLinkList;
-import org.tyaa.furniturehelper.manager.model.SubLinkMap;
-import org.tyaa.furniturehelper.manager.model.SubLinkText;
-import org.tyaa.furniturehelper.manager.model.interfaces.ISubLink;
 
 import java.util.Collections;
 import java.util.Comparator;

@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import org.tyaa.fhelpermodel.LinkListItem;
 import org.tyaa.furniturehelper.manager.adapter.EntitiesModelsAdapter;
 import org.tyaa.furniturehelper.manager.common.Generator;
 import org.tyaa.furniturehelper.manager.common.Global;
@@ -30,12 +28,8 @@ import org.tyaa.furniturehelper.manager.entity.LinkMapItem;
 import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
 import org.tyaa.furniturehelper.manager.entity.LinkUrlItem;
 import org.tyaa.furniturehelper.manager.entity.LinksGroup;
-import org.tyaa.furniturehelper.manager.model.LinkListItem;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import butterknife.BindView;

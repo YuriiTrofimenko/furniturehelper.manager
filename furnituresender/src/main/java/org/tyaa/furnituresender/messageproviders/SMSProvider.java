@@ -7,11 +7,11 @@ import android.databinding.ObservableArrayList;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsManager;
 
+import org.tyaa.fhelpermodel.SubLinkText;
+import org.tyaa.fhelpermodel.interfaces.ISubLink;
 import org.tyaa.furnituresender.AfterSendActivity;
 import org.tyaa.furnituresender.messageproviders.base.IMessageProvider;
 import org.tyaa.furnituresender.messageproviders.base.MessageProviderOptions;
-import org.tyaa.furnituresender.model.SubLinkText;
-import org.tyaa.furnituresender.model.interfaces.ISubLink;
 
 /**
  * FB, Telegram, VK, Google Maps, Viber

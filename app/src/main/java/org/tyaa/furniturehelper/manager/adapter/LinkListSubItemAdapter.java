@@ -3,31 +3,22 @@ package org.tyaa.furniturehelper.manager.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
-import org.tyaa.furniturehelper.manager.LinksEditActivity;
+import org.tyaa.fhelpermodel.SubLinkImg;
+import org.tyaa.fhelpermodel.SubLinkLink;
+import org.tyaa.fhelpermodel.SubLinkMap;
+import org.tyaa.fhelpermodel.SubLinkText;
+import org.tyaa.fhelpermodel.interfaces.ISubLink;
 import org.tyaa.furniturehelper.manager.R;
-import org.tyaa.furniturehelper.manager.common.Global;
 //import org.tyaa.furniturehelper.manager.databinding.LinkBinding;
 import org.tyaa.furniturehelper.manager.databinding.LinkImgBinding;
 import org.tyaa.furniturehelper.manager.databinding.LinkLinkBinding;
 import org.tyaa.furniturehelper.manager.databinding.LinkMapBinding;
 import org.tyaa.furniturehelper.manager.databinding.LinkTextBinding;
-import org.tyaa.furniturehelper.manager.model.SubLink;
-import org.tyaa.furniturehelper.manager.model.SubLinkImg;
-import org.tyaa.furniturehelper.manager.model.SubLinkLink;
-import org.tyaa.furniturehelper.manager.model.SubLinkMap;
-import org.tyaa.furniturehelper.manager.model.SubLinkText;
-import org.tyaa.furniturehelper.manager.model.interfaces.ISubLink;
 
 /**
  * Created by yurii on 30.11.17.

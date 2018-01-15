@@ -1,6 +1,6 @@
-package org.tyaa.furnituresender.model;
+package org.tyaa.fhelpermodel;
 
-import org.tyaa.furnituresender.model.interfaces.ISubLink;
+import org.tyaa.fhelpermodel.interfaces.ISubLink;
 
 /**
  * Created by yurii on 29.11.17.
