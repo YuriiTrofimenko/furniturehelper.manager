@@ -32,7 +32,15 @@ public class PermissionActivity extends AppCompatActivity {
 
                 Toast.makeText(
                         this
-                        , "Application won't be able reading the phone state"
+                        , "Application won't be able reading the phone's status"
+                        , Toast.LENGTH_LONG
+                ).show();
+            }
+            if (grantResults[1] == PackageManager.PERMISSION_DENIED){
+
+                Toast.makeText(
+                        this
+                        , "Application won't be able working with contacts"
                         , Toast.LENGTH_LONG
                 ).show();
             }
@@ -48,7 +56,10 @@ public class PermissionActivity extends AppCompatActivity {
 
             ActivityCompat.requestPermissions(
                     this
-                    , new String[]{Manifest.permission.READ_PHONE_STATE}
+                    , new String[]{
+                            Manifest.permission.READ_PHONE_STATE
+                            , Manifest.permission.READ_CONTACTS
+                    }
                     , PERMISSION_REQUEST_CODE
             );
         } else {

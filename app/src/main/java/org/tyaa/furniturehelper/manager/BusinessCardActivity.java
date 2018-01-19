@@ -80,6 +80,8 @@ public class BusinessCardActivity extends AppCompatActivity {
     public static final String SELECTED_LINK_LIST_ITEM_TITLE =
             "org.tyaa.furniturehelper.manager.AppCompatActivity.SELECTED_TITLE";
 
+    public static final int CONTACTS_REQUEST = 0;
+
     /*@OnClick({R.id.viberTab, R.id.whatsappTab, R.id.telegramTab, R.id.smsTab})
     void onClickTab(View selectedView) {
 
@@ -257,6 +259,8 @@ public class BusinessCardActivity extends AppCompatActivity {
                 break;
             case R.id.fab:
                 //
+                Intent intent = new Intent(this, ContactsActivity.class);
+                startActivityForResult(intent, CONTACTS_REQUEST);
                 break;
         }
     }
