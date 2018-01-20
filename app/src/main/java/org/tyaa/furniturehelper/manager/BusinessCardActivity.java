@@ -1,10 +1,14 @@
 package org.tyaa.furniturehelper.manager;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,6 +22,8 @@ import org.tyaa.furniturehelper.manager.databinding.ActivityBusinessCardBinding;
 import org.tyaa.furniturehelper.manager.receiver.CallReceiver;
 import org.tyaa.furnituresender.messagehelper.MessageHelper;
 import org.tyaa.furnituresender.messageproviders.SMSProvider;
+import org.tyaa.furnituresender.messageproviders.SMSProviderOptions;
+import org.tyaa.furnituresender.messageproviders.base.MessageProviderOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +33,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static org.tyaa.furnituresender.messageproviders.base.MessageProviderOptions.getContext;
 
 public class BusinessCardActivity extends AppCompatActivity {
 
@@ -80,7 +88,8 @@ public class BusinessCardActivity extends AppCompatActivity {
     public static final String SELECTED_LINK_LIST_ITEM_TITLE =
             "org.tyaa.furniturehelper.manager.AppCompatActivity.SELECTED_TITLE";
 
-    public static final int CONTACTS_REQUEST = 0;
+    public static final int EDIT_GROUP_REQUEST = 0;
+    public static final int CONTACTS_REQUEST = 1;
 
     /*@OnClick({R.id.viberTab, R.id.whatsappTab, R.id.telegramTab, R.id.smsTab})
     void onClickTab(View selectedView) {
@@ -250,26 +259,68 @@ public class BusinessCardActivity extends AppCompatActivity {
 
                     case Sms: {
 
-                        MessageHelper messageHelper = MessageHelper.getInstance(this);
-                        messageHelper.registerProvider(mSelectedProvider.name(), new SMSProvider());
-                        messageHelper.sendMessages(Global.LINK_LIST.mLinkItemList);
+                        if (mPhoneNumber.equals("")){
+
+                            goToContactsActivity();
+                        } else {
+
+                            MessageHelper messageHelper = MessageHelper.getInstance(this);
+                            SMSProvider smsProvider = new SMSProvider();
+                            smsProvider.setTempOptions(new SMSProviderOptions(mPhoneNumber));
+                            messageHelper.registerProvider(mSelectedProvider.name(), smsProvider);
+                            messageHelper.sendMessages(Global.LINK_LIST.mLinkItemList);
+                        }
                         break;
                     }
                 }
                 break;
             case R.id.fab:
-                //
-                Intent intent = new Intent(this, ContactsActivity.class);
-                startActivityForResult(intent, CONTACTS_REQUEST);
+
+                goToContactsActivity();
                 break;
         }
     }
 
+    private void goToContactsActivity(){
+
+        //
+        //Intent intent = new Intent(this, ContactsActivity.class);
+        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+        startActivityForResult(intent, CONTACTS_REQUEST);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
-        //mActivityBusinessCardBinding.notifyChange();
-        //mActivityBusinessCardBinding.executePendingBindings();
-        mActivityBusinessCardBinding.invalidateAll();
+        if (resultCode == RESULT_OK) {
+
+            if (requestCode == EDIT_GROUP_REQUEST){
+
+                //
+                mActivityBusinessCardBinding.invalidateAll();
+            }
+            else if (requestCode == CONTACTS_REQUEST){
+
+                // Get the URI and query the content provider for the phone number
+                Uri contactUri = data.getData();
+                String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
+                Cursor cursor = getContentResolver().query(contactUri, projection,
+                        null, null, null);
+
+                // If the cursor returned is valid, get the phone number
+                if (cursor != null && cursor.moveToFirst()) {
+
+                    int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                    mPhoneNumber = cursor.getString(numberIndex);
+                    Log.d("my", mPhoneNumber);
+                    // Do something with the phone number
+                    //mPhoneNumber = data.getStringExtra(ContactsActivity.EXTRA_PHONE_NUMBER);
+                }
+
+                cursor.close();
+            }
+        }
     }
 }

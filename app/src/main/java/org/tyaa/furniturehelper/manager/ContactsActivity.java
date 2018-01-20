@@ -3,6 +3,7 @@ package org.tyaa.furniturehelper.manager;
 import android.annotation.SuppressLint;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -61,13 +63,12 @@ public class ContactsActivity extends AppCompatActivity implements
                             >= Build.VERSION_CODES.HONEYCOMB ?
                             ContactsContract.Contacts.DISPLAY_NAME_PRIMARY :
                             ContactsContract.Contacts.DISPLAY_NAME
-
             };
 
     // The column index for the _ID column
-    private static final int CONTACT_ID_INDEX = 0;
+    private static final Long CONTACT_ID_INDEX = 0L;
     // The column index for the LOOKUP_KEY column
-    private static final int LOOKUP_KEY_INDEX = 1;
+    private static final String LOOKUP_KEY_INDEX = "1";
 
     // Defines the text expression
     /*@SuppressLint("InlinedApi")
@@ -85,6 +86,9 @@ public class ContactsActivity extends AppCompatActivity implements
     // Defines the array to hold values that replace the ?
     private String[] mSelectionArgs = { mSearchString };
 
+    public static final String EXTRA_PHONE_NUMBER =
+            "org.tyaa.furniturehelper.manager.ContactsActivity.PHONE_NUMBER";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -93,7 +97,7 @@ public class ContactsActivity extends AppCompatActivity implements
 
         // Gets the ListView from the View list of the parent activity
         mContactsList =
-                (ListView) findViewById(android.R.id.list);
+                findViewById(android.R.id.list);
         // Gets a CursorAdapter
         mCursorAdapter = new SimpleCursorAdapter(
                 this,
@@ -101,11 +105,37 @@ public class ContactsActivity extends AppCompatActivity implements
                 null,
                 FROM_COLUMNS, TO_IDS,
                 0);
+
+        // Set the item click listener
+        mContactsList.setOnItemClickListener(this);
+
+        /*mContactsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // Get the Cursor
+                Cursor cursor = (Cursor) parent.getAdapter().getItem(position);
+                // Move to the selected contact
+                cursor.moveToPosition(position);
+                // Get the _ID value
+                //mContactId = getLong(String.valueOf(CONTACT_ID_INDEX));
+                // Get the selected LOOKUP KEY
+                //mContactKey = getString(LOOKUP_KEY_INDEX);
+                // Create the contact's content Uri
+                mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
+                //
+                int phoneNumberIndex = cursor
+                        .getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                String phoneNumber = cursor.getString(phoneNumberIndex);
+                Log.d("my", phoneNumber);
+                Intent intent = new Intent();
+                intent.putExtra(EXTRA_PHONE_NUMBER, phoneNumber);
+                setResult(RESULT_OK, intent);
+            }
+        });*/
+
         // Sets the adapter for the ListView
         mContactsList.setAdapter(mCursorAdapter);
-
-        // Set the item click listener to be the current fragment.
-        mContactsList.setOnItemClickListener(this);
 
         // Initializes the loader
         getLoaderManager().initLoader(0, null, this);
@@ -154,19 +184,36 @@ public class ContactsActivity extends AppCompatActivity implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            // Get the Cursor
-            Cursor cursor = (Cursor) parent.getAdapter().getItem(position);
-            // Move to the selected contact
-            cursor.moveToPosition(position);
-            // Get the _ID value
-            mContactId = getLong(String.valueOf(CONTACT_ID_INDEX));
-            // Get the selected LOOKUP KEY
-            mContactKey = getString(LOOKUP_KEY_INDEX);
-            // Create the contact's content Uri
-            mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
-        /*
-         * You can use mContactUri as the content URI for retrieving
-         * the details for a contact.
-         */
+        // Get the Cursor
+        Cursor cursor = (Cursor) parent.getAdapter().getItem(position);
+        // Move to the selected contact
+        cursor.moveToPosition(position);
+        // Get the _ID value
+        mContactId = CONTACT_ID_INDEX;
+        // Get the selected LOOKUP KEY
+        mContactKey = LOOKUP_KEY_INDEX;
+        // Create the contact's content Uri
+        mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
+        //
+        String[] projection =
+                new String[] {
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+        };
+
+        Cursor people = getContentResolver().query(
+                mContactUri
+                , projection
+                , null
+                , null
+                , null
+        );
+        int phoneNumberIndex = people
+                .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+        String phoneNumber = cursor.getString(phoneNumberIndex);
+        Log.d("my", phoneNumber);
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_PHONE_NUMBER, phoneNumber);
+        setResult(RESULT_OK, intent);
     }
 }

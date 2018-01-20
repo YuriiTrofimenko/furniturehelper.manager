@@ -44,6 +44,14 @@ public class PermissionActivity extends AppCompatActivity {
                         , Toast.LENGTH_LONG
                 ).show();
             }
+            if (grantResults[2] == PackageManager.PERMISSION_DENIED){
+
+                Toast.makeText(
+                        this
+                        , "Application won't be able sending sms"
+                        , Toast.LENGTH_LONG
+                ).show();
+            }
             finish();
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -59,6 +67,7 @@ public class PermissionActivity extends AppCompatActivity {
                     , new String[]{
                             Manifest.permission.READ_PHONE_STATE
                             , Manifest.permission.READ_CONTACTS
+                            , Manifest.permission.SEND_SMS
                     }
                     , PERMISSION_REQUEST_CODE
             );
