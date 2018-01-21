@@ -21,6 +21,8 @@ public class PermissionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_permission);
 
         checkPermission();
+
+        finish();
     }
 
     @Override
@@ -60,7 +62,12 @@ public class PermissionActivity extends AppCompatActivity {
     private void checkPermission(){
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) ==
-                PackageManager.PERMISSION_DENIED){
+                PackageManager.PERMISSION_DENIED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) ==
+                PackageManager.PERMISSION_DENIED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) ==
+                PackageManager.PERMISSION_DENIED
+                ){
 
             ActivityCompat.requestPermissions(
                     this

@@ -1,11 +1,15 @@
 package org.tyaa.furniturehelper.manager;
 
+import android.*;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -88,6 +92,9 @@ public class BusinessCardActivity extends AppCompatActivity {
     public static final String SELECTED_LINK_LIST_ITEM_TITLE =
             "org.tyaa.furniturehelper.manager.AppCompatActivity.SELECTED_TITLE";
 
+    public static final String STATE_PHONE_NUMBER =
+            "org.tyaa.furniturehelper.manager.AppCompatActivity.PHONE_NUMBER";
+
     public static final int EDIT_GROUP_REQUEST = 0;
     public static final int CONTACTS_REQUEST = 1;
 
@@ -113,6 +120,15 @@ public class BusinessCardActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        checkPermission();
+
+        // recovering the instance state
+        if (savedInstanceState != null) {
+
+            mPhoneNumber = savedInstanceState.getString(STATE_PHONE_NUMBER);
+        }
+
+
         mProvidersSet.put(0, Provider.Viber);
         mProvidersSet.put(1, Provider.Whatsapp);
         mProvidersSet.put(2, Provider.Telegram);
@@ -122,7 +138,11 @@ public class BusinessCardActivity extends AppCompatActivity {
 
         Intent incomingIntent = getIntent();
 
-        if (incomingIntent.hasExtra(CallReceiver.EXTRA_PHONE_NUMBER)){
+        if (!mPhoneNumber.equals("")){
+
+            Toast.makeText(this, "Phone number is " + mPhoneNumber,
+                    Toast.LENGTH_SHORT).show();
+        } else if (incomingIntent.hasExtra(CallReceiver.EXTRA_PHONE_NUMBER)){
 
             mPhoneNumber =
                     getIntent().getStringExtra(CallReceiver.EXTRA_PHONE_NUMBER);
@@ -130,7 +150,7 @@ public class BusinessCardActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         } else {
 
-            Toast.makeText(this, "TODO",
+            Toast.makeText(this, "Phone number is not set",
                     Toast.LENGTH_SHORT).show();
         }
 
@@ -322,5 +342,37 @@ public class BusinessCardActivity extends AppCompatActivity {
                 cursor.close();
             }
         }
+    }
+
+    private void checkPermission(){
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE) ==
+                PackageManager.PERMISSION_DENIED
+                || ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) ==
+                PackageManager.PERMISSION_DENIED
+                || ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) ==
+                PackageManager.PERMISSION_DENIED
+                ){
+
+            Intent checkPermissionIntent = new Intent(this, PermissionActivity.class);
+            checkPermissionIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(checkPermissionIntent);
+        }
+    }
+
+    // invoked when the activity may be temporarily destroyed, save the instance state here
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        if (!mPhoneNumber.equals("")){
+
+            outState.putString(STATE_PHONE_NUMBER, mPhoneNumber);
+        } else {
+
+            //outState = null;
+        }
+
+        // call superclass to save any view hierarchy
+        super.onSaveInstanceState(outState);
     }
 }
