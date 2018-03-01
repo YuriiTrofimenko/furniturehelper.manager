@@ -5,6 +5,8 @@ import android.databinding.ObservableArrayList;
 
 import org.tyaa.fhelpermodel.interfaces.ISubLink;
 
+import java.util.ArrayList;
+
 /**
 @author Bokov Valery
  */
@@ -18,7 +20,7 @@ public interface IMessageProvider{
 
 	/**Sends message.
 	@param content Some instance of ISubLink.
-	@return True if message sent with one of more items from content. False if all items in content is not applicable for this message
+	@return True if message sent with one of more items from content. False if all items in content are not applicable for this message
 	@exception Can't send message. See message information.*/
-	boolean sendMessage(final ObservableArrayList<ISubLink> content, Context context);
+	boolean sendMessage(final ArrayList<ISubLink> content, Context context);
 }

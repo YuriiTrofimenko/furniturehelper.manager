@@ -30,33 +30,27 @@ public class LinkListSubItemAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
 
     public LinkListSubItemAdapter(ObservableArrayList<ISubLink> _list) {
-
         mList = _list;
     }
 
     @Override
     public int getCount() {
-
         return mList.size();
     }
 
     @Override
     public Object getItem(int i) {
-
         return mList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-
         return i;
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-
         if (mInflater == null) {
-
             mInflater = (LayoutInflater) viewGroup.getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -84,30 +78,32 @@ public class LinkListSubItemAdapter extends BaseAdapter {
         ISubLink currentSubLink = mList.get(i);
 
         if (currentSubLink instanceof SubLinkText) {
-
             LinkTextBinding binding =
                     DataBindingUtil.inflate(mInflater, R.layout.link_text, viewGroup, false);
             binding.setItem((SubLinkText) currentSubLink);
             //Log.d("MySpy", "txt bind!");
             return binding.getRoot();
-        } else if (currentSubLink instanceof SubLinkLink) {
-
+        }
+        else if (currentSubLink instanceof SubLinkLink) {
             LinkLinkBinding binding =
                     DataBindingUtil.inflate(mInflater, R.layout.link_link, viewGroup, false);
             binding.setItem((SubLinkLink) currentSubLink);
-            return binding.getRoot();
-        } else if (currentSubLink instanceof SubLinkMap) {
 
+            return binding.getRoot();
+        }
+        else if (currentSubLink instanceof SubLinkMap) {
             LinkMapBinding binding =
                     DataBindingUtil.inflate(mInflater, R.layout.link_map, viewGroup, false);
             binding.setItem((SubLinkMap) currentSubLink);
-            return binding.getRoot();
-        } else /*if (currentSubLink instanceof SubLinkImg)*/ {
 
+            return binding.getRoot();
+        }
+        else /*if (currentSubLink instanceof SubLinkImg)*/ {
             LinkImgBinding binding =
                     DataBindingUtil.inflate(mInflater, R.layout.link_img, viewGroup, false);
             binding.setItem((SubLinkImg) currentSubLink);
             //Log.d("MySpy", "img bind!");
+
             return binding.getRoot();
         }
 

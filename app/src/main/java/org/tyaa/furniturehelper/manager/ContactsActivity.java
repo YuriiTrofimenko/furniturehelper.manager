@@ -55,8 +55,7 @@ public class ContactsActivity extends AppCompatActivity implements
     // An adapter that binds the result Cursor to the ListView
     private SimpleCursorAdapter mCursorAdapter;
     @SuppressLint("InlinedApi")
-    private static final String[] PROJECTION =
-            {
+    private static final String[] PROJECTION = {
                     ContactsContract.Contacts._ID,
                     ContactsContract.Contacts.LOOKUP_KEY,
                     Build.VERSION.SDK_INT
@@ -91,13 +90,11 @@ public class ContactsActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
         // Gets the ListView from the View list of the parent activity
-        mContactsList =
-                findViewById(android.R.id.list);
+        mContactsList = findViewById(android.R.id.list);
         // Gets a CursorAdapter
         mCursorAdapter = new SimpleCursorAdapter(
                 this,
@@ -143,7 +140,6 @@ public class ContactsActivity extends AppCompatActivity implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
         /*
          * Makes search string into pattern and
          * stores it in the selection array
@@ -172,7 +168,6 @@ public class ContactsActivity extends AppCompatActivity implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Put the result Cursor in the adapter for the ListView
         mCursorAdapter.swapCursor(cursor);
-
     }
 
     @Override
@@ -183,7 +178,6 @@ public class ContactsActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
         // Get the Cursor
         Cursor cursor = (Cursor) parent.getAdapter().getItem(position);
         // Move to the selected contact
@@ -214,6 +208,7 @@ public class ContactsActivity extends AppCompatActivity implements
         Log.d("my", phoneNumber);
         Intent intent = new Intent();
         intent.putExtra(EXTRA_PHONE_NUMBER, phoneNumber);
+
         setResult(RESULT_OK, intent);
     }
 }

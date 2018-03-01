@@ -8,14 +8,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.AnyRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -23,34 +21,35 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
-import org.tyaa.furniturehelper.manager.R;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * Created by yurii on 11.12.17.
  */
 
 public class Utility {
+    //a folder name for images
+    private final static String imagesFolder = "Manager Images";
 
-    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
-
-    private static Bitmap mBitmap;
-    private static File mFile;
+    //прсстая проверка наличия разрешения
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static boolean isThereAPermission(final Context context, final String permissionId){
+        return ContextCompat.checkSelfPermission(context, permissionId) == PackageManager.PERMISSION_GRANTED;
+    }
 
     //Проверка разрешений на работу с картой памяти
+    //Проверка разрешения с ответом в onRequestPermissionsResult
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public static boolean checkPermission(final Context context) {
-
+    public static boolean checkPermission(final Context context, final String permissionId, final int requestId) {
         int currentAPIVersion = Build.VERSION.SDK_INT;
-        if(currentAPIVersion>=android.os.Build.VERSION_CODES.M)
+
+        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M)
         {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (ContextCompat.checkSelfPermission(context, permissionId) == PackageManager.PERMISSION_DENIED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context,permissionId)) {
                     AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
                     alertBuilder.setCancelable(true);
                     alertBuilder.setTitle("Permission necessary");
@@ -58,14 +57,15 @@ public class Utility {
                     alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                            ActivityCompat.requestPermissions((Activity) context, new String[]{permissionId}, requestId);
                         }
                     });
                     AlertDialog alert = alertBuilder.create();
                     alert.show();
                 } else {
-                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    ActivityCompat.requestPermissions((Activity) context, new String[]{permissionId}, requestId);
                 }
+
                 return false;
             } else {
                 return true;
@@ -83,47 +83,70 @@ public class Utility {
      */
     public static final String drawableToURIString(@NonNull Context context,
                                           @AnyRes int drawableId) {
-        /*Log.d("MyLog", "drawableToURI");
-        Uri imageUri = Uri.parse(
-                ContentResolver.SCHEME_ANDROID_RESOURCE +
-                //"res:///" +
-                "://" + context.getResources().getResourcePackageName(drawableId)
-                + '/' + context.getResources().getResourceTypeName(drawableId)
-                + '/' + context.getResources().getResourceEntryName(drawableId) );
-        return imageUri;*/
+
+        String filename = context.getResources()
+                .getResourceEntryName(drawableId) + ".png";
+
+        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imagesFolder);
+
+        filename = folder.getAbsolutePath() + "/" + filename;
+        Log.d("valery", "Utility 1723: " + filename);
+
+        if (!folder.exists()) {
+            if (!isThereAPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                Log.d("valery", "1816can't write");
+                return "";
+            }
+            if (!folder.mkdirs()) {
+                Log.d("valery", "1734can't make directory");
+                return "";
+            }
+        }
+
+        File file = new File(filename);
+
+        if (file.exists())
+            return filename;
+
         // Get the image from drawable resource as drawable object
-        Drawable drawable = context.getDrawable(drawableId);
-        mBitmap = ((BitmapDrawable)drawable).getBitmap();
-        // Get the external storage directory path
-        String path = Environment.getExternalStorageDirectory().toString();
+        Drawable drawable = context.getResources().getDrawable(drawableId);
+        Bitmap mBitmap = ((BitmapDrawable)drawable).getBitmap();
+
         // Create a file to save the image
-        mFile =
-                new File(path, context.getResources()
-                        .getResourceEntryName(drawableId) + ".png");
+        FileOutputStream fs;
+     //   Log.d("valery", "Utility 2: " + filename);
         try{
-            OutputStream stream = null;
-            stream = new FileOutputStream(mFile);
-            mBitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-            stream.flush();
-            stream.close();
+            fs = new FileOutputStream(file);
+            mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fs);
+            fs.flush();
+
+            fs.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // Parse the saved image path to uri
-        return mFile.getAbsolutePath();
+
+        return filename;
     }
 
     /**
      * get Drawable from string
      * */
     public static final Drawable uriStringToDrawable(@NonNull String _uriString) {
+ //       Log.d("MyLog", "uriStringToDrawable 2:" + _uriString);
+        java.io.FileInputStream fs;
 
-        Uri imageUri = Uri.parse(_uriString);
-        String path = imageUri.toString();
-        Log.d("MyLog", path);
-        return Drawable.createFromPath(path);
+        try {
+            Log.d("valery", "Utility 1713: " +  _uriString);
+            fs = new java.io.FileInputStream(_uriString);
+      //      Log.d("MyLog", "got stream");
+            return Drawable.createFromStream(fs, _uriString);
+        }catch(java.io.IOException ex){
+            ex.printStackTrace();
+        }
+
+        return Global.EMPTY_DRAWABLE;
     }
 
     /**
@@ -177,25 +200,35 @@ public class Utility {
                                                      Bitmap _bitmap
                                                     , String _fileName
                                                 ) {
-
-        mBitmap = _bitmap;
+        Bitmap mBitmap = _bitmap;
         // Get the external storage directory path
-        String path = Environment.getExternalStorageDirectory().toString();
+        String filename = _fileName + "_copy.png";
+
+    //    Log.d("valery", "Utility 3: " + filename);
         // Create a file to save the image
-        mFile =
-                new File(path, _fileName + "_copy.png");
         try{
-            OutputStream stream = null;
-            stream = new FileOutputStream(mFile);
-            mBitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+            File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), imagesFolder);
+
+            filename = folder.getAbsolutePath() + "/" + filename;
+            Log.d("valery", "Utility 3: " + filename);
+
+            File file = new File(filename);
+
+            if (file.exists())
+                return filename;
+
+            FileOutputStream stream = new java.io.FileOutputStream(file);
+            mBitmap.compress(Bitmap.CompressFormat.PNG,100, stream);
             stream.flush();
             stream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return "";
         } catch (IOException e) {
             e.printStackTrace();
+            return "";
         }
-        // Parse the saved image path to uri
-        return mFile.getAbsolutePath();
+
+        return filename;
     }
 }

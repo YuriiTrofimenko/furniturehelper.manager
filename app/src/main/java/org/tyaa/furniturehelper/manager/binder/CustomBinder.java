@@ -14,17 +14,14 @@ import org.tyaa.furniturehelper.manager.adapter.LinkListSubItemAdapter;
  */
 
 public class CustomBinder {
-
     @BindingAdapter({"link_list"})
     public static void bindList(ListView view, ObservableArrayList<LinkListItem> list) {
-
         LinkListItemAdapter adapter = new LinkListItemAdapter(list);
         view.setAdapter(adapter);
     }
 
     @BindingAdapter({"sub_link_list"})
     public static void bindSubList(ListView view, ObservableArrayList<ISubLink> list) {
-
         LinkListSubItemAdapter adapter = new LinkListSubItemAdapter(list);
         view.setAdapter(adapter);
     }

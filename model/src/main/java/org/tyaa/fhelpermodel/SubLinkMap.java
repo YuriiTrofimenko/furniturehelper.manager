@@ -7,7 +7,6 @@ import org.tyaa.fhelpermodel.interfaces.ISubLink;
  */
 
 public class SubLinkMap implements ISubLink {
-
     public Long id;
     public String map;
     public String guid;

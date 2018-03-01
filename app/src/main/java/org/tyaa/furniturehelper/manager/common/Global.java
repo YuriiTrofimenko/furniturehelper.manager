@@ -2,7 +2,7 @@ package org.tyaa.furniturehelper.manager.common;
 
 import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.widget.ImageButton;
+//import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import org.tyaa.fhelpermodel.LinkList;
@@ -16,18 +16,18 @@ import java.util.List;
  */
 
 public class Global {
-
-    public static final LinkList LINK_LIST;
+    public static LinkList LINK_LIST;
     public static ImageView selectedImageView;
     //
-    public static ImageButton currentGroupImageButton;
-    public static final Drawable EMPTY_DRAWABLE;
+    //public static ImageButton currentGroupImageButton;
+    public static Drawable EMPTY_DRAWABLE;
     public static int selectedSubLinkPos;
     public static GreenDAOFacade greenDAOFacade;
     public static List<LinksGroup> linksGroupList;
     public static String currentUrl;
 
-    static {
+    static public void init(){
+        if (greenDAOFacade != null) return;
 
         greenDAOFacade = new GreenDAOFacade();
         initRepository();
@@ -44,13 +44,13 @@ public class Global {
      * Первичная настройка репозитория
      * */
     private static void initRepository(){
-
         //greenDAOFacade.clearLinksGroups();
         //Пытаемся получить список всех групп ссылок из БД
         linksGroupList = greenDAOFacade.getAllLinksGroups();
         //Если ничего не получено - значит БД еще не создавалась
-        Log.d("MyLog", "get groups 1");
-        if (linksGroupList == null || linksGroupList.size() == 0){
+        Log.i("MyLog", "get groups 1");
+
+        if (linksGroupList == null || linksGroupList.size() == 0){//при добавлении новых групп, учебные не исчезают
 
             Log.d("MyLog", "get groups 2");
             //Создаем список групп, заполненных элементами

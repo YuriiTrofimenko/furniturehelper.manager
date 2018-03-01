@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">Manager</string>
     <string name="social_name">Social name</string>
+    <string name="qDeleteGroup">Do you want to delete the group?</string>
+    <string name="qDeleteItem">Do you want to delete this item?</string>
+    <string name="sEnterGroupName">enter the name of the new group</string>
+    <string name="sFieldIsBlank">Enter data in blank field</string>
+    <string name="sDelete">Delete</string>
+    <string name="sShowGroup">Open</string>
+    <string name="titleEditGroup">Edit group</string>
+    <string name="titleCreateGroup">Create group</string>
+    <string name="sMessageSentSuccessfully">Message sent successfully!</string>
+    <string name="sGenericFailure">Generic failure</string>
+    <string name="sNoServiceAvailable">Error: No service available</string>
+    <string name="sNullPDU">Error: Null PDU</string>
+    <string name="sRadioIsOff">Radio is off</string>
+    <string name="sUnknownError">Unknown error (</string>
+    <string name="sPhoneIs">Phone number is</string>
+    <string name="sPhoneIsNoSet">Phone number is not set</string>
+    <string name="sNewGroupName">New-group</string>
+    <string name="sAddPhoto">Add photo</string>
+    <string name="sSelectFile">Select file</string>
+    <string name="sFeedback">Feedback about us</string>
 </resources>

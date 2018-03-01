@@ -1,6 +1,7 @@
 package org.tyaa.furniturehelper.manager.common;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 
 import org.tyaa.furniturehelper.manager.R;
@@ -18,11 +19,9 @@ import java.util.List;
  */
 
 public class Generator {
-
     private static Context mContext;
 
     static {
-
         mContext = CurrentApplication.getAppContext();
     }
 
@@ -128,8 +127,8 @@ public class Generator {
     /**
      * Метод создания демонстрационных данных ссылок для БД
      * */
-    public static List<LinksGroup> generateLinksGroups(){
-
+    public static List<LinksGroup> generateLinksGroups(){//TODO строки в ресурсы добавить
+        Resources res = mContext.getResources();
         /**
          * Список для групп ссылок
          * */
@@ -138,18 +137,16 @@ public class Generator {
          * Группа ссылок из ВК
          * */
         //Log.d("MyLog", Utility.drawableToURI(mContext, R.drawable.vk).toString());
-        //Log.d("MyLog", Utility.drawableToURI(mContext, R.drawable.facebook).toString());
+        String uriString = Utility.drawableToURIString(mContext, R.drawable.vk);
+        Log.d("MyLog", uriString);
+
         LinksGroup linksGroup =
-                Global.greenDAOFacade.createLinksGroup(
-                        "ВКонтакте"
-                        , true
-                        , Utility.drawableToURIString(mContext, R.drawable.vk)
-                );
+                Global.greenDAOFacade.createLinksGroup("ВКонтакте", true, uriString);
         /**
          * Добавление текстового элемента в группу
          * */
         LinkTextItem linkTextItem = new LinkTextItem();
-        linkTextItem.setText("Отзывы о нас");
+        linkTextItem.setText(res.getString(R.string.sFeedback));
         linkTextItem.setGuid(Generator.generateGuid());
         linkTextItem.setLinksGroup(linksGroup);
         Global.greenDAOFacade.createLink(linkTextItem);
@@ -265,7 +262,6 @@ public class Generator {
     }
 
     public static String generateGuid() {
-
         //return UUID.randomUUID().toString();
         return String.valueOf(new Date().getTime());
     }

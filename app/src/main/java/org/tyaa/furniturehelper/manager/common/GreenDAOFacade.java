@@ -24,7 +24,6 @@ import java.util.List;
  */
 
 public class GreenDAOFacade {
-
     private DaoSession mDaoSession;
 
     private LinksGroupDao mLinksGroupDao;
@@ -39,7 +38,6 @@ public class GreenDAOFacade {
     //public List<LinksGroup> mLinksGroupList;
 
     public GreenDAOFacade() {
-
         mDaoSession = CurrentApplication.getDaoSession();
 
         mLinksGroupDao = mDaoSession.getLinksGroupDao();
@@ -76,61 +74,59 @@ public class GreenDAOFacade {
     }
 
     /* LinksGroups */
+    //я добавил новый метод для удаления группы
+    public void deleteLinksGroupByKey(Long value){
+        mLinksGroupDao.deleteByKey(value);
+    }
 
     public List<LinksGroup> getAllLinksGroups(){
+        List<LinksGroup> linksGroups = mLinksGroupQuery.list();
 
-        List<LinksGroup> linksGroups =
-                mLinksGroupQuery.list();
         for (LinksGroup linksGroup : linksGroups) {
-
             if (linksGroup.linkTextItems == null) {
-
-                linksGroup.linkTextItems =
-                        new ArrayList<>();
+                linksGroup.linkTextItems = new ArrayList<>();
             }
+
             List<LinkTextItem> textItems =
                 getTextItemsById(linksGroup.getId());
-            if (textItems != null) {
 
+            if (textItems != null) {
                 linksGroup.linkTextItems.addAll(textItems);
             }
 
             if (linksGroup.linkUrlItems == null) {
-
-                linksGroup.linkUrlItems =
-                        new ArrayList<>();
+                linksGroup.linkUrlItems = new ArrayList<>();
             }
+
             List<LinkUrlItem> urlItems =
                     getUrlItemsById(linksGroup.getId());
-            if (urlItems != null) {
 
+            if (urlItems != null) {
                 linksGroup.linkUrlItems.addAll(urlItems);
             }
 
             if (linksGroup.linkMapItems == null) {
-
-                linksGroup.linkMapItems =
-                        new ArrayList<>();
+                linksGroup.linkMapItems = new ArrayList<>();
             }
+
             List<LinkMapItem> mapItems =
                     getMapItemsById(linksGroup.getId());
-            if (mapItems != null) {
 
+            if (mapItems != null) {
                 linksGroup.linkMapItems.addAll(mapItems);
             }
 
             if (linksGroup.linkImgItems == null) {
-
-                linksGroup.linkImgItems =
-                        new ArrayList<>();
+                linksGroup.linkImgItems = new ArrayList<>();
             }
-            List<LinkImgItem> imgItems =
-                    getImgItemsById(linksGroup.getId());
-            if (imgItems != null) {
 
+            List<LinkImgItem> imgItems = getImgItemsById(linksGroup.getId());
+
+            if (imgItems != null) {
                 linksGroup.linkImgItems.addAll(imgItems);
             }
         }
+
         return linksGroups;
     }
 
@@ -143,100 +139,97 @@ public class GreenDAOFacade {
     }
 
     public LinksGroup createLinksGroup(String _title, Boolean _checked, String _drawable){
-
         LinksGroup linksGroup = new LinksGroup();
         linksGroup.setTitle(_title);
         linksGroup.setChecked(_checked);
         linksGroup.setDrawable(_drawable);
         Long id = mLinksGroupDao.insert(linksGroup);
+
         return mLinksGroupDao.load(id);
     }
 
     public void updateLinksGroup(LinksGroup _linksGroup)
     {
-
         mLinksGroupDao.update(_linksGroup);
     }
 
     public void clearLinksGroups(){
-
         mLinksGroupDao.deleteAll();
     }
 
     /* Link */
 
     public void createLink(ILinkItem _linkItem){
-
         Long id = null;
 
         if (_linkItem instanceof LinkTextItem) {
-
             id = mLinkTextItemDao.insert((LinkTextItem)_linkItem);
         } else if (_linkItem instanceof LinkUrlItem) {
-
             id = mLinkUrlItemDao.insert((LinkUrlItem)_linkItem);
         } else if (_linkItem instanceof LinkMapItem) {
-
             id = mLinkMapItemDao.insert((LinkMapItem)_linkItem);
         } else /*if (_linkItem instanceof LinkImgItem)*/ {
-
             id = mLinkImgItemDao.insert((LinkImgItem)_linkItem);
         }
     }
 
     public void createLink(ILinkItem _linkItem, Long _groupId){
-
-        Long id = null;
+      //  Long id = null;
 
         if (_linkItem instanceof LinkTextItem) {
-
             LinkTextItem linkItem = (LinkTextItem) _linkItem;
             LinksGroup linksGroup = getLinksGroupById(_groupId);
             linkItem.setLinksGroup(linksGroup);
-            id = mLinkTextItemDao.insert(linkItem);
-            if (linksGroup.linkTextItems == null) {
+      //      id = mLinkTextItemDao.insert(linkItem);
 
+            if (linksGroup.linkTextItems == null) {
                 linksGroup.linkTextItems = new ArrayList<>();
             }
+
             linksGroup.linkTextItems.add(linkItem);
             mLinksGroupDao.update(linksGroup);
-        } else if (_linkItem instanceof LinkUrlItem) {
+        }
+        else if (_linkItem instanceof LinkUrlItem) {
 
             //id = mLinkUrlItemDao.insert((LinkUrlItem)_linkItem);
             LinkUrlItem linkItem = (LinkUrlItem) _linkItem;
             LinksGroup linksGroup = getLinksGroupById(_groupId);
             linkItem.setLinksGroup(linksGroup);
-            id = mLinkUrlItemDao.insert(linkItem);
-            if (linksGroup.linkUrlItems == null) {
+       //     id = mLinkUrlItemDao.insert(linkItem);
 
+            if (linksGroup.linkUrlItems == null) {
                 linksGroup.linkUrlItems = new ArrayList<>();
             }
+
             linksGroup.linkUrlItems.add(linkItem);
             mLinksGroupDao.update(linksGroup);
-        } else if (_linkItem instanceof LinkMapItem) {
+        }
+        else if (_linkItem instanceof LinkMapItem) {
 
             //id = mLinkMapItemDao.insert((LinkMapItem)_linkItem);
             LinkMapItem linkItem = (LinkMapItem) _linkItem;
             LinksGroup linksGroup = getLinksGroupById(_groupId);
             linkItem.setLinksGroup(linksGroup);
-            id = mLinkMapItemDao.insert(linkItem);
-            if (linksGroup.linkMapItems == null) {
+          //  id = mLinkMapItemDao.insert(linkItem);
 
+            if (linksGroup.linkMapItems == null) {
                 linksGroup.linkMapItems = new ArrayList<>();
             }
+
             linksGroup.linkMapItems.add(linkItem);
             mLinksGroupDao.update(linksGroup);
-        } else /*if (_linkItem instanceof LinkImgItem)*/ {
-
+        }
+        else /*if (_linkItem instanceof LinkImgItem)*/ {
             //id = mLinkImgItemDao.insert((LinkImgItem)_linkItem);
             LinkImgItem linkItem = (LinkImgItem) _linkItem;
             LinksGroup linksGroup = getLinksGroupById(_groupId);
             linkItem.setLinksGroup(linksGroup);
-            id = mLinkImgItemDao.insert(linkItem);
-            if (linksGroup.linkImgItems == null) {
+         //   id = mLinkImgItemDao.insert(linkItem);
 
+            if (linksGroup.linkImgItems == null) {
                 linksGroup.linkImgItems = new ArrayList<>();
             }
+
             linksGroup.linkImgItems.add(linkItem);
             mLinksGroupDao.update(linksGroup);
         }
@@ -259,7 +252,7 @@ public class GreenDAOFacade {
     }
 
     public List<LinkMapItem> getMapItemsById(Long _id)
-    {
+    {mLinkMapItemDao.deleteInTx();
         return mLinkMapItemDao.queryBuilder()
                 .where(LinkMapItemDao.Properties.LinksGroupId.eq(_id))
                 .build()

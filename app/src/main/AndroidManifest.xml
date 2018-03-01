@@ -16,6 +16,7 @@
     <uses-permission android:name="org.tyaa.furniturehelper.manager.PRIVATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".common.CurrentApplication"
@@ -39,7 +40,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".receiver.CallReceiver"
@@ -50,21 +53,35 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".BusinessCardActivity">
+        <activity
+            android:name=".BusinessCardActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LinksEditActivity" />
-        <activity android:name=".PermissionActivity" />
-        <activity android:name=".WebActivity">
+        <activity
+            android:name=".LinksEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PermissionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WebActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LinksEditActivity" />
         </activity>
-        <activity android:name=".ContactsActivity"></activity>
+        <activity
+            android:name=".ContactsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditGroupActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

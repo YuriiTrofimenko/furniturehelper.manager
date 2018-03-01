@@ -3,7 +3,7 @@
     package="org.tyaa.furnituresender">
 
     <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission>
+    <!--uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission-->
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AfterSendActivity"></activity>
+        <activity android:name=".AfterSendActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

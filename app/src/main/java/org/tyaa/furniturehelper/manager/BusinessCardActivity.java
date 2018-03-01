@@ -1,33 +1,48 @@
 package org.tyaa.furniturehelper.manager;
 
-import android.*;
+import android.Manifest;
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import org.tyaa.fhelpermodel.LinkList;
+import org.tyaa.fhelpermodel.LinkListItem;
+import org.tyaa.furniturehelper.manager.adapter.LinkListItemAdapter;
 import org.tyaa.furniturehelper.manager.common.Global;
+import org.tyaa.furniturehelper.manager.common.Utility;
 import org.tyaa.furniturehelper.manager.databinding.ActivityBusinessCardBinding;
+import org.tyaa.furniturehelper.manager.entity.LinkTextItem;
+import org.tyaa.furniturehelper.manager.entity.LinksGroup;
+import org.tyaa.furniturehelper.manager.entity.interfaces.ILinkItem;
 import org.tyaa.furniturehelper.manager.receiver.CallReceiver;
+import org.tyaa.furniturehelper.manager.widget.Dialog2Buttons;
 import org.tyaa.furnituresender.messagehelper.MessageHelper;
+import org.tyaa.furnituresender.messagehelper.ProviderData;
 import org.tyaa.furnituresender.messageproviders.SMSProvider;
 import org.tyaa.furnituresender.messageproviders.SMSProviderOptions;
-import org.tyaa.furnituresender.messageproviders.base.MessageProviderOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,10 +53,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static org.tyaa.furnituresender.messageproviders.base.MessageProviderOptions.getContext;
-
-public class BusinessCardActivity extends AppCompatActivity {
-
+public class BusinessCardActivity extends AppCompatActivity implements DialogInterface.OnClickListener{
     //@BindViews({R.id.viberTabLayout, R.id.whatsappTabLayout, R.id.telegramTabLayout, R.id.smsTabLayout})
     //List<View> mTabs;
 
@@ -62,36 +74,37 @@ public class BusinessCardActivity extends AppCompatActivity {
     private LinearLayout mTelegramTabLayout;
     private LinearLayout mSmsTabLayout;
 
-    private List<LinearLayout> mTabLayouts = new ArrayList<>();
+    private final List<LinearLayout> mTabLayouts = new ArrayList<>();
+    private MessageHelper messageHelper;
 
     private ImageView mViberTabImageView;
     private ImageView mWhatsappTabImageView;
     private ImageView mTelegramTabImageView;
     private ImageView mSmsTabImageView;
-
-    private List<ImageView> mTabImageViews = new ArrayList<>();
-
+    private SMSProvider smsProvider;
+    private final List<ImageView> mTabImageViews = new ArrayList<>();
+    private Dialog2Buttons dlgYesNo;
     private ListView mLinkListView;
 
     private String mPhoneNumber = "";
 
     private enum Provider {
-
         Viber
         , Whatsapp
         , Telegram
         , Sms
     }
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    private final Map<Integer, Provider> mProvidersSet = new HashMap<>();
 
-    private Map<Integer, Provider> mProvidersSet = new HashMap<>();
-
-    private Provider mSelectedProvider = Provider.Viber;
+    private Provider mSelectedProvider = Provider.Sms;
 
     private ActivityBusinessCardBinding mActivityBusinessCardBinding;
 
-    public static final String SELECTED_LINK_LIST_ITEM_TITLE =
+    public static final String GROUP_ID =
             "org.tyaa.furniturehelper.manager.AppCompatActivity.SELECTED_TITLE";
-
+    public static final String GROUP_NAME =
+            "org.tyaa.furniturehelper.manager.AppCompatActivity.GroupName";
     public static final String STATE_PHONE_NUMBER =
             "org.tyaa.furniturehelper.manager.AppCompatActivity.PHONE_NUMBER";
 
@@ -117,17 +130,16 @@ public class BusinessCardActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
         checkPermission();
 
+        boolean canWrite = Utility.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+
         // recovering the instance state
         if (savedInstanceState != null) {
-
             mPhoneNumber = savedInstanceState.getString(STATE_PHONE_NUMBER);
         }
-
 
         mProvidersSet.put(0, Provider.Viber);
         mProvidersSet.put(1, Provider.Whatsapp);
@@ -138,28 +150,26 @@ public class BusinessCardActivity extends AppCompatActivity {
 
         Intent incomingIntent = getIntent();
 
-        if (!mPhoneNumber.equals("")){
+        if (CallReceiver.isReceiverCalled()) {
+            String message;
 
-            Toast.makeText(this, "Phone number is " + mPhoneNumber,
-                    Toast.LENGTH_SHORT).show();
-        } else if (incomingIntent.hasExtra(CallReceiver.EXTRA_PHONE_NUMBER)){
+            if (!mPhoneNumber.equals("")) {
+                message = getResources().getString(R.string.sPhoneIs) + " " + mPhoneNumber;
+            } else if (incomingIntent.hasExtra(CallReceiver.EXTRA_PHONE_NUMBER)) {
+                mPhoneNumber = getIntent().getStringExtra(CallReceiver.EXTRA_PHONE_NUMBER);
+                message = mPhoneNumber;
+            } else {
+                message = getResources().getString(R.string.sPhoneIsNoSet);
+            }
 
-            mPhoneNumber =
-                    getIntent().getStringExtra(CallReceiver.EXTRA_PHONE_NUMBER);
-            Toast.makeText(this, mPhoneNumber,
-                    Toast.LENGTH_SHORT).show();
-        } else {
-
-            Toast.makeText(this, "Phone number is not set",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
 
-        mActivityBusinessCardBinding =
-                DataBindingUtil.setContentView(this, R.layout.activity_business_card);
-        final LinkList linkList = Global.LINK_LIST;
-        mActivityBusinessCardBinding.setItems(linkList);
-        //activityBusinessCardBinding.
+        if (canWrite) {
+            bindData();
+        }
 
+        //activityBusinessCardBinding.
         mViberTabLayout = (LinearLayout) findViewById(R.id.viberTabLayout);
         mWhatsappTabLayout = (LinearLayout) findViewById(R.id.whatsappTabLayout);
         mTelegramTabLayout = (LinearLayout) findViewById(R.id.telegramTabLayout);
@@ -181,29 +191,31 @@ public class BusinessCardActivity extends AppCompatActivity {
         mTabImageViews.add(mSmsTabImageView);
 
         int tabIdx = 0;
+
         for (ImageView imageView : mTabImageViews) {
-
-            final int currentTabIdx = tabIdx;
+            final Integer currentTabIdx = tabIdx;
+            Log.d("test0", currentTabIdx.toString());
             imageView.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
-
+                    Log.d("test1", "1");
                     for (LinearLayout linearLayout : mTabLayouts) {
 
+                        Log.d("test2", linearLayout.toString());
                         linearLayout.setBackgroundColor(getResources()
-                            .getColor(android.R.color.transparent));
+                                .getColor(android.R.color.transparent));
                     }
+
                     mTabLayouts.get(currentTabIdx)
-                        .setBackgroundColor(Color.parseColor("#CCCCCC"));
+                            .setBackgroundColor(Color.parseColor("#CCCCCC"));
                     mSelectedProvider = mProvidersSet.get(currentTabIdx);
                 }
             });
+
             tabIdx++;
         }
 
         mLinkListView = (ListView) findViewById(R.id.listView);
-
         ButterKnife.bind(this);
 
         /*mLinkListView.setOnItemLongClickListener((parent, view, position, id) -> {
@@ -249,62 +261,184 @@ public class BusinessCardActivity extends AppCompatActivity {
                         .setBackgroundColor(Color.parseColor("#CCCCCC"));
             }
         });*/
+
+        initProviders();
+
+        registerForContextMenu(mLinkListView);
     }
 
+    private final void bindData() {
+        if (mActivityBusinessCardBinding != null) return;
+
+        Global.init();
+
+        mActivityBusinessCardBinding =
+                DataBindingUtil.setContentView(this, R.layout.activity_business_card);
+        final LinkList linkList = Global.LINK_LIST;
+        mActivityBusinessCardBinding.setItems(linkList);
+    }
+
+    private void initProviders(){
+        messageHelper = MessageHelper.getInstance(this);
+
+        smsProvider = new SMSProvider(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent arg1) {
+                String s;
+
+                switch (getResultCode()) {
+                    case Activity.RESULT_OK:
+                        s = getResources().getString(R.string.sMessageSentSuccessfully);
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        s = getResources().getString(R.string.sGenericFailure);
+                        break;
+                    case SmsManager.RESULT_ERROR_NO_SERVICE:
+                        s = getResources().getString(R.string.sNoServiceAvailable);
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        s = getResources().getString(R.string.sNullPDU);
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        s = getResources().getString(R.string.sRadioIsOff);
+                        break;
+                    default:
+                        s = getResources().getString(R.string.sUnknownError) + getResultCode() + ")";
+                        break;
+                }
+
+                notifyAboutSendingResult(s);
+            }});
+
+        messageHelper.registerProvider(Provider.Sms.name(), smsProvider);
+        //messageHelper.registerProvider(Provider.Telegram.name(), telegrProvider);
+        //messageHelper.registerProvider(Provider.Whatsapp.name(), wtsappProvider);
+        //messageHelper.registerProvider(Provider.Viber.name(), viberProvider);
+    }
+
+    private void notifyAboutSendingResult(String message) {
+        //TODO code notyfiAboutSendingResult
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_group_edit, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.miShowGroup: {
+                int index = //((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
+                        getIntent().getIntExtra(LinkListItemAdapter.MENU_ITEM_INDEX, -1);
+                Intent intent = new Intent(this, LinksEditActivity.class);
+                Long id = ((LinkListItem) mLinkListView.getAdapter().getItem(index)).getId();
+                intent.putExtra(
+                        BusinessCardActivity.GROUP_ID
+                        , id
+                );
+
+                startActivityForResult(intent, BusinessCardActivity.EDIT_GROUP_REQUEST);
+            }   return true;
+            case R.id.miDeleteGroup:
+                //if (Global.LINK_LIST.mLinkItemList.size() > 0){
+                    int index = //((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
+                            getIntent().getIntExtra(LinkListItemAdapter.MENU_ITEM_INDEX, -1);
+                    getIntent().putExtra("index", index);
+
+                    dlgYesNo = new Dialog2Buttons();
+                    Bundle b = new Bundle();
+                    b.putString("msg", getResources().getString(R.string.qDeleteGroup));
+
+                    dlgYesNo.setArguments(b);
+
+                    dlgYesNo.show(getFragmentManager(), "dlgyn");
+              //  }
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
     //Обработчик клика для кнопок добавления прикреплений
     @OnClick({
             R.id.exitImageButton
             , R.id.addGroupImageButton
             , R.id.sendImageButton
-            , R.id.fab
-    })
+            , R.id.fab})
     void onClick(View view) {
         //Log.i("asd", "Test text 0");
         switch (view.getId()) {
-
             case R.id.exitImageButton:
-                //
+                //exit from app
+                finish();
                 break;
             case R.id.addGroupImageButton:
-                //
-
+                Intent intent = new Intent(this, LinksEditActivity.class);
+                startActivityForResult(intent, BusinessCardActivity.EDIT_GROUP_REQUEST);
                 break;
             case R.id.sendImageButton:
                 //
-                /*Toast.makeText(
-                        this
-                        , "Test text", Toast.LENGTH_LONG).show();
-                Log.i("asd", "Test text");*/
                 switch (mSelectedProvider){
-
                     case Sms: {
-
                         if (mPhoneNumber.equals("")){
-
                             goToContactsActivity();
                         } else {
+                            final ArrayList<LinkListItem> list = new ArrayList<>();
+                            final ObservableArrayList<LinkListItem> li = Global.LINK_LIST.mLinkItemList;
 
-                            MessageHelper messageHelper = MessageHelper.getInstance(this);
-                            SMSProvider smsProvider = new SMSProvider();
-                            smsProvider.setTempOptions(new SMSProviderOptions(mPhoneNumber));
-                            messageHelper.registerProvider(mSelectedProvider.name(), smsProvider);
-                            messageHelper.sendMessages(Global.LINK_LIST.mLinkItemList);
+                            for (int j = 0; j < li.size(); ++j)
+                                if (li.get(j).checked)
+                                   list.add(li.get(j));
+
+                            final ProviderData data = messageHelper.getProviderData(Provider.Sms.name());
+                            data.enabled = true;
+                            data.provider.setTempOptions(new SMSProviderOptions(mPhoneNumber));
+                            messageHelper.sendMessages(list);//Global.LINK_LIST.mLinkItemList);
+
+                            mPhoneNumber = "";
                         }
+                    }   break;
+                    case Telegram:
                         break;
-                    }
+                    case Viber:
+                        break;
+                    case Whatsapp:
+                        break;
                 }
                 break;
             case R.id.fab:
-
                 goToContactsActivity();
                 break;
         }
     }
 
-    private void goToContactsActivity(){
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        dlgYesNo = null;
 
-        //
-        //Intent intent = new Intent(this, ContactsActivity.class);
+        if (which == DialogInterface.BUTTON_POSITIVE) {
+            int index = getIntent().getIntExtra("index",-1);
+            removeItem(index);
+        }
+    }
+
+    private void removeItem(int index){
+        //Object it = mLinkListView.getAdapter().getItem(index);
+        //Global.LINK_LIST.mLinkItemList.get(index)
+        LinkListItem li = Global.LINK_LIST.mLinkItemList.remove(index);
+        //TODO check it
+        //apply changes in database
+        Global.greenDAOFacade.deleteLinksGroupByKey(li.getId());
+        //Global.greenDAOFacade.updateLinksGroup(linksGroup);
+        //mActivityBusinessCardBinding.invalidateAll();
+    }
+
+    private void goToContactsActivity(){
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
         intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
         startActivityForResult(intent, CONTACTS_REQUEST);
@@ -312,17 +446,41 @@ public class BusinessCardActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == RESULT_OK) {
-
             if (requestCode == EDIT_GROUP_REQUEST){
+                /*int groupIndex = data.getIntExtra(EditGroupActivity.GROUP_ID, 0);
+                String title = data.getStringExtra(EditGroupActivity.GROUP_NAME);
 
+                //edit group
+                if (groupIndex > -1) {//change
+                    LinkListItem item = Global.LINK_LIST.mLinkItemList.get(groupIndex);
+                    item.title = title;
+                 //   item.drawable = ?
+                }
+                else//create group
+                {//change
+                    LinksGroup linksGroup =
+                            Global.greenDAOFacade.createLinksGroup(
+                                    title
+                                    , true
+                                    , Utility.drawableToURIString(this, R.drawable.vk)
+                            );
+                    Global.greenDAOFacade.updateLinksGroup(linksGroup);
+                    Global.linksGroupList.add(linksGroup);
+                 //   Long id = ???Global.;
+                  //  Drawable drawable = getResources().getDrawable(R.drawable.defaultImageForGroup);
+                 //   SubLinkList subLinks = new SubLinkList();
+
+                  //  LinkListItem item = new LinkListItem(id, title, drawable, true, subLinks);
+                 //   Global.LINK_LIST.mLinkItemList.add(item);
+                }*/
                 //
                 mActivityBusinessCardBinding.invalidateAll();
             }
-            else if (requestCode == CONTACTS_REQUEST){
-
+            else
+            if (requestCode == CONTACTS_REQUEST){
                 // Get the URI and query the content provider for the phone number
                 Uri contactUri = data.getData();
                 String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
@@ -330,42 +488,69 @@ public class BusinessCardActivity extends AppCompatActivity {
                         null, null, null);
 
                 // If the cursor returned is valid, get the phone number
-                if (cursor != null && cursor.moveToFirst()) {
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                        mPhoneNumber = cursor.getString(numberIndex);
+                        //Log.d("my", mPhoneNumber);
+                        // Do something with the phone number
+                        //mPhoneNumber = data.getStringExtra(ContactsActivity.EXTRA_PHONE_NUMBER);
+                    }
 
-                    int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                    mPhoneNumber = cursor.getString(numberIndex);
-                    Log.d("my", mPhoneNumber);
-                    // Do something with the phone number
-                    //mPhoneNumber = data.getStringExtra(ContactsActivity.EXTRA_PHONE_NUMBER);
+                    cursor.close();
                 }
-
-                cursor.close();
             }
         }
     }
 
     private void checkPermission(){
-
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE) ==
-                PackageManager.PERMISSION_DENIED
-                || ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_CONTACTS) ==
-                PackageManager.PERMISSION_DENIED
-                || ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) ==
-                PackageManager.PERMISSION_DENIED
-                ){
-
+        if (!Utility.isThereAPermission(this, android.Manifest.permission.READ_PHONE_STATE)
+           || !Utility.isThereAPermission(this, android.Manifest.permission.READ_CONTACTS)
+           || !Utility.isThereAPermission(this, android.Manifest.permission.SEND_SMS)
+           || !Utility.isThereAPermission(this, Manifest.permission.CAMERA))
+        {
             Intent checkPermissionIntent = new Intent(this, PermissionActivity.class);
             checkPermissionIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.startActivity(checkPermissionIntent);
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    bindData();
+                }
+                else {
+                    //code for deny
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //TODO инкапсулировать
+        if (smsProvider != null)
+            smsProvider.resume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //TODO инкапсулировать
+        if (smsProvider != null)
+            smsProvider.reset(this);
+    }
+
     // invoked when the activity may be temporarily destroyed, save the instance state here
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
         if (!mPhoneNumber.equals("")){
-
             outState.putString(STATE_PHONE_NUMBER, mPhoneNumber);
         } else {
 

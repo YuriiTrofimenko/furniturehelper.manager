@@ -11,7 +11,6 @@ import android.widget.Toast;
 import org.tyaa.furniturehelper.manager.R;
 
 public class ProgressToast extends Toast {
-
 	private static TextView mProgressToastText;
 	private final Toast mProgressToast;
 

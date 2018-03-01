@@ -16,9 +16,10 @@
     </data>
 
     <LinearLayout
+        android:clickable="true"
+        android:longClickable="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:weightSum="10">
 
         <ImageButton
@@ -46,6 +47,7 @@
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"/>-->
         <CheckBox
+            android:id="@+id/chb"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

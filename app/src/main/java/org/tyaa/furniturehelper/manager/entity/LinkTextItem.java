@@ -19,7 +19,6 @@ import org.tyaa.furniturehelper.manager.entity.interfaces.ILinkItem;
         nameInDb = "LinkTextItem"
 )
 public class LinkTextItem implements ILinkItem {
-
     @Id(autoincrement = true)
     private Long id;
 
@@ -40,132 +39,133 @@ public class LinkTextItem implements ILinkItem {
     @ToOne(joinProperty = "linksGroupId")
     private LinksGroup linksGroup;
 
-/** Used to resolve relations */
-@Generated(hash = 2040040024)
-private transient DaoSession daoSession;
+    /** Used to resolve relations */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
 
-/** Used for active entity operations. */
-@Generated(hash = 555363119)
-private transient LinkTextItemDao myDao;
+    /** Used for active entity operations. */
+    @Generated(hash = 555363119)
+    private transient LinkTextItemDao myDao;
 
-@Generated(hash = 1397867384)
-public LinkTextItem(Long id, @NotNull String text, @NotNull String guid,
-        Long linksGroupId) {
-    this.id = id;
-    this.text = text;
-    this.guid = guid;
-    this.linksGroupId = linksGroupId;
-}
+    @Generated(hash = 1397867384)
+    public LinkTextItem(Long id, @NotNull String text, @NotNull String guid,
+            Long linksGroupId) {
+        this.id = id;
+        this.text = text;
+        this.guid = guid;
+        this.linksGroupId = linksGroupId;
+    }
 
-@Generated(hash = 1511569863)
-public LinkTextItem() {
-}
+    @Generated(hash = 1511569863)
+    public LinkTextItem() {
+    }
 
-public Long getId() {
-    return this.id;
-}
+    public Long getId() {
+        return this.id;
+    }
 
-public void setId(Long id) {
-    this.id = id;
-}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-public String getText() {
-    return this.text;
-}
+    public String getText() {
+        return this.text;
+    }
 
-public void setText(String text) {
-    this.text = text;
-}
+    public void setText(String text) {
+        this.text = text;
+    }
 
-public Long getLinksGroupId() {
-    return this.linksGroupId;
-}
+    public Long getLinksGroupId() {
+        return this.linksGroupId;
+    }
 
-public void setLinksGroupId(Long linksGroupId) {
-    this.linksGroupId = linksGroupId;
-}
+    public void setLinksGroupId(Long linksGroupId) {
+        this.linksGroupId = linksGroupId;
+    }
 
-@Generated(hash = 1566396435)
-private transient Long linksGroup__resolvedKey;
+    @Generated(hash = 1566396435)
+    private transient Long linksGroup__resolvedKey;
 
-/** To-one relationship, resolved on first access. */
-@Generated(hash = 34970653)
-public LinksGroup getLinksGroup() {
-    Long __key = this.linksGroupId;
-    if (linksGroup__resolvedKey == null
-            || !linksGroup__resolvedKey.equals(__key)) {
-        final DaoSession daoSession = this.daoSession;
-        if (daoSession == null) {
+    /** To-one relationship, resolved on first access. */
+    @Generated(hash = 34970653)
+    public LinksGroup getLinksGroup() {
+        Long __key = this.linksGroupId;
+        if (linksGroup__resolvedKey == null
+                || !linksGroup__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            LinksGroupDao targetDao = daoSession.getLinksGroupDao();
+            LinksGroup linksGroupNew = targetDao.load(__key);
+            synchronized (this) {
+                linksGroup = linksGroupNew;
+                linksGroup__resolvedKey = __key;
+            }
+        }
+
+        return linksGroup;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 987654691)
+    public void setLinksGroup(LinksGroup linksGroup) {
+        synchronized (this) {
+            this.linksGroup = linksGroup;
+            linksGroupId = linksGroup == null ? null : linksGroup.getId();
+            linksGroup__resolvedKey = linksGroupId;
+        }
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 128553479)
+    public void delete() {
+        if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
         }
-        LinksGroupDao targetDao = daoSession.getLinksGroupDao();
-        LinksGroup linksGroupNew = targetDao.load(__key);
-        synchronized (this) {
-            linksGroup = linksGroupNew;
-            linksGroup__resolvedKey = __key;
+        myDao.delete(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 1942392019)
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
         }
+        myDao.refresh(this);
     }
-    return linksGroup;
-}
 
-/** called by internal mechanisms, do not call yourself. */
-@Generated(hash = 987654691)
-public void setLinksGroup(LinksGroup linksGroup) {
-    synchronized (this) {
-        this.linksGroup = linksGroup;
-        linksGroupId = linksGroup == null ? null : linksGroup.getId();
-        linksGroup__resolvedKey = linksGroupId;
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 713229351)
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
     }
-}
 
-/**
- * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
- * Entity must attached to an entity context.
- */
-@Generated(hash = 128553479)
-public void delete() {
-    if (myDao == null) {
-        throw new DaoException("Entity is detached from DAO context");
+    public String getGuid() {
+        return this.guid;
     }
-    myDao.delete(this);
-}
 
-/**
- * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
- * Entity must attached to an entity context.
- */
-@Generated(hash = 1942392019)
-public void refresh() {
-    if (myDao == null) {
-        throw new DaoException("Entity is detached from DAO context");
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
-    myDao.refresh(this);
-}
 
-/**
- * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
- * Entity must attached to an entity context.
- */
-@Generated(hash = 713229351)
-public void update() {
-    if (myDao == null) {
-        throw new DaoException("Entity is detached from DAO context");
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 505895724)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getLinkTextItemDao() : null;
     }
-    myDao.update(this);
-}
-
-public String getGuid() {
-    return this.guid;
-}
-
-public void setGuid(String guid) {
-    this.guid = guid;
-}
-
-/** called by internal mechanisms, do not call yourself. */
-@Generated(hash = 505895724)
-public void __setDaoSession(DaoSession daoSession) {
-    this.daoSession = daoSession;
-    myDao = daoSession != null ? daoSession.getLinkTextItemDao() : null;
-}
 }

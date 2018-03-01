@@ -10,7 +10,6 @@ import android.support.v7.widget.AppCompatImageView;
  * при задании ширины высота изменяется автоматически пропорционально
  */
 public class RatioImageView extends AppCompatImageView {
-
     public RatioImageView(Context context) {
         super(context);
     }

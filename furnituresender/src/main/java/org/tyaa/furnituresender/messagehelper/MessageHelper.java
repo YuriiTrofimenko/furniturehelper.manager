@@ -3,9 +3,11 @@ package org.tyaa.furnituresender.messagehelper;
 import android.content.Context;
 import android.databinding.ObservableArrayList;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.tyaa.fhelpermodel.LinkListItem;
+import org.tyaa.fhelpermodel.interfaces.ISubLink;
 import org.tyaa.furnituresender.messageproviders.base.IMessageProvider;
 
 /**
@@ -22,13 +24,11 @@ public final class MessageHelper{
 	}
 
 	public static MessageHelper getInstance(Context _context){
-
 		context = _context;
 		return instance;
 	}
 
 	public void registerProvider(String providerName, IMessageProvider provider){
-
 		providers.put(providerName, new ProviderData(provider));
 	}
 
@@ -41,13 +41,14 @@ public final class MessageHelper{
 	}
 	//https://www.youtube.com/watch?v=RtMCPyhoALg
 	//https://habrahabr.ru/post/243411/
-	public boolean sendMessages(ObservableArrayList<LinkListItem> list){
+	public boolean sendMessages(ArrayList<LinkListItem> list){//ObservableArrayList<LinkListItem> list){
 		boolean messagesSent = false;
 
 		for(final LinkListItem item : list){
-			//send one message via diffrend providers
+			//send one message via different providers
 			for(final ProviderData data : providers.values()){
-				if (data.enabled && data.provider.sendMessage(item.subLinks.mSubLinks, context))
+				if (item.checked && data.enabled &&
+					data.provider.sendMessage(item.subLinks.mSubLinks, context))
 					messagesSent = true;
 			}
 		}

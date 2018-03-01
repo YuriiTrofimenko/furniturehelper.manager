@@ -20,7 +20,6 @@ public class CurrentApplication extends Application {
     private static DaoSession mDaoSession;
 
     public void onCreate() {
-
         super.onCreate();
 
         CurrentApplication.mContext = getApplicationContext();
@@ -35,7 +34,6 @@ public class CurrentApplication extends Application {
     }
 
     public static Context getAppContext() {
-
         return CurrentApplication.mContext;
     }
 

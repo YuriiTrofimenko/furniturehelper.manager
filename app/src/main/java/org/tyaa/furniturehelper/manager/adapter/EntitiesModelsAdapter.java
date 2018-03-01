@@ -27,14 +27,11 @@ import java.util.List;
  */
 
 public class EntitiesModelsAdapter {
-
     public static ObservableArrayList<LinkListItem> populateLinkList(List<LinksGroup> _linksGroups){
-
         ObservableArrayList<LinkListItem> linkListItems =
                 new ObservableArrayList<>();
 
         for (LinksGroup linksGroup : _linksGroups) {
-
             LinkListItem linkListItem =
                     new LinkListItem(
                             linksGroup.getId()
@@ -44,9 +41,7 @@ public class EntitiesModelsAdapter {
                             , new SubLinkList()
                     );
             if (linksGroup.linkTextItems != null) {
-
                 for (LinkTextItem linkTextItem : linksGroup.linkTextItems) {
-
                     SubLinkText subLinkText = new SubLinkText();
                     subLinkText.id = linkTextItem.getId();
                     subLinkText.text = linkTextItem.getText();
@@ -56,9 +51,7 @@ public class EntitiesModelsAdapter {
             }
 
             if (linksGroup.linkUrlItems != null) {
-
                 for (LinkUrlItem linkUrlItem : linksGroup.linkUrlItems) {
-
                     SubLinkLink subLinkLink = new SubLinkLink();
                     subLinkLink.id = linkUrlItem.getId();
                     subLinkLink.link = linkUrlItem.getLink();
@@ -68,9 +61,7 @@ public class EntitiesModelsAdapter {
             }
 
             if (linksGroup.linkMapItems != null) {
-
                 for (LinkMapItem linkMapItem : linksGroup.linkMapItems) {
-
                     SubLinkMap subLinkMap = new SubLinkMap();
                     subLinkMap.id = linkMapItem.getId();
                     subLinkMap.map = linkMapItem.getLink();
@@ -80,9 +71,7 @@ public class EntitiesModelsAdapter {
             }
 
             if (linksGroup.linkImgItems != null) {
-
                 for (LinkImgItem linkImgItem : linksGroup.linkImgItems) {
-
                     SubLinkImg subLinkImg = new SubLinkImg();
                     subLinkImg.id = linkImgItem.getId();
                     subLinkImg.drawable = Utility.uriStringToDrawable(linkImgItem.getDrawable());
@@ -95,15 +84,14 @@ public class EntitiesModelsAdapter {
                 @Override
                 public int compare(ISubLink o1, ISubLink o2) {
                     //return o1.getId().intValue() - o2.getId().intValue();
-                    return  o1.getGuid().compareTo(o2.getGuid());
+                    return o1.getGuid().compareTo(o2.getGuid());
                 }
             });
 
             linkListItems.add(linkListItem);
         }
 
-        for (ISubLink subLink:
-        linkListItems.get(0).subLinks.mSubLinks) {
+        for (ISubLink subLink : linkListItems.get(0).subLinks.mSubLinks) {
             Log.d("asd", subLink.getGuid());
         }
 
@@ -111,35 +99,33 @@ public class EntitiesModelsAdapter {
     }
 
     public static ISubLink linkItemToSubLink(ILinkItem _linkItem){
-
         ISubLink subLink = null;
 
         if (_linkItem instanceof LinkTextItem) {
-
             LinkTextItem linkTextItem = (LinkTextItem) _linkItem;
             SubLinkText subLinkText = new SubLinkText();
             subLinkText.id = linkTextItem.getId();
             subLinkText.text = linkTextItem.getText();
             subLinkText.guid = linkTextItem.getGuid();
             subLink = subLinkText;
-        } else if (_linkItem instanceof LinkUrlItem) {
-
+        }
+        else if (_linkItem instanceof LinkUrlItem) {
             LinkUrlItem linkUrlItem = (LinkUrlItem) _linkItem;
             SubLinkLink subLinkLink = new SubLinkLink();
             subLinkLink.id = linkUrlItem.getId();
             subLinkLink.link = linkUrlItem.getLink();
             subLinkLink.guid = linkUrlItem.getGuid();
             subLink = subLinkLink;
-        } else if (_linkItem instanceof LinkMapItem) {
-
+        }
+        else if (_linkItem instanceof LinkMapItem) {
             LinkMapItem linkMapItem = (LinkMapItem) _linkItem;
             SubLinkMap subLinkMap = new SubLinkMap();
             subLinkMap.id = linkMapItem.getId();
             subLinkMap.map = linkMapItem.getLink();
             subLinkMap.guid = linkMapItem.getGuid();
             subLink = subLinkMap;
-        } else /*if (_linkItem instanceof LinkImgItem)*/ {
-
+        }
+        else /*if (_linkItem instanceof LinkImgItem)*/ {
             LinkImgItem linkImgItem = (LinkImgItem) _linkItem;
             SubLinkImg subLinkImg = new SubLinkImg();
             subLinkImg.id = linkImgItem.getId();
