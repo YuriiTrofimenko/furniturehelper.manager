@@ -1,7 +1,7 @@
 package org.tyaa.furnituresender.messagehelper;
 
 import android.content.Context;
-import android.databinding.ObservableArrayList;
+import androidx.databinding.ObservableArrayList;
 
 import java.util.ArrayList;
 import java.util.HashMap;

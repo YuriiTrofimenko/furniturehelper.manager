@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/furniturehelper-manager.iml" filepath="$PROJECT_DIR$/.idea/modules/furniturehelper-manager.iml" group="furniturehelper-manager" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/furniturehelper-manager-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/furniturehelper-manager-app.iml" group="furniturehelper-manager/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/furnituresender/furniturehelper-manager-furnituresender.iml" filepath="$PROJECT_DIR$/.idea/modules/furnituresender/furniturehelper-manager-furnituresender.iml" group="furniturehelper-manager/furnituresender" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/model/furniturehelper-manager-model.iml" filepath="$PROJECT_DIR$/.idea/modules/model/furniturehelper-manager-model.iml" group="furniturehelper-manager/model" />
-      <module fileurl="file://$PROJECT_DIR$/furniturehelper.manager.iml" filepath="$PROJECT_DIR$/furniturehelper.manager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/furnituresender/furnituresender.iml" filepath="$PROJECT_DIR$/furnituresender/furnituresender.iml" />
-      <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/furniturehelper-manager.iml" filepath="$PROJECT_DIR$/.idea/modules/furniturehelper-manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/furniturehelper-manager.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/furniturehelper-manager.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/furnituresender/furniturehelper-manager.furnituresender.iml" filepath="$PROJECT_DIR$/.idea/modules/furnituresender/furniturehelper-manager.furnituresender.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/model/furniturehelper-manager.model.iml" filepath="$PROJECT_DIR$/.idea/modules/model/furniturehelper-manager.model.iml" />
     </modules>
   </component>
 </project>

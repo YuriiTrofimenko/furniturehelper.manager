@@ -1,6 +1,6 @@
 package org.tyaa.fhelpermodel.interfaces;
 
-import android.databinding.ObservableArrayList;
+import androidx.databinding.ObservableArrayList;
 import android.view.View;
 
 /**

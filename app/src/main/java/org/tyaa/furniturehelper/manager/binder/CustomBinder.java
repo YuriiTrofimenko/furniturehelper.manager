@@ -1,7 +1,7 @@
 package org.tyaa.furniturehelper.manager.binder;
 
-import android.databinding.BindingAdapter;
-import android.databinding.ObservableArrayList;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.ObservableArrayList;
 import android.widget.ListView;
 
 import org.tyaa.fhelpermodel.LinkListItem;

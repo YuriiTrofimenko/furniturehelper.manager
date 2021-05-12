@@ -2,8 +2,6 @@ package org.tyaa.furniturehelper.manager.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.databinding.ObservableArrayList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 //import android.widget.ListView;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableArrayList;
 
 import org.tyaa.fhelpermodel.LinkListItem;
 import org.tyaa.furniturehelper.manager.BusinessCardActivity;

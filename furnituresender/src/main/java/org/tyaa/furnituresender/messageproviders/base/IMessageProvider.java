@@ -1,7 +1,7 @@
 package org.tyaa.furnituresender.messageproviders.base;
 
 import android.content.Context;
-import android.databinding.ObservableArrayList;
+import androidx.databinding.ObservableArrayList;
 
 import org.tyaa.fhelpermodel.interfaces.ISubLink;
 

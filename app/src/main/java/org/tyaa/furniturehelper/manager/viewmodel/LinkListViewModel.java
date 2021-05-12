@@ -1,8 +1,8 @@
 package org.tyaa.furniturehelper.manager.viewmodel;
 
 import android.content.Intent;
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;

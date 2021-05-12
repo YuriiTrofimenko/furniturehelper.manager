@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +17,8 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import static java.lang.Long.getLong;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ContactsActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>,

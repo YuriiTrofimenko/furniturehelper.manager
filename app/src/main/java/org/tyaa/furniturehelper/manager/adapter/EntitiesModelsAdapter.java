@@ -1,6 +1,6 @@
 package org.tyaa.furniturehelper.manager.adapter;
 
-import android.databinding.ObservableArrayList;
+import androidx.databinding.ObservableArrayList;
 import android.util.Log;
 
 import org.tyaa.fhelpermodel.LinkListItem;

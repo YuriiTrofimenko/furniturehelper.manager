@@ -1,8 +1,8 @@
 package org.tyaa.furniturehelper.manager.adapter;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ObservableArrayList;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableArrayList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
